@@ -19,49 +19,49 @@ Permissions
 Default config
 --------------
 
-  #####Config file for BedHome v2.0 by Superior_Slime#####
+    #####Config file for BedHome v2.0 by Superior_Slime#####
   
 
-  ##Boolean values. If these are not set to true or false, you and your players WILL get errors. You have been warned.##
+    ##Boolean values. If these are not set to true or false, you and your players WILL get errors. You have been warned.##
+    
+    #Whether to use permissions or allow all players to do /bed
+    
+    permissions: true
   
-  #Whether to use permissions or allow all players to do /bed
+    #Whether you can teleport to a destroyed bed
   
-  permissions: true
+    tptodestroyedbed: false
   
-  #Whether you can teleport to a destroyed bed
+    #If tpToDestroyedBed is false, this determines whether the player can see their previous bed's coordinates.
   
-  tptodestroyedbed: false
+    #If tpToDestroyedBed is true, this won't do anything.
   
-  #If tpToDestroyedBed is false, this determines whether the player can see their previous bed's coordinates.
+    displaybedcoords: true
+    
+    #Whether to notify you of new updates (not auto-downloaded). Note this is reccommended, as if a bug is found or a         crucial new feature is added you'll be in the know. 
   
-  #If tpToDestroyedBed is true, this won't do anything.
-  
-  displaybedcoords: true
-  
-  #Whether to notify you of new updates (not auto-downloaded). Note this is reccommended, as if a bug is found or a         crucial new feature is added you'll be in the know. 
-  
-  updatecheck: true
+    updatecheck: true
 
 
-  ###Messages###
+    ###Messages###
   
-  #What is displayed if a player teleports to their bed
+    #What is displayed if a player teleports to their bed
   
-  tpmessage: 'You have been teleported to your bed.'
+    tpmessage: 'You have been teleported to your bed.'
   
-  #What is displayed if a player does not have the permission bedhome.bed
+    #What is displayed if a player does not have the permission bedhome.bed
   
-  noperms: 'You do not have permission to do that.'
+    noperms: 'You do not have permission to do that.'
   
-  #What is displayed if a player has no bed
+    #What is displayed if a player has no bed
   
-  nobed: 'You do not have a bed home set, or it has been destroyed.'
+    nobed: 'You do not have a bed home set, or it has been destroyed.'
   
-  #What is displayed when a player sets their bed
+    #What is displayed when a player sets their bed
   
-  bedset: 'Your bed home has been set.'
+    bedset: 'Your bed home has been set.'
   
-  #The message displayed if someone's bed is destroyed, but they can see the co-ords
+    #The message displayed if someone's bed is destroyed, but they can see the co-ords
   
-  bedcoordmessage: 'Your bed has been destroyed, however, here are its co-ordinates:' 
+    bedcoordmessage: 'Your bed has been destroyed, however, here are its co-ordinates:' 
 
