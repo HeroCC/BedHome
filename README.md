@@ -38,7 +38,7 @@ Default config
   
     displaybedcoords: true
     
-    #Whether to notify you of new updates (not auto-downloaded). Note this is reccommended, as if a bug is found or a         crucial new feature is added you'll be in the know. 
+    #Whether to notify you of new updates (not auto-downloaded). Note this is reccommended, as if a bug is found or crucial new feature is added you'll be in the know. 
   
     updatecheck: true
 
