@@ -14,8 +14,6 @@ public class listener
   implements Listener
 {
   public static main plugin;
-  //TESTTEST
-
   public void setBed(Player player){
 	Player p = (Player) player;
   	String dn = p.getDisplayName();
