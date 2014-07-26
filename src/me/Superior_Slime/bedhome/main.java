@@ -29,6 +29,7 @@ public class main extends JavaPlugin {
 	}
 
 	public void onEnable() {
+		Updater updater = new Updater(this, 81407, this.getFile(), getConfig().getBoolean("auto-update")? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD, false);
 		this.log = this.getLogger();
 		this.yml.options().copyDefaults(true);
 		saveDefaultConfig();
