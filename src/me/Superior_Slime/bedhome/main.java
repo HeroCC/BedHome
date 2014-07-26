@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -22,25 +24,17 @@ public class main extends JavaPlugin {
 	File file = new File(this.getDataFolder(), "beds.yml");
 	YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
 	protected Logger log;
-	protected UpdateChecker updateChecker;
 	
 	public void onDisable() {
 	}
 
 	public void onEnable() {
 		this.log = this.getLogger();
-		this.updateChecker = new UpdateChecker(this, "http://dev.bukkit.org/bukkit-plugins/bedhome/files.rss");
-		if(this.updateChecker.updateNeeded() && (getConfig().getString("updatecheck") == "true")){
-			this.log.info("A new version of BedHome is available: " + this.updateChecker.getVersion());
-			this.log.info("Download it here: " + this.updateChecker.getLink());
-		}
-
 		this.yml.options().copyDefaults(true);
 		saveDefaultConfig();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.l, this);
 		pm.addPermission(new Permission("bedhome.getupdates"));
-
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
@@ -105,15 +99,14 @@ public class main extends JavaPlugin {
 					}
 
 				}
-			} else if ((getConfig().getString("tptodestroyedbed") == "true")) {
+			} else if ((getConfig().getString("nobedmode") == "a")) {
 				if (bedExists(p)) {
 					tp(p);
 				} else {
 					p.sendMessage(ChatColor.DARK_RED
 							+ getConfig().getString("nobed"));
 				}
-			} else if ((getConfig().getString("displaybedcoords") == "true")
-					&& (getConfig().getString("tptodestroyedbed") == "false")) {
+			} else if ((getConfig().getString("nobedmode") == "c")) {
 				if (bedExists(p)) {
 					double x = (Double) yml.get(dn + ".x");
 					double y = (Double) yml.get(dn + ".y");
@@ -129,8 +122,7 @@ public class main extends JavaPlugin {
 					p.sendMessage(ChatColor.DARK_RED
 							+ getConfig().getString("nobed"));
 				}
-			} else if ((getConfig().getString("displaybedcoords") == "false")
-					&& (getConfig().getString("tptodestroyedbed") == "false")) {
+			} else if ((getConfig().getString("nobedmode") == "b")) {
 				p.sendMessage(ChatColor.DARK_RED
 						+ getConfig().getString("nobed"));
 			} else {
@@ -141,5 +133,6 @@ public class main extends JavaPlugin {
 		return false;
 
 	}
+
 
 }
