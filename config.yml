@@ -8,7 +8,8 @@ permissions: true
 #"nobedmode: b" Block. Players will be given the error message defined below as "nobed"
 #"nobedmode: c" Co-ordinates. Players will be given their past bed's co-ordinates, if they exist.
 nobedmode: c
-
+#Should we automatically download and install new updates?
+auto-update: true
 
 ###Messages###
 #What is displayed if a player teleports to their bed
