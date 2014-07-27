@@ -14,54 +14,32 @@ Permissions
 --------------
 
 - **bedhome.bed** - this allows players to use the /bed command, if permissions are enabled in the config.
-- **bedhome.getupdates** - this notifies the player of updates when they join the server, if update checks are enabled.
 
 Default config
 --------------
 
     #####Config file for BedHome v2.0 by Superior_Slime#####
-  
 
-    ##Boolean values. If these are not set to true or false, you and your players WILL get errors. You have been warned.##
-    
-    #Whether to use permissions or allow all players to do /bed
-    
+    ###Boolean values. If these are not set to the given values, you and your players WILL get errors. You have been warned.###
+    ##Whether to use permissions or allow all players to do /bed
     permissions: true
-  
-    #Whether you can teleport to a destroyed bed
-  
-    tptodestroyedbed: false
-  
-    #If tpToDestroyedBed is false, this determines whether the player can see their previous bed's coordinates.
-  
-    #If tpToDestroyedBed is true, this won't do anything.
-  
-    displaybedcoords: true
-    
-    #Whether to notify you of new updates (not auto-downloaded). Note this is reccommended, as if a bug is found or crucial new feature is added you'll be in the know. 
-  
-    updatecheck: true
-
+    ##What to do if a player has no bed.
+    #"nobedmode: a" Allow. Players will be able to teleport to past beds if they have no bed.
+    #"nobedmode: b" Block. Players will be given the error message defined below as "nobed"
+    #"nobedmode: c" Co-ordinates. Players will be given their past bed's co-ordinates, if they exist.
+    nobedmode: c
+    #Should we automatically download and install new updates?
+    auto-update: true
 
     ###Messages###
-  
     #What is displayed if a player teleports to their bed
-  
     tpmessage: 'You have been teleported to your bed.'
-  
     #What is displayed if a player does not have the permission bedhome.bed
-  
     noperms: 'You do not have permission to do that.'
-  
     #What is displayed if a player has no bed
-  
     nobed: 'You do not have a bed home set, or it has been destroyed.'
-  
     #What is displayed when a player sets their bed
-  
     bedset: 'Your bed home has been set.'
-  
     #The message displayed if someone's bed is destroyed, but they can see the co-ords
-  
     bedcoordmessage: 'Your bed has been destroyed, however, here are its co-ordinates:' 
 
