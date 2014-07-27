@@ -7,7 +7,7 @@ The plugin also has other (optional) features. You can choose to teleport to a b
 
 It saves player bed co-ordinates and worlds to *beds.yml*. As of me writing this, the plugin is designed for Minecraft 1.7.2, but soon I will create an update which implements UUIDs.
 
-It also features an update checker, which notifies players both through the console and when you join the server, if you have a permission or are an operator. You can disable this of course, in the config, however it's reccommended you keep it enabled so if we find a bug/have an update with some great new feature you'll be in the know.
+It also features an auto-updater. Of course, you can disable this in the config by setting "auto-update" to false.
 
 
 Permissions
