@@ -2,9 +2,17 @@ name: BedHome
 main: me.Superior_Slime.bedhome.main
 version: 2.0
 description: >
-             Teleport to your bed with a command!
+             Teleport to your bed with a command: /bed!
 commands:
     bed:
         description: Teleport to your bed.
         permission: bedhome.bed
-
+    bedhome:
+        description: Reload the config or get help.
+        permission: bedhome.config
+permissions:
+    bedhome.bed:
+        description: Allows you to TP to your bed!
+    bedhome.config:
+        description: Allows you to reload the config!
+            
