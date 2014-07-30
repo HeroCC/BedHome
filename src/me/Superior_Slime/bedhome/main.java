@@ -74,7 +74,7 @@ public class main extends JavaPlugin implements Listener {
 		double y = (Double) yml.get(dn + "." + wn + ".y");
 		double z = (Double) yml.get(dn + "." + wn + ".z");
 		p.teleport(new Location(w, x, y, z));
-		p.sendMessage(ChatColor.DARK_GREEN + getConfig().getString("tpmessage"));
+		p.sendMessage(ChatColor.DARK_GREEN + "You have been teleported to your bed.");
 	}
 	private void cfgCheck(Player player){
 		Player p = (Player) player;
