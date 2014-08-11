@@ -55,30 +55,28 @@ public class main extends JavaPlugin implements Listener {
 	} // Ends onEnable()
 
 	private boolean bedInConfig(Player player) {
-		String dn = player.getDisplayName();
-		dn = ChatColor.stripColor(dn);
+		String id = player.getUniqueId().toString();
 		World w = player.getLocation().getWorld();
 		String wn = w.getName();
-		return (yml.contains(dn + "." + wn + ".x")
-				&& yml.contains(dn + "." + wn + ".y") && yml.contains(dn + "."
+		return (yml.contains(id + "." + wn + ".x")
+				&& yml.contains(id + "." + wn + ".y") && yml.contains(id + "."
 				+ wn + ".z"));
 	}
 
 	private void tp(Player player) {
 		Player p = player;
-		String dn = p.getDisplayName();
-		dn = ChatColor.stripColor(dn);
+		String id = player.getUniqueId().toString();
 		World w = player.getLocation().getWorld();
 		String wn = w.getName();
-		double x = (Double) yml.get(dn + "." + wn + ".x");
-		double y = (Double) yml.get(dn + "." + wn + ".y");
-		double z = (Double) yml.get(dn + "." + wn + ".z");
+		double x = (Double) yml.get(id + "." + wn + ".x");
+		double y = (Double) yml.get(id + "." + wn + ".y");
+		double z = (Double) yml.get(id + "." + wn + ".z");
 		p.teleport(new Location(w, x, y, z));
 		p.sendMessage(ChatColor.DARK_GREEN + "You have been teleported to your bed.");
 	}
 	private void cfgCheck(Player player){
 		Player p = (Player) player;
-		String dn = p.getDisplayName();
+		String id = player.getUniqueId().toString();
 		if ((getConfig().getString("nobedmode").equals("a"))) {
 			if (bedInConfig(p)) {
 				tp(p);
@@ -90,9 +88,9 @@ public class main extends JavaPlugin implements Listener {
 			if (bedInConfig(p)) {
 				World w = p.getLocation().getWorld();
 				String wn = w.getName();
-				double x = (Double) yml.get(dn + "." + wn + ".x");
-				double y = (Double) yml.get(dn + "." + wn + ".y");
-				double z = (Double) yml.get(dn + "." + wn + ".z");
+				double x = (Double) yml.get(id + "." + wn + ".x");
+				double y = (Double) yml.get(id + "." + wn + ".y");
+				double z = (Double) yml.get(id + "." + wn + ".z");
 				int xInt = (int) Math.round(x);
 				int yInt = (int) Math.round(y);
 				int zInt = (int) Math.round(z);

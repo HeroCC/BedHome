@@ -28,17 +28,16 @@ public class listener
   	if ((p.hasPermission("bedhome.bed") && plugin.getConfig().getString("permissions") == "true") || p.isOp()
     		|| (plugin.getConfig().getString("permissions") == "false")){
   		
-  	  	String dn = p.getDisplayName();
-  	    dn = ChatColor.stripColor(dn);
+  	  	String id = p.getUniqueId().toString();
   	    p.setBedSpawnLocation(p.getLocation());
   		double x = p.getLocation().getX();
   		double z = p.getLocation().getZ();
   		double y = p.getLocation().getY();
   	    World w = p.getLocation().getWorld();
   	    String wn = w.getName();
-  		plugin.yml.set(dn + "." + wn + ".x", x);
-  		plugin.yml.set(dn + "." + wn + ".y", y);
-  		plugin.yml.set(dn + "." + wn + ".z", z);
+  		plugin.yml.set(id + "." + wn + ".x", x);
+  		plugin.yml.set(id + "." + wn + ".y", y);
+  		plugin.yml.set(id + "." + wn + ".z", z);
   		try {
   			plugin.yml.save(plugin.file);
   			} catch (IOException ex) {
