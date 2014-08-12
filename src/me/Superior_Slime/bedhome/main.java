@@ -3,7 +3,6 @@ package me.Superior_Slime.bedhome;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -115,8 +114,8 @@ public class main extends JavaPlugin implements Listener {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String[] args) {
-		Player p = (Player) sender;
 		if (commandLabel.equalsIgnoreCase("bedhome")){
+			Player p = (Player) sender;
 			if(args.length == 0){
 				p.sendMessage(ChatColor.BLUE + "[BH] BedHome version " + pdf.getVersion() + " by Superior_Slime");
 			} 
@@ -125,27 +124,56 @@ public class main extends JavaPlugin implements Listener {
 					if((p.hasPermission("bedhome.config")) || p.isOp()){
 						reloadConfig();
 						p.sendMessage(ChatColor.BLUE + "[BH] Config reloaded!");
-					}else{
-						p.sendMessage(ChatColor.DARK_RED + "You don't have permission.");
-					}
 				}else if(args[0].equals("help")){
-					p.sendMessage(ChatColor.GREEN + "~~~BedHome version " + pdf.getVersion() + " by Superior_Slime - help~~~");
+					p.sendMessage(ChatColor.GREEN + "BedHome version " + pdf.getVersion() + " by Superior_Slime - help");
 					p.sendMessage(ChatColor.DARK_AQUA + "/bed   " + ChatColor.DARK_GRAY + "Teleport to your bed");
 					p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "[reload/help]    "
 					+ ChatColor.DARK_GRAY + "Reload the plugin config or get help");
+					p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "lookup "  + ChatColor.DARK_AQUA +  "<name>    "
+							+ ChatColor.DARK_GRAY + "Lookup someone's bed");
+				}else if(args[0].equals("lookup")){
+					p.sendMessage(ChatColor.DARK_RED + "We need a player to lookup! /bedhome lookup <name>");
+				}
 				}else{
-					p.sendMessage(ChatColor.DARK_RED + "Incorrect syntax! Use: /bedhome [reload/help]");
+					p.sendMessage(ChatColor.DARK_RED + "Incorrect syntax! Use: /bedhome [reload/help] or /bedhome lookup <name>");
 				}
 			}else if(args.length > 1){
-				p.sendMessage(ChatColor.DARK_RED + "Incorrect syntax! Use: /bedhome [reload/help]");
-			}
+				if(args[0].equals("lookup")){
+					if((p.hasPermission("bedhome.lookup")) || p.isOp()){
+						try {
+							if (this.yml.contains((UUIDFetcher.getUUIDOf(args[1])).toString())){
+								p.sendMessage(ChatColor.BLUE + "[BH] " + ChatColor.DARK_AQUA + args[1] + ChatColor.BLUE + "'s bed is at:");
+								double x = (Double) yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName() + ".x");
+								double y = (Double) yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName() + ".y");
+								double z = (Double) yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName() + ".z");
+								int xInt = (int) Math.round(x);
+								int yInt = (int) Math.round(y);
+								int zInt = (int) Math.round(z);
+								p.sendMessage(ChatColor.RED + "X: " + ChatColor.GOLD + Integer.toString(xInt));
+								p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + Integer.toString(yInt));
+								p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + Integer.toString(zInt));
+							}else{
+								p.sendMessage(ChatColor.DARK_RED + "That player does not have a bed in this world.");
+							}
+						} catch (Exception e) {
+							p.sendMessage(ChatColor.DARK_RED + "An error occured while attempting to perform this command (see console stack trace).");
+							e.printStackTrace();
+						}
+					}else{
+						p.sendMessage(ChatColor.DARK_RED + "You don't have permission.");
+					}
+				}else{
+					p.sendMessage(ChatColor.DARK_RED + "Incorrect syntax! Use: /bedhome [reload/help] or /bedhome lookup <name>");
+				}
 		}
-		if (commandLabel.equalsIgnoreCase("bed")) {
-			String dn = p.getDisplayName();
-			dn = ChatColor.stripColor(dn);
+		}else if (commandLabel.equalsIgnoreCase("bed")) {
+
 			if (!(sender instanceof Player)) {
 				sender.sendMessage("CONSOLE can't teleport to a bed!");
-			} else if (p.getBedSpawnLocation() != null) {
+			} else if (((Player) sender).getBedSpawnLocation() != null) {
+				Player p = (Player) sender;
+				String dn = p.getDisplayName();
+				dn = ChatColor.stripColor(dn);
 				if (p.getBedSpawnLocation().getWorld() == p.getWorld()) {
 					if (!p.hasPermission("bedhome.bed")
 							&& (getConfig().getString("permissions") == "true")) {
@@ -169,10 +197,11 @@ public class main extends JavaPlugin implements Listener {
 					cfgCheck(p);
 				}
 			}else{
-				cfgCheck(p);
+				cfgCheck((Player) sender);
 			}
 		}
 		return false;
-	}
+	
 
+}
 }
