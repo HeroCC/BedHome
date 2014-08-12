@@ -124,6 +124,9 @@ public class main extends JavaPlugin implements Listener {
 					if((p.hasPermission("bedhome.config")) || p.isOp()){
 						reloadConfig();
 						p.sendMessage(ChatColor.BLUE + "[BH] Config reloaded!");
+					}else{
+						p.sendMessage(ChatColor.DARK_RED + "You don't have permission.");
+					}
 				}else if(args[0].equals("help")){
 					p.sendMessage(ChatColor.GREEN + "BedHome version " + pdf.getVersion() + " by Superior_Slime - help");
 					p.sendMessage(ChatColor.DARK_AQUA + "/bed   " + ChatColor.DARK_GRAY + "Teleport to your bed");
@@ -133,10 +136,11 @@ public class main extends JavaPlugin implements Listener {
 							+ ChatColor.DARK_GRAY + "Lookup someone's bed");
 				}else if(args[0].equals("lookup")){
 					p.sendMessage(ChatColor.DARK_RED + "We need a player to lookup! /bedhome lookup <name>");
-				}
+				
 				}else{
 					p.sendMessage(ChatColor.DARK_RED + "Incorrect syntax! Use: /bedhome [reload/help] or /bedhome lookup <name>");
 				}
+			
 			}else if(args.length > 1){
 				if(args[0].equals("lookup")){
 					if((p.hasPermission("bedhome.lookup")) || p.isOp()){
@@ -162,10 +166,12 @@ public class main extends JavaPlugin implements Listener {
 					}else{
 						p.sendMessage(ChatColor.DARK_RED + "You don't have permission.");
 					}
-				}else{
-					p.sendMessage(ChatColor.DARK_RED + "Incorrect syntax! Use: /bedhome [reload/help] or /bedhome lookup <name>");
-				}
-		}
+			}else{
+				p.sendMessage(ChatColor.DARK_RED + "Incorrect syntax! Use: /bedhome [reload/help] or /bedhome lookup <name>");
+			}
+			}else{
+				p.sendMessage(ChatColor.DARK_RED + "Incorrect syntax! Use: /bedhome [reload/help] or /bedhome lookup <name>");
+			}
 		}else if (commandLabel.equalsIgnoreCase("bed")) {
 
 			if (!(sender instanceof Player)) {
@@ -205,3 +211,4 @@ public class main extends JavaPlugin implements Listener {
 
 }
 }
+
