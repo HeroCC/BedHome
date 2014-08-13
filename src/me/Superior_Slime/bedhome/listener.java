@@ -45,6 +45,7 @@ public class listener
   			}
   			p.sendMessage(ChatColor.DARK_GREEN
   					+ "Your bed has been set.");
+  		
 }
   }
 

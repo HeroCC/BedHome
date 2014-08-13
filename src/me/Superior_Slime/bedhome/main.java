@@ -145,7 +145,7 @@ public class main extends JavaPlugin implements Listener {
 				if(args[0].equals("lookup")){
 					if((p.hasPermission("bedhome.lookup")) || p.isOp()){
 						try {
-							if (this.yml.contains((UUIDFetcher.getUUIDOf(args[1])).toString())){
+							if (this.yml.contains(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName())){
 								p.sendMessage(ChatColor.BLUE + "[BH] " + ChatColor.DARK_AQUA + args[1] + ChatColor.BLUE + "'s bed is at:");
 								double x = (Double) yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName() + ".x");
 								double y = (Double) yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName() + ".y");
@@ -160,8 +160,7 @@ public class main extends JavaPlugin implements Listener {
 								p.sendMessage(ChatColor.DARK_RED + "That player does not have a bed in this world.");
 							}
 						} catch (Exception e) {
-							p.sendMessage(ChatColor.DARK_RED + "An error occured while attempting to perform this command (see console stack trace).");
-							e.printStackTrace();
+							p.sendMessage(ChatColor.DARK_RED + "The player you specified does not exist.");
 						}
 					}else{
 						p.sendMessage(ChatColor.DARK_RED + "You don't have permission.");
