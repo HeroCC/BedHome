@@ -146,7 +146,7 @@ public class main extends JavaPlugin implements Listener {
 					if((p.hasPermission("bedhome.lookup")) || p.isOp()){
 						try {
 							if (this.yml.contains(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName())){
-								p.sendMessage(ChatColor.BLUE + "[BH] " + ChatColor.DARK_AQUA + args[1] + ChatColor.BLUE + "'s bed is at:");
+								p.sendMessage(ChatColor.BLUE + "[BH] " + ChatColor.DARK_AQUA + args[1] + ChatColor.BLUE + "'s bed is located at:");
 								double x = (Double) yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName() + ".x");
 								double y = (Double) yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName() + ".y");
 								double z = (Double) yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + p.getWorld().getName() + ".z");
