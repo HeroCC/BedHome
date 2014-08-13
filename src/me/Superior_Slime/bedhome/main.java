@@ -153,6 +153,7 @@ public class main extends JavaPlugin implements Listener {
 								int xInt = (int) Math.round(x);
 								int yInt = (int) Math.round(y);
 								int zInt = (int) Math.round(z);
+								p.sendMessage(ChatColor.RED + "Player " + args[1] + " has a bed in this world, located at:");
 								p.sendMessage(ChatColor.RED + "X: " + ChatColor.GOLD + Integer.toString(xInt));
 								p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + Integer.toString(yInt));
 								p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + Integer.toString(zInt));
