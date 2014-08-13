@@ -132,11 +132,10 @@ public class main extends JavaPlugin implements Listener {
 					}
 				}else if(args[0].equals("help")){
 					p.sendMessage(ChatColor.GREEN + "BedHome version " + pdf.getVersion() + " by Superior_Slime - help");
-					p.sendMessage(ChatColor.DARK_AQUA + "/bed   " + ChatColor.DARK_GRAY + "Teleport to your bed");
+					p.sendMessage(ChatColor.DARK_AQUA + "/bed                           " + ChatColor.DARK_GRAY + "Teleport to your bed");
 					p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "[reload/help]    "
 					+ ChatColor.DARK_GRAY + "Reload the plugin config or get help");
-					p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "lookup "  + ChatColor.DARK_AQUA +  "<name>    "
-							+ ChatColor.DARK_GRAY + "Lookup someone's bed");
+					p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "lookup "  + ChatColor.DARK_AQUA +  "<name>    " + ChatColor.DARK_GRAY + "Lookup someone's bed");
 				}else if(args[0].equals("lookup")){
 					p.sendMessage(ChatColor.DARK_RED + "We need a player to lookup! /bedhome lookup <name>");
 				
@@ -163,7 +162,7 @@ public class main extends JavaPlugin implements Listener {
 								p.sendMessage(ChatColor.DARK_RED + "That player does not have a bed in this world.");
 							}
 						} catch (Exception e) {
-							p.sendMessage(ChatColor.DARK_RED + "The player you specified does not exist.");
+							p.sendMessage(ChatColor.DARK_RED + "The player you specified does not exist (case-sensitive!).");
 						}
 					}else{
 						p.sendMessage(ChatColor.DARK_RED + "You don't have permission.");
