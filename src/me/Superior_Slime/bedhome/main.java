@@ -79,6 +79,9 @@ public class main extends JavaPlugin implements Listener {
 		if ((getConfig().getString("nobedmode").equals("a"))) {
 			if (bedInConfig(p)) {
 				tp(p);
+				if(getConfig().getBoolean("console_messages")){
+	  				log.info("[BH]" + p.getDisplayName() + " has teleported to their destroyed bed's location.");
+	  			}
 			} else {
 				p.sendMessage(ChatColor.DARK_RED
 						+ "You do not have a bed in this world, or it has been destroyed.");
@@ -192,6 +195,9 @@ public class main extends JavaPlugin implements Listener {
 							|| (getConfig().getString("permissions") == "false")) {
 						if (bedInConfig(p)) {
 							tp(p);
+							if(getConfig().getBoolean("console_messages")){
+				  				log.info("[BH]" + p.getDisplayName() + " has teleported to their bed.");
+				  			}
 						} else {
 							p.sendMessage(ChatColor.DARK_RED
 									+ "You do not have a bed in this world, or it has been destroyed.");

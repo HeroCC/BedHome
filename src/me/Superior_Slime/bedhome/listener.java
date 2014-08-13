@@ -45,6 +45,9 @@ public class listener
   			}
   			p.sendMessage(ChatColor.DARK_GREEN
   					+ "Your bed has been set.");
+  			if(plugin.getConfig().getBoolean("console_messages")){
+  				plugin.log.info("[BH]" + p.getDisplayName() + " has set their bed.");
+  			}
   		
 }
   }

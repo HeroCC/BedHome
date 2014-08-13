@@ -4,11 +4,12 @@
 permissions: true
 #Should we automatically download and install new updates?
 auto-update: true
-
+#Should player actions (such as teleporting to a bed or setting one) be logged to the console?
+console_messages: false
 
 ##What to do if a player has no bed.
 #"nobedmode: a" Allow. Players will be able to teleport to past beds if they have no bed.
-#"nobedmode: b" Block. Players will be given the error message defined below as "nobed"
+#"nobedmode: b" Block. Players will be given the error message that they have no bed.
 #"nobedmode: c" Co-ordinates. Players will be given their past bed's co-ordinates, if they exist.
 nobedmode: c
 
