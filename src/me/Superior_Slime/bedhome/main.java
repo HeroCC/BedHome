@@ -3,7 +3,6 @@ package me.Superior_Slime.bedhome;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -166,11 +165,7 @@ public class main extends JavaPlugin implements Listener {
 			else if(args.length == 1){
 				if((args[0].equals("reload"))){
 					if((p.hasPermission("bedhome.config")) || p.isOp()){
-						InputStream defConfigStream = getResource("config.yml");
-						if (defConfigStream != null) {
-							YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream));
-							this.getConfig().setDefaults(defConfig);
-						}
+						reloadConfig();
 						p.sendMessage(ChatColor.BLUE + "[BH] Config reloaded!");
 					}else{
 						p.sendMessage(ChatColor.DARK_RED + ERR_NO_PERMS);
