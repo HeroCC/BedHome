@@ -44,9 +44,9 @@ public class listener
   				ex.printStackTrace();
   			}
   			p.sendMessage(ChatColor.DARK_GREEN
-  					+ "Your bed has been set.");
+  					+ plugin.BED_SET);
   			if(plugin.getConfig().getBoolean("console_messages")){
-  				plugin.log.info("[BH]" + p.getDisplayName() + " has set their bed.");
+  				plugin.log.info(plugin.CONSOLE_PLAYER_SET.replace("$player", ChatColor.stripColor(p.getDisplayName())));
   			}
   		
 }

@@ -1,6 +1,6 @@
 name: BedHome
 main: me.Superior_Slime.bedhome.main
-version: 2.1
+version: 2.2
 description: >
              Teleport to your bed with a command: /bed!
 commands:
@@ -9,10 +9,12 @@ commands:
         permission: bedhome.bed
     bedhome:
         description: Reload the config or get help.
-        permission: bedhome.config
 permissions:
     bedhome.bed:
         description: Allows you to TP to your bed!
     bedhome.config:
         description: Allows you to reload the config!
+    bedhome.lookup:
+        description: Allows you to look up player bed locations or teleport to them!!
+    
             

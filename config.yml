@@ -1,4 +1,4 @@
-#####Config file for BedHome v2.1 by Superior_Slime#####
+#####Config file for BedHome v2.2 by Superior_Slime#####
 ###Boolean values. If these are not set to true or false, you and your players WILL get errors. You have been warned.###
 ##Whether to use permissions or allow all players to do /bed
 permissions: true
@@ -12,4 +12,6 @@ console_messages: false
 #"nobedmode: b" Block. Players will be given the error message that they have no bed.
 #"nobedmode: c" Co-ordinates. Players will be given their past bed's co-ordinates, if they exist.
 nobedmode: c
-
+##What language to use.
+locale: en
+###If you specify a language that doesn't exist, the plugin will just use English.
