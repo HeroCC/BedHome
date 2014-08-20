@@ -56,7 +56,6 @@ pt:
     BED_COORDS: 'Sua cama foi destruída, mas, aqui estão as coordenadas:'
 fr:
     #By Google Translate
-    # Google translated (I know no French). Correct this if you like.
     ERR_NO_BED: 'Vous n`avez pas un lit dans ce monde, ou qu`il a été détruit.'
     ERR_NO_PERMS: 'Vous n`avez pas la permission.'
     ERR_PLAYER_NO_BED: 'Le joueur que vous avez spécifié ($player) n`a pas de lit dans $world.'
@@ -70,7 +69,7 @@ fr:
     TELE_OTHER_PLAYER: 'Vous avez été téléporté dans le lit de $player dans le monde $world.'
     HELP_LOOKUP: 'Lookup someone`s bed.'
     HELP_TELE: 'Téléportation vers le lit de quelqu`un.'
-    HELP_BEDHOME: 'Recharger le plugin ou obtenir de l'aide.'
+    HELP_BEDHOME: 'Recharger le plugin ou obtenir de l`aide.'
     HELP_BED: 'Téléporter à votre lit.'
     NAME: '<nom>'
     WORLD: '<monde>'
@@ -98,7 +97,7 @@ es:
     LOOKUP_RESULT: 'La cama de $player se encuentra en:'
     BED_COORDS: 'Tu cama ha sido destruida, pero, aquí están las coordenadas:'
 dn:
-    By Fedmand
+    #By Fedmand
     ERR_NO_BED: 'Du har ingen seng i denne verden, eller også er den blevet ødelagt.'
     ERR_NO_PERMS: 'Ingen tilladelse.'
     ERR_PLAYER_NO_BED: 'Spilleren ved navn ($player) har ingen seng i $world.'
@@ -114,7 +113,6 @@ dn:
     HELP_TELE: 'Teleporter til en seng.'
     HELP_BEDHOME: 'Genstart pluginnet eller søg hjælp.'
     HELP_BED: 'Bliv sendt til din seng.'
-	
     NAME: '<navn>'
     WORLD: '<verden>'
     LOOKUP_RESULT: '$player`s seng er placeret ved:'

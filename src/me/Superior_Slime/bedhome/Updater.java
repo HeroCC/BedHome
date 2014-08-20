@@ -127,7 +127,9 @@ public class Updater {
         /**
          * Get information about the version and the download size, but don't actually download anything.
          */
-        NO_DOWNLOAD
+        NO_DOWNLOAD,
+        
+        DISABLED
     }
 
     /**
@@ -199,6 +201,11 @@ public class Updater {
 
         if (this.config.getBoolean("disable")) {
             this.result = UpdateResult.DISABLED;
+            return;
+        }
+        
+        if(this.type == UpdateType.DISABLED){
+        	this.result = UpdateResult.DISABLED;
             return;
         }
 
@@ -556,7 +563,7 @@ public class Updater {
                 // Obtain the results of the project's file feed
                 if (Updater.this.read()) {
                     if (Updater.this.versionCheck(Updater.this.versionName)) {
-                        if ((Updater.this.versionLink != null) && (Updater.this.type != UpdateType.NO_DOWNLOAD)) {
+                        if ((Updater.this.versionLink != null) && (Updater.this.type != UpdateType.NO_DOWNLOAD) && (Updater.this.type != UpdateType.DISABLED)) {
                             String name = Updater.this.file.getName();
                             // If it's a zip file, it shouldn't be downloaded as the plugin's name
                             if (Updater.this.versionLink.endsWith(".zip")) {
@@ -565,7 +572,8 @@ public class Updater {
                             }
                             Updater.this.saveFile(new File(Updater.this.plugin.getDataFolder().getParent(), Updater.this.updateFolder), name, Updater.this.versionLink);
                         } else {
-                            Updater.this.result = UpdateResult.UPDATE_AVAILABLE;
+                        	Updater.this.result = UpdateResult.UPDATE_AVAILABLE;
+                            
                         }
                     }
                 }
