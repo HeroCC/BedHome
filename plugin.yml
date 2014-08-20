@@ -1,6 +1,6 @@
 name: BedHome
 main: me.Superior_Slime.bedhome.main
-version: 2.2
+version: 2.15
 description: >
              Teleport to your bed with a command: /bed!
 commands:

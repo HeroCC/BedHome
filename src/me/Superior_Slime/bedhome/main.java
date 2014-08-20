@@ -18,8 +18,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class main extends JavaPlugin implements Listener {
-	FileConfiguration config;
-	File cfile;
 	public static main plugin;
 	public final listener l = new listener(this);
 	File file = new File(this.getDataFolder(), "beds.yml");
