@@ -57,7 +57,7 @@ public class BedHomeCmd implements CommandExecutor{
 								p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + Integer.toString(yInt));
 								p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + Integer.toString(zInt));
 							}else{
-								p.sendMessage(ChatColor.DARK_RED + (plugin.ERR_PLAYER_NO_BED.replace("$player", ChatColor.stripColor(p.getDisplayName()))).replace("$world", args[2]));
+								p.sendMessage(ChatColor.DARK_RED + (plugin.ERR_PLAYER_NO_BED.replace("$player", ChatColor.stripColor(args[1]))).replace("$world", args[2]));
 							}
 						} catch (Exception e) {
 							p.sendMessage(ChatColor.DARK_RED + plugin.ERR_BAD_PLAYER);
@@ -76,7 +76,7 @@ public class BedHomeCmd implements CommandExecutor{
 							p.teleport(l);
 							p.sendMessage(ChatColor.DARK_GREEN + (plugin.TELE_OTHER_PLAYER.replace("$player", args[1])).replace("$world", args[2]));
 						}else{
-							p.sendMessage(ChatColor.DARK_RED + (plugin.ERR_PLAYER_NO_BED.replace("$player", ChatColor.stripColor(p.getDisplayName()))).replace("$world", args[2]));
+							p.sendMessage(ChatColor.DARK_RED + (plugin.ERR_PLAYER_NO_BED.replace("$player", args[1])).replace("$world", args[2]));
 						}
 					} catch (Exception e) {
 						p.sendMessage(ChatColor.DARK_RED + plugin.ERR_BAD_PLAYER);
