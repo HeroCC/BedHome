@@ -11,14 +11,14 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
 
 
 
-public class listener
+public class BedHomeListener
   implements Listener
 {
-  public static main plugin;
+  public static Main plugin;
 
   Updater updater;
   
-  public listener(main instance)
+  public BedHomeListener(Main instance)
   {
     plugin = instance;
   }

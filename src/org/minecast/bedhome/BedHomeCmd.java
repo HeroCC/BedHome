@@ -10,8 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class BedHomeCmd implements CommandExecutor{
-	 public static main plugin;
-	 public BedHomeCmd(main instance)
+	 public static Main plugin;
+	 public BedHomeCmd(Main instance)
 	  {
 	    plugin = instance;
 	  }
@@ -90,6 +90,7 @@ public class BedHomeCmd implements CommandExecutor{
 		}else{
 			p.sendMessage(ChatColor.DARK_RED + plugin.ERR_SYNTAX);
 		}
+		return true;
 	}
 	return false;
 }

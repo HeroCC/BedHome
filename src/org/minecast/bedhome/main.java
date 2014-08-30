@@ -1,3 +1,4 @@
+
 package org.minecast.bedhome;
 
 import java.io.File;
@@ -16,9 +17,9 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class main extends JavaPlugin implements Listener {
-	public static main plugin;
-	public final listener l = new listener(this);
+public class Main extends JavaPlugin implements Listener {
+	public static Main plugin;
+	public final BedHomeListener l = new BedHomeListener(this);
 	File file = new File(this.getDataFolder(), "beds.yml");
 	File localeFile = new File(this.getDataFolder(), "locale.yml");
 	YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
@@ -204,3 +205,4 @@ public class main extends JavaPlugin implements Listener {
 		return false;
 }
 }
+
