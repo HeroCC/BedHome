@@ -82,11 +82,7 @@ public class Main extends JavaPlugin implements Listener {
 				+ wn + ".z"));
 	}
 	public String locale(){
-		if (this.getConfig().getString("locale").equals("en") ||
-			this.getConfig().getString("locale").equals("fr") ||
-			this.getConfig().getString("locale").equals("es") ||
-			this.getConfig().getString("locale").equals("dn") ||
-			this.getConfig().getString("locale").equals("pt")){
+		if (locale.contains(this.getConfig().getString("locale") + "." + "ERR_NO_BED")){
 			return this.getConfig().getString("locale");
 		}else{
 			return "en";
@@ -201,6 +197,7 @@ public class Main extends JavaPlugin implements Listener {
 			}else{
 				cfgCheck((Player) sender);
 			}
+			return true;
 		}
 		return false;
 }
