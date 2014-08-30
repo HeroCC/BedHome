@@ -4,7 +4,7 @@
  * This class provides the means to safely and easily update a plugin, or check to see if it is updated using dev.bukkit.org
  */
 
-package me.Superior_Slime.bedhome;
+package org.minecast.bedhome;
 
 import java.io.*;
 import java.net.MalformedURLException;

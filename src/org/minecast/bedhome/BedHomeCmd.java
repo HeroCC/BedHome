@@ -1,4 +1,4 @@
-package me.Superior_Slime.bedhome;
+package org.minecast.bedhome;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

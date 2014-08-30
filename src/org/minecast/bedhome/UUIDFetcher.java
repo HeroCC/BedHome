@@ -1,4 +1,4 @@
-package me.Superior_Slime.bedhome;
+package org.minecast.bedhome;
 
 import com.google.common.collect.ImmutableList;
 import org.json.simple.JSONArray;
