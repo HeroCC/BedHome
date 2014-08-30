@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -42,8 +41,6 @@ public class main extends JavaPlugin implements Listener {
 	@SuppressWarnings("unused")
 	@Override
 	public void onEnable() {
-		String Note_to_the_BukkitDev_mods = 
-		"PLEASE read line 205 of the Updater class as this DISABLES auto-updating according to the config!";
 		Updater updater = new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.DISABLED //Custom Updater type which does nothing
 						, false);
 		this.getCommand("bedhome").setExecutor(new BedHomeCmd(this));
