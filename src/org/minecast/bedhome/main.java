@@ -82,7 +82,7 @@ public class Main extends JavaPlugin implements Listener {
 				+ wn + ".z"));
 	}
 	public String locale(){
-		if (locale.contains(this.getConfig().getString("locale") + "." + "ERR_NO_BED")){
+		if ((this.locale.isConfigurationSection(getConfig().getString("locale")))){
 			return this.getConfig().getString("locale");
 		}else{
 			return "en";

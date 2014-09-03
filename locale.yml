@@ -58,7 +58,7 @@ fr:
     #By FiFTX
     ERR_NO_BED: 'Tu n`as pas de lit dans ce monde, ou il as été détruit.'
     ERR_NO_PERMS: 'Tu n`as pas la permission.'
-    ERR_PLAYER_NO_BED: '"Le joueur spécifié ($player) n`as pas de lis dans le monde $world'
+    ERR_PLAYER_NO_BED: 'Le joueur spécifié ($player) n`as pas de lis dans le monde $world'
     ERR_BAD_PLAYER: 'Le joueur spécifié n`existe pas (sensible à la case)'
     ERR_SYNTAX: 'Syntaxe incorrecte! Utilisation: /bedhome [reload/help] ou /bedhome <lookup/teleport> <nom> <monde>'
     ERR_CONSOLE_TELE: 'La console ne peut pas te téléporter à ton lit.'
@@ -69,7 +69,7 @@ fr:
     TELE_OTHER_PLAYER: 'Tu as été téléporter au lit de $player dans le monde $world.'
     HELP_LOOKUP: 'Information sur le lit.'
     HELP_TELE: 'Téléportation vers le lit de quelqu`un.'
-    HELP_BEDHOME: 'Redémarre le plugin ou utilise l'aide.'
+    HELP_BEDHOME: 'Redémarre le plugin ou utilise l`aide.'
     HELP_BED: 'Téléportation à son lit.'
     NAME: '<nom>'
     WORLD: '<monde>'
