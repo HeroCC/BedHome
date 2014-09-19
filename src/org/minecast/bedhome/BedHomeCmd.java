@@ -27,17 +27,17 @@ public class BedHomeCmd implements CommandExecutor{
 					plugin.reloadConfig();
 					p.sendMessage(ChatColor.BLUE + "[BH] Config reloaded!");
 				}else{
-					p.sendMessage(ChatColor.DARK_RED + plugin.ERR_NO_PERMS);
+					p.sendMessage(ChatColor.DARK_RED + (plugin.locale.getString(plugin.locale() + "." + "ERR_NO_PERMS")));
 				}
 			}else if(args[0].equals("help")){
 				p.sendMessage(ChatColor.GREEN + "BedHome version " + plugin.pdf.getVersion() + " by Superior_Slime - help");
-				p.sendMessage(ChatColor.DARK_AQUA + "/bed                           " + ChatColor.DARK_GRAY + plugin.HELP_BED);
+				p.sendMessage(ChatColor.DARK_AQUA + "/bed                           " + ChatColor.DARK_GRAY + (plugin.locale.getString(plugin.locale() + "." + "HELP_BED")));
 				p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "[reload/help]    "
-				+ ChatColor.DARK_GRAY + plugin.HELP_BEDHOME);
-				p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "lookup "  + ChatColor.DARK_AQUA +  plugin.NAME + " " + plugin.WORLD + "    " + ChatColor.DARK_GRAY + plugin.HELP_LOOKUP);
-				p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "teleport "  + ChatColor.DARK_AQUA +  plugin.NAME + " " + plugin.WORLD + "    " + ChatColor.DARK_GRAY + plugin.HELP_TELE);
+				+ ChatColor.DARK_GRAY + (plugin.locale.getString(plugin.locale() + "." + "HELP_BEDHOME")));
+				p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "lookup "  + ChatColor.DARK_AQUA +  (plugin.locale.getString(plugin.locale() + "." + "NAME")) + " " + (plugin.locale.getString(plugin.locale() + "." + "WORLD")) + "    " + ChatColor.DARK_GRAY + (plugin.locale.getString(plugin.locale() + "." + "HELP_LOOKUP")));
+				p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "teleport "  + ChatColor.DARK_AQUA +  (plugin.locale.getString(plugin.locale() + "." + "NAME")) + " " + (plugin.locale.getString(plugin.locale() + "." + "WORLD")) + "    " + ChatColor.DARK_GRAY + (plugin.locale.getString(plugin.locale() + "." + "HELP_TELE")));
 			}else{
-				p.sendMessage(ChatColor.DARK_RED + plugin.ERR_SYNTAX);
+				p.sendMessage(ChatColor.DARK_RED + (plugin.locale.getString(plugin.locale() + "." + "ERR_SYNTAX")));
 			}
 		
 		}else if(args.length > 1){
@@ -46,7 +46,7 @@ public class BedHomeCmd implements CommandExecutor{
 					if((p.hasPermission("bedhome.lookup")) || p.isOp()){
 						try {
 							if (plugin.yml.contains(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + args[2])){
-								p.sendMessage(ChatColor.BLUE + plugin.LOOKUP_RESULT.replace("$player", args[1]));
+								p.sendMessage(ChatColor.BLUE + (plugin.locale.getString(plugin.locale() + "." + "LOOKUP_RESULT")).replace("$player", args[1]));
 								double x = (Double) plugin.yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + args[2] + ".x");
 								double y = (Double) plugin.yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + args[2] + ".y");
 								double z = (Double) plugin.yml.get(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "." + args[2] + ".z");
@@ -57,13 +57,13 @@ public class BedHomeCmd implements CommandExecutor{
 								p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + Integer.toString(yInt));
 								p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + Integer.toString(zInt));
 							}else{
-								p.sendMessage(ChatColor.DARK_RED + (plugin.ERR_PLAYER_NO_BED.replace("$player", ChatColor.stripColor(args[1]))).replace("$world", args[2]));
+								p.sendMessage(ChatColor.DARK_RED + ((plugin.locale.getString(plugin.locale() + "." + "ERR_PLAYER_NO_BED")).replace("$player", ChatColor.stripColor(args[1]))).replace("$world", args[2]));
 							}
 						} catch (Exception e) {
-							p.sendMessage(ChatColor.DARK_RED + plugin.ERR_BAD_PLAYER);
+							p.sendMessage(ChatColor.DARK_RED + (plugin.locale.getString(plugin.locale() + "." + "ERR_BAD_PLAYER")));
 						}
 					}else{
-						p.sendMessage(ChatColor.DARK_RED + plugin.ERR_NO_PERMS);
+						p.sendMessage(ChatColor.DARK_RED + (plugin.locale.getString(plugin.locale() + "." + "ERR_NO_PERMS")));
 					}
 				}else if (((args[0].equals("teleport")) || (args[0].equals("tele"))) && (p.hasPermission("bedhome.lookup")) || p.isOp()){
 					try {
@@ -74,21 +74,21 @@ public class BedHomeCmd implements CommandExecutor{
 							World w = Bukkit.getWorld(args[2]);
 							Location l = new Location(w, x, y, z);
 							p.teleport(l);
-							p.sendMessage(ChatColor.DARK_GREEN + (plugin.TELE_OTHER_PLAYER.replace("$player", args[1])).replace("$world", args[2]));
+							p.sendMessage(ChatColor.DARK_GREEN + ((plugin.locale.getString(plugin.locale() + "." + "TELE_OTHER_PLAYER")).replace("$player", args[1])).replace("$world", args[2]));
 						}else{
-							p.sendMessage(ChatColor.DARK_RED + (plugin.ERR_PLAYER_NO_BED.replace("$player", args[1])).replace("$world", args[2]));
+							p.sendMessage(ChatColor.DARK_RED + ((plugin.locale.getString(plugin.locale() + "." + "ERR_PLAYER_NO_BED")).replace("$player", args[1])).replace("$world", args[2]));
 						}
 					} catch (Exception e) {
-						p.sendMessage(ChatColor.DARK_RED + plugin.ERR_BAD_PLAYER);
+						p.sendMessage(ChatColor.DARK_RED + (plugin.locale.getString(plugin.locale() + "." + "ERR_BAD_PLAYER")));
 					}
 				}else{
-					p.sendMessage(ChatColor.DARK_RED + plugin.ERR_SYNTAX);
+					p.sendMessage(ChatColor.DARK_RED + (plugin.locale.getString(plugin.locale() + "." + "ERR_SYNTAX")));
 				}
 		}else{
-			p.sendMessage(ChatColor.DARK_RED + plugin.ERR_SYNTAX);
+			p.sendMessage(ChatColor.DARK_RED + (plugin.locale.getString(plugin.locale() + "." + "ERR_SYNTAX")));
 		}
 		}else{
-			p.sendMessage(ChatColor.DARK_RED + plugin.ERR_SYNTAX);
+			p.sendMessage(ChatColor.DARK_RED + (plugin.locale.getString(plugin.locale() + "." + "ERR_SYNTAX")));
 		}
 		return true;
 	}

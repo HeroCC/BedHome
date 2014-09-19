@@ -88,25 +88,6 @@ public class Main extends JavaPlugin implements Listener {
 			return "en";
 		}
 	}
-	String ERR_NO_BED = locale.getString(locale() + "." + "ERR_NO_BED");
-	String ERR_PLAYER_NO_BED = locale.getString(locale() + "." + "ERR_PLAYER_NO_BED");
-	String ERR_BAD_PLAYER = locale.getString(locale() + "." + "ERR_BAD_PLAYER");
-	String ERR_SYNTAX = locale.getString(locale() + "." + "ERR_SYNTAX");
-	String CONSOLE_PLAYER_TELE = locale.getString(locale() + "." + "CONSOLE_PLAYER_TELE");
-	String CONSOLE_PLAYER_SET = locale.getString(locale() + "." + "CONSOLE_PLAYER_SET");
-	String HELP_BEDHOME = locale.getString(locale() + "." + "HELP_BEDHOME");
-	String BED_TELE = locale.getString(locale() + "." + "BED_TELE");
-	String BED_SET = locale.getString(locale() + "." + "BED_SET");
-	String LOOKUP_RESULT = locale.getString(locale() + "." + "LOOKUP_RESULT");
-	String BED_COORDS = locale.getString(locale() + "." + "BED_COORDS");
-	String TELE_OTHER_PLAYER = locale.getString(locale() + "." + "TELE_OTHER_PLAYER");
-	String HELP_BED = locale.getString(locale() + "." + "HELP_BED");
-	String HELP_LOOKUP = locale.getString(locale() + "." + "HELP_LOOKUP");
-	String HELP_TELE = locale.getString(locale() + "." + "HELP_TELE");
-	String ERR_NO_PERMS = locale.getString(locale() + "." + "ERR_NO_PERMS");
-	String ERR_CONSOLE_TELE = locale.getString(locale() + "." + "ERR_CONSOLE_TELE");
-	String NAME = locale.getString(locale() + "." + "NAME");
-	String WORLD = locale.getString(locale() + "." + "WORLD");
 
 	private void tp(Player player) {
 		Player p = player;
@@ -117,7 +98,7 @@ public class Main extends JavaPlugin implements Listener {
 		double y = (Double) yml.get(id + "." + wn + ".y");
 		double z = (Double) yml.get(id + "." + wn + ".z");
 		p.teleport(new Location(w, x, y, z));
-		p.sendMessage(ChatColor.DARK_GREEN + BED_TELE);
+		p.sendMessage(ChatColor.DARK_GREEN + locale.getString(locale() + "." + "BED_TELE"));
 	}
 	private void cfgCheck(Player player){
 		Player p = (Player) player;
@@ -126,11 +107,11 @@ public class Main extends JavaPlugin implements Listener {
 			if (bedInConfig(p)) {
 				tp(p);
 				if(getConfig().getBoolean("console_messages")){
-	  				log.info(CONSOLE_PLAYER_TELE.replace("$player", ChatColor.stripColor(p.getDisplayName())));
+	  				log.info(locale.getString(locale() + "." + "CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
 	  			}
 			} else {
 				p.sendMessage(ChatColor.DARK_RED
-						+ ERR_NO_BED);
+						+ locale.getString(locale() + "." + "ERR_NO_BED"));
 			}
 		} else if (getConfig().getString("nobedmode").equals("c")) {
 			if (bedInConfig(p)) {
@@ -142,17 +123,17 @@ public class Main extends JavaPlugin implements Listener {
 				int xInt = (int) Math.round(x);
 				int yInt = (int) Math.round(y);
 				int zInt = (int) Math.round(z);
-				p.sendMessage(ChatColor.RED + BED_COORDS);
+				p.sendMessage(ChatColor.RED + (plugin.locale.getString(plugin.locale() + "." + "BED_COORDS")));
 				p.sendMessage(ChatColor.RED + "X: " + ChatColor.GOLD + xInt);
 				p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + yInt);
 				p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + zInt);
 			} else {
 				p.sendMessage(ChatColor.DARK_RED
-						+ ERR_NO_BED);
+						+ locale.getString(locale() + "." + "ERR_NO_BED"));
 			}
 		} else if ((getConfig().getString("nobedmode").equals("b"))) {
 			p.sendMessage(ChatColor.DARK_RED
-					+ ERR_NO_BED);
+					+ locale.getString(locale() + "." + "ERR_NO_BED"));
 		} else {
 			p.sendMessage(ChatColor.DARK_RED
 					+ "Plugin was not set up correctly. Please contact your server administrator.");
@@ -165,7 +146,7 @@ public class Main extends JavaPlugin implements Listener {
 		if (commandLabel.equalsIgnoreCase("bed")) {
 
 			if (!(sender instanceof Player)) {
-				sender.sendMessage(ERR_CONSOLE_TELE);
+				sender.sendMessage(locale.getString(locale() + "." + "ERR_CONSOLE_TELE"));
 			} else if (((Player) sender).getBedSpawnLocation() != null) {
 				Player p = (Player) sender;
 				String dn = p.getDisplayName();
@@ -174,7 +155,7 @@ public class Main extends JavaPlugin implements Listener {
 					if (!p.hasPermission("bedhome.bed")
 							&& (getConfig().getString("permissions") == "true")) {
 						p.sendMessage(ChatColor.DARK_RED
-								+ ERR_NO_PERMS);
+								+ locale.getString(locale() + "." + "ERR_NO_PERMS"));
 					} else if (p.isOp()
 							|| ((p.hasPermission("bedhome.bed")) & (getConfig()
 									.getString("permissions") == "true"))
@@ -184,11 +165,11 @@ public class Main extends JavaPlugin implements Listener {
 						if (bedInConfig(p)) {
 							tp(p);
 							if(getConfig().getBoolean("console_messages")){
-								log.info(CONSOLE_PLAYER_TELE.replace("$player", ChatColor.stripColor(p.getDisplayName())));
+								log.info(locale.getString(locale() + "." + "CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
 				  			}
 						} else {
 							p.sendMessage(ChatColor.DARK_RED
-									+ ERR_NO_BED);
+									+ locale.getString(locale() + "." + "ERR_NO_BED"));
 						}
 					}
 				} else if (bedInConfig(p)) {

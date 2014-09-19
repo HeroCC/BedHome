@@ -44,9 +44,9 @@ public class BedHomeListener
   				ex.printStackTrace();
   			}
   			p.sendMessage(ChatColor.DARK_GREEN
-  					+ plugin.BED_SET);
+  					+ plugin.locale.getString(plugin.locale() + "." + "BED_SET"));
   			if(plugin.getConfig().getBoolean("console_messages")){
-  				plugin.log.info(plugin.CONSOLE_PLAYER_SET.replace("$player", ChatColor.stripColor(p.getDisplayName())));
+  				plugin.log.info((plugin.locale.getString(plugin.locale() + "." + "CONSOLE_PLAYER_SET")).replace("$player", ChatColor.stripColor(p.getDisplayName())));
   			}
   		
 }
