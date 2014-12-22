@@ -4,6 +4,8 @@ package org.minecast.bedhome;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -45,48 +47,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 	
-	@SuppressWarnings("static-access")
-	public boolean isItMyBirthday(){
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR, 0);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		int today = c.DAY_OF_YEAR;
-		int year = 2014;
-		int month = 12;
-		int dayOfMonth = 23;
-		c.set(Calendar.YEAR, year);
-		c.set(Calendar.MONTH, month);
-		c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-		int dateSpecified = c.DAY_OF_YEAR;
-		if(today == dateSpecified){
-			return true;
-		}else{
-			return false;
-		}
 
-	}
-	@SuppressWarnings("static-access")
-	public boolean isItThePluginsBirthday(){
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR, 0);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		int today = c.DAY_OF_YEAR;
-		int year = 2014;
-		int month = 6;
-		int dayOfMonth = 17;
-		c.set(Calendar.YEAR, year);
-		c.set(Calendar.MONTH, month);
-		c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-		int dateSpecified = c.DAY_OF_YEAR;
-		if(today == dateSpecified){
-			return true;
-		}else{
-			return false;
-		}
-
-	}
 	@Override
 	@SuppressWarnings("unused")
 	public void onEnable() {
@@ -96,31 +57,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.log = this.getLogger();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.l, this);
-		if(isItMyBirthday()){
-			log.info("-------> It's my birthday! Woop woop!");
-			log.info("            ,:/+/-                      ");
-			log.info("            /M/              .,-=;//;-  ");
-			log.info("       .:/= ;MH/,    ,=/+%$XH@MM#@:     ");
-			log.info("      -$##@+$###@H@MMM#######H:.    -/H#");
-			log.info(" .,H@H@ X######@ -H#####@+-     -+H###@X");
-			log.info("  .,@##H;      +XM##M/,     =%@###@X;-  ");
-			log.info("X%-  :M##########$.    .:%M###@%:       ");
-			log.info("M##H,   +H@@@$/-.  ,;$M###@%,          -");
-			log.info("M####M=,,---,.-%%H####M$:          ,+@##");
-			log.info("@##################@/.         :%H##@$- ");
-			log.info("M###############H,         ;HM##M$=     ");
-			log.info("#################.    .=$M##M$=         ");
-			log.info("################H..;XM##M$=          .:+");
-			log.info("M###################@%=           =+@MH%");
-			log.info("@################M/.          =+H#X%=   ");
-			log.info("=+M##############M,       -/X#X+;.      ");
-			log.info("  .;XM##########H=    ,/X#H+:,          ");
-			log.info("     .=+HM######M+/+HM@+=.              ");
-			log.info("         ,:/%XM####H/.                  ");
-			log.info("              ,.:=-.                    ");
-		}else if(isItThePluginsBirthday()){
-			log.info("It's the plugin's birthday! Horray!");
-		}
+
 		this.yml.options().copyDefaults(true);
 		this.locale.options().copyDefaults(true);
 		this.getConfig().options().copyDefaults(true);
@@ -196,7 +133,7 @@ public class Main extends JavaPlugin implements Listener {
 				int xInt = (int) Math.round(x);
 				int yInt = (int) Math.round(y);
 				int zInt = (int) Math.round(z);
-				p.sendMessage(ChatColor.RED + (plugin.locale.getString(plugin.locale() + "." + "BED_COORDS")));
+				p.sendMessage(ChatColor.RED + (locale.getString(locale() + "." + "BED_COORDS")));
 				p.sendMessage(ChatColor.RED + "X: " + ChatColor.GOLD + xInt);
 				p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + yInt);
 				p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + zInt);

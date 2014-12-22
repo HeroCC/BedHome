@@ -30,7 +30,7 @@ public class BedHomeCmd implements CommandExecutor{
 					p.sendMessage(ChatColor.DARK_RED + (plugin.locale.getString(plugin.locale() + "." + "ERR_NO_PERMS")));
 				}
 			}else if(args[0].equals("help")){
-				p.sendMessage(ChatColor.GREEN + "BedHome version " + plugin.pdf.getVersion() + " by Superior_Slime - help");
+				p.sendMessage(ChatColor.GREEN + "-----==================================-----");
 				p.sendMessage(ChatColor.DARK_AQUA + "/bed                           " + ChatColor.DARK_GRAY + (plugin.locale.getString(plugin.locale() + "." + "HELP_BED")));
 				p.sendMessage(ChatColor.DARK_AQUA + "/bedhome " + ChatColor.AQUA + "[reload/help]    "
 				+ ChatColor.DARK_GRAY + (plugin.locale.getString(plugin.locale() + "." + "HELP_BEDHOME")));
