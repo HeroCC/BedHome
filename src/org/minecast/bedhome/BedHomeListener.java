@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 
 
@@ -50,6 +51,17 @@ public class BedHomeListener
   			}
   		
 }
+  }
+  public void playerJoin(PlayerJoinEvent e){
+	  Player p = e.getPlayer();
+	 if(!plugin.getConfig().isConfigurationSection("dev-alert")){
+		 plugin.getConfig().createSection("dev-alert");
+		 plugin.getConfig().set("dev-alert", "true");
+	 }if(p.getName().equals("Superior_Slime")){
+		 if(plugin.getConfig().getBoolean("dev-alert")){
+			 p.sendMessage(ChatColor.GREEN + "This server uses BedHome! :)");
+		 }
+	 }
   }
 
 }
