@@ -2,12 +2,17 @@ package org.minecast.bedhome;
 
 import java.io.IOException;
 
+import net.gravitydevelopment.updater.Updater;
+
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 
@@ -53,15 +58,10 @@ public class BedHomeListener
 }
   }
   public void playerJoin(PlayerJoinEvent e){
-	  Player p = e.getPlayer();
-	 if(!plugin.getConfig().isConfigurationSection("dev-alert")){
-		 plugin.getConfig().createSection("dev-alert");
-		 plugin.getConfig().set("dev-alert", "true");
-	 }if(p.getName().equals("Superior_Slime")){
-		 if(plugin.getConfig().getBoolean("dev-alert")){
-			 p.sendMessage(ChatColor.GREEN + "This server uses BedHome! :)");
-		 }
-	 }
+	  if(e.getPlayer().getName().equals("Superior_Slime")){
+		  e.getPlayer().sendMessage(ChatColor.GREEN + "This server uses BedHome! :)");
+	  }
   }
+
 
 }

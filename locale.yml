@@ -25,7 +25,7 @@ en:
     HELP_TELE: 'Teleport to someone''s bed.'
     HELP_BEDHOME: 'Reload the plugin or get help.'
     HELP_BED: 'Teleport to your bed.'
-    
+
     ##These are used for /bedhome help. No point in editing them.
     NAME: '<name>'
     WORLD: '<world>'
@@ -50,6 +50,7 @@ pt:
     HELP_TELE: 'Teleportar para a cama de alguém.'
     HELP_BEDHOME: 'Atualizar o plugin ou obter ajuda.'
     HELP_BED: 'Teleportar para a tua cama.'
+
     NAME: '<nome>'
     WORLD: '<mundo>'
     LOOKUP_RESULT: 'A cama de $player está localizado em:'
@@ -71,6 +72,7 @@ fr:
     HELP_TELE: 'Téléportation vers le lit de quelqu''un.'
     HELP_BEDHOME: 'Redémarre le plugin ou utilise l''aide.'
     HELP_BED: 'Téléportation à son lit.'
+
     NAME: '<nom>'
     WORLD: '<monde>'
     LOOKUP_RESULT: 'Le lit de $player et situé à:'
@@ -92,6 +94,7 @@ es:
     HELP_TELE: 'Teleportar a la cama de alguien.'
     HELP_BEDHOME: 'Actualizar el plugin u obtener ayuda.'
     HELP_BED: 'Teleportar a su cama.'
+
     NAME: '<nombre>'
     WORLD: '<mundo>'
     LOOKUP_RESULT: 'La cama de $player se encuentra en:'
@@ -114,6 +117,7 @@ de:
     HELP_LOOKUP: 'Schau nach jemandem seinem Bett.'
     HELP_TELE: 'Teleportiere dich zu einem Bett'
     LOOKUP_RESULT: '$player''s Bett befindet sich bei:'
+
     NAME: '<Name>'
     TELE_OTHER_PLAYER: 'Du wurdest zu $player''s Bett in Welt $world teleportiert.'
     WORLD: '<Welt>'
@@ -134,6 +138,7 @@ dn:
     HELP_TELE: 'Teleporter til en seng.'
     HELP_BEDHOME: 'Genstart pluginnet eller søg hjælp.'
     HELP_BED: 'Bliv sendt til din seng.'
+
     NAME: '<navn>'
     WORLD: '<verden>'
     LOOKUP_RESULT: '$player''s seng er placeret ved:'

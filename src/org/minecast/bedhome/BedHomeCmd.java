@@ -9,6 +9,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.evilmidget38.UUIDFetcher;
+
 public class BedHomeCmd implements CommandExecutor{
 	 public static Main plugin;
 	 public BedHomeCmd(Main instance)
@@ -16,7 +18,7 @@ public class BedHomeCmd implements CommandExecutor{
 	    plugin = instance;
 	  }
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-	if (commandLabel.equalsIgnoreCase("bedhome")){
+	if (commandLabel.equalsIgnoreCase("bedhome") || commandLabel.equalsIgnoreCase("bh")){
 		Player p = (Player) sender;
 		if(args.length == 0){
 			p.sendMessage(ChatColor.BLUE + "[BH] BedHome version " + plugin.pdf.getVersion() + " by Superior_Slime");

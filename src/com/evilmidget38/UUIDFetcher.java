@@ -1,4 +1,4 @@
-package org.minecast.bedhome;
+package com.evilmidget38;
 
 import com.google.common.collect.ImmutableList;
 import org.json.simple.JSONArray;

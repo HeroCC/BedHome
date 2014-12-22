@@ -9,6 +9,7 @@ commands:
         permission: bedhome.bed
     bedhome:
         description: Reload the config or get help.
+        aliases: [bh]
 permissions:
     bedhome.bed:
         description: Allows you to TP to your bed!
