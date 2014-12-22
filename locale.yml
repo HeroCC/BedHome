@@ -4,32 +4,32 @@
 ####Availible languages: English (en), Portuguese (pt), French (fr), German (de), Spanish (es), Danish (dn)
 
 
-#What not to do:
-##Don't use apostrophes (') because they are surrounding the string. Instead, use these: `
+#Read:
+##If you use apostrophes/single quotes ('), you will get errors. Escape them by typing 2: ''
 ##Don't translate $player, $world and the names of the string. E.G., DON'T translate "ERR_NO_BED" to "ERR_NON_LIT" because the plugin can't find it. Leave it English.
 ##Don't include colour codes, they are already hard-coded into the plugin.
 en:
     #By Superior_Slime
     ERR_NO_BED: 'You do not have a bed in this world, or it has been destroyed.'
-    ERR_NO_PERMS: 'You don`t have permission.'
+    ERR_NO_PERMS: 'You don''t have permission.'
     ERR_PLAYER_NO_BED: 'The player you specified ($player) does not have a bed in $world.'
     ERR_BAD_PLAYER: 'The player you specified does not exist (case-sensitive!).'
     ERR_SYNTAX: 'Incorrect syntax! Use: /bedhome [reload/help] or /bedhome <lookup/teleport> <name> <world>'
-    ERR_CONSOLE_TELE: 'CONSOLE can`t teleport to a bed!'
+    ERR_CONSOLE_TELE: 'CONSOLE can''t teleport to a bed!'
     CONSOLE_PLAYER_TELE: '[BH] $player has teleported to their bed.'
     CONSOLE_PLAYER_SET: '[BH] $player has set their bed.'
     BED_TELE: 'You have been teleported to your bed.'
     BED_SET: 'Your bed has been set.'
-    TELE_OTHER_PLAYER: 'You have been teleported to $player`s bed in world $world.'
-    HELP_LOOKUP: 'Lookup someone`s bed.'
-    HELP_TELE: 'Teleport to someone`s bed.'
+    TELE_OTHER_PLAYER: 'You have been teleported to $player''s bed in world $world.'
+    HELP_LOOKUP: 'Lookup someone''s bed.'
+    HELP_TELE: 'Teleport to someone''s bed.'
     HELP_BEDHOME: 'Reload the plugin or get help.'
     HELP_BED: 'Teleport to your bed.'
     
     ##These are used for /bedhome help. No point in editing them.
     NAME: '<name>'
     WORLD: '<world>'
-    LOOKUP_RESULT: '$player`s bed is located at:'
+    LOOKUP_RESULT: '$player''s bed is located at:'
     ##                                         ^ don't put anything after the colon
     BED_COORDS: 'Your bed has been destroyed, however, here are its co-ordinates:'
     ##                                                                          ^ same goes here
@@ -55,11 +55,11 @@ pt:
     LOOKUP_RESULT: 'A cama de $player está localizado em:'
     BED_COORDS: 'Sua cama foi destruída, mas, aqui estão as coordenadas:'
 fr:
-    #By FiFTX
-    ERR_NO_BED: 'Tu n`as pas de lit dans ce monde, ou il as été détruit.'
-    ERR_NO_PERMS: 'Tu n`as pas la permission.'
-    ERR_PLAYER_NO_BED: 'Le joueur spécifié ($player) n`as pas de lis dans le monde $world'
-    ERR_BAD_PLAYER: 'Le joueur spécifié n`existe pas (sensible à la case)'
+    #By Bossbirdyman51
+    ERR_NO_BED: 'Tu n''as pas de lit dans ce monde, ou il as été détruit.'
+    ERR_NO_PERMS: 'Tu n''as pas la permission.'
+    ERR_PLAYER_NO_BED: 'Le joueur spécifié ($player) n''as pas de lis dans le monde $world'
+    ERR_BAD_PLAYER: 'Le joueur spécifié n''existe pas (sensible à la case)'
     ERR_SYNTAX: 'Syntaxe incorrecte! Utilisation: /bedhome [reload/help] ou /bedhome <lookup/teleport> <nom> <monde>'
     ERR_CONSOLE_TELE: 'La console ne peut pas te téléporter à ton lit.'
     CONSOLE_PLAYER_TELE: '[BH] $player as été téléporter à son lit.'
@@ -68,8 +68,8 @@ fr:
     BED_SET: 'Ton lit as été placé.'
     TELE_OTHER_PLAYER: 'Tu as été téléporter au lit de $player dans le monde $world.'
     HELP_LOOKUP: 'Information sur le lit.'
-    HELP_TELE: 'Téléportation vers le lit de quelqu`un.'
-    HELP_BEDHOME: 'Redémarre le plugin ou utilise l`aide.'
+    HELP_TELE: 'Téléportation vers le lit de quelqu''un.'
+    HELP_BEDHOME: 'Redémarre le plugin ou utilise l''aide.'
     HELP_BED: 'Téléportation à son lit.'
     NAME: '<nom>'
     WORLD: '<monde>'
@@ -113,9 +113,9 @@ de:
     HELP_BEDHOME: 'Lade das Plugin neu oder bekomme Hilfe.'
     HELP_LOOKUP: 'Schau nach jemandem seinem Bett.'
     HELP_TELE: 'Teleportiere dich zu einem Bett'
-    LOOKUP_RESULT: '$player`s Bett befindet sich bei:'
+    LOOKUP_RESULT: '$player''s Bett befindet sich bei:'
     NAME: '<Name>'
-    TELE_OTHER_PLAYER: 'Du wurdest zu $player`s Bett in Welt $world teleportiert.'
+    TELE_OTHER_PLAYER: 'Du wurdest zu $player''s Bett in Welt $world teleportiert.'
     WORLD: '<Welt>'
 dn:
     #By Fedmand
@@ -129,12 +129,12 @@ dn:
     CONSOLE_PLAYER_SET: '[BH] $player har sat sin seng.'
     BED_TELE: 'Du er blevet sendt til din seng.'
     BED_SET: 'Din seng er blevet sat.'
-    TELE_OTHER_PLAYER: 'Du er blevet sendt til $player`s seng i $world.'
+    TELE_OTHER_PLAYER: 'Du er blevet sendt til $player''s seng i $world.'
     HELP_LOOKUP: 'Tjek en spillers seng.'
     HELP_TELE: 'Teleporter til en seng.'
     HELP_BEDHOME: 'Genstart pluginnet eller søg hjælp.'
     HELP_BED: 'Bliv sendt til din seng.'
     NAME: '<navn>'
     WORLD: '<verden>'
-    LOOKUP_RESULT: '$player`s seng er placeret ved:'
+    LOOKUP_RESULT: '$player''s seng er placeret ved:'
     BED_COORDS: 'Din seng er blevet destrueret, her er dog koordinaterne:'

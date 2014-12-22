@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -153,7 +155,7 @@ public class Main extends JavaPlugin implements Listener {
 				dn = ChatColor.stripColor(dn);
 				if (p.getBedSpawnLocation().getWorld() == p.getWorld()) {
 					if (!p.hasPermission("bedhome.bed")
-							&& (getConfig().getString("permissions") == "true")) {
+							&& (getConfig().getBoolean("permissions"))) {
 						p.sendMessage(ChatColor.DARK_RED
 								+ locale.getString(locale() + "." + "ERR_NO_PERMS"));
 					} else if (p.isOp()
@@ -161,7 +163,7 @@ public class Main extends JavaPlugin implements Listener {
 									.getString("permissions") == "true"))
 							|| ((getConfig().getString("permissions") != "false") & (getConfig()
 									.getString("permissions") != "true"))
-							|| (getConfig().getString("permissions") == "false")) {
+							|| (!getConfig().getBoolean("permissions"))) {
 						if (bedInConfig(p)) {
 							tp(p);
 							if(getConfig().getBoolean("console_messages")){
