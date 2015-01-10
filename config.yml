@@ -1,4 +1,4 @@
-#####Config file for BedHome v2.17 by Superior_Slime#####
+#####Config file for BedHome v2.18 by Superior_Slime#####
 ###Boolean values. If these are not set to true or false, you and your players WILL get errors. You have been warned.###
 ##Whether to use permissions or allow all players to do /bed
 permissions: true
@@ -6,7 +6,8 @@ permissions: true
 auto-update: true
 #Should player actions (such as teleporting to a bed or setting one) be logged to the console?
 console_messages: false
-
+#Should players be able to set beds at day? Or only allow beds at night?
+day_beds: false
 ##What to do if a player has no bed.
 #"nobedmode: a" Allow. Players will be able to teleport to past beds if they have no bed.
 #"nobedmode: b" Block. Players will be given the error message that they have no bed.

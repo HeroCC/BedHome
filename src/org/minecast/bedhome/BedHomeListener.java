@@ -11,57 +11,62 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 
 
-public class BedHomeListener
-  implements Listener
-{
+public class BedHomeListener implements Listener{
   public static Main plugin;
-
   Updater updater;
-  
-  public BedHomeListener(Main instance)
-  {
+  public BedHomeListener(Main instance){
     plugin = instance;
   }
+  public boolean day(Player p) {
+	    long time = p.getWorld().getTime();
+	    return time < 12300 || time > 23850;
+	}
+
   @EventHandler
-  public void bedLeave(PlayerBedLeaveEvent event){
-	  Player p = event.getPlayer();
-  	if ((p.hasPermission("bedhome.bed") && plugin.getConfig().getString("permissions") == "true") || p.isOp()
-    		|| (plugin.getConfig().getString("permissions") == "false")){
-  		
-  	  	String id = p.getUniqueId().toString();
-  	    p.setBedSpawnLocation(p.getLocation());
-  		double x = p.getLocation().getX();
-  		double z = p.getLocation().getZ();
-  		double y = p.getLocation().getY();
-  	    World w = p.getLocation().getWorld();
-  	    String wn = w.getName();
-  		plugin.yml.set(id + "." + wn + ".x", x);
-  		plugin.yml.set(id + "." + wn + ".y", y);
-  		plugin.yml.set(id + "." + wn + ".z", z);
-  		try {
-  			plugin.yml.save(plugin.file);
-  			} catch (IOException ex) {
-  				ex.printStackTrace();
-  			}
-  			p.sendMessage(ChatColor.DARK_GREEN
-  					+ plugin.locale.getString(plugin.locale() + "." + "BED_SET"));
-  			if(plugin.getConfig().getBoolean("console_messages")){
-  				plugin.log.info((plugin.locale.getString(plugin.locale() + "." + "CONSOLE_PLAYER_SET")).replace("$player", ChatColor.stripColor(p.getDisplayName())));
-  			}
-  		
-}
-  }
   public void playerJoin(PlayerJoinEvent e){
 	  if(e.getPlayer().getName().equals("Superior_Slime")){
 		  e.getPlayer().sendMessage(ChatColor.GREEN + "This server uses BedHome! :)");
 	  }
   }
+  @EventHandler
+  public void playerInteract(PlayerInteractEvent e){
+	  if((e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.BED_BLOCK))){
+		  Player p = e.getPlayer();
+		  if(!day(p) || plugin.getConfig().getBoolean("day_beds")){
+			  if ((p.hasPermission("bedhome.bed") && plugin.getConfig().getString("permissions") == "true") || p.isOp()
+			    		|| (plugin.getConfig().getString("permissions") == "false")){
+			  		
+			  	  	String id = p.getUniqueId().toString();
+			  	  	p.teleport(e.getClickedBlock().getLocation());
+			  	    p.setBedSpawnLocation(p.getLocation(), true);
+			  		double x = p.getLocation().getX();
+			  		double z = p.getLocation().getZ();
+			  		double y = p.getLocation().getY();
+			  	    World w = p.getLocation().getWorld();
+			  	    String wn = w.getName();
+			  		plugin.yml.set(id + "." + wn + ".x", x);
+			  		plugin.yml.set(id + "." + wn + ".y", y);
+			  		plugin.yml.set(id + "." + wn + ".z", z);
+			  		try {
+			  			plugin.yml.save(plugin.file);
+			  			} catch (IOException ex) {
+			  				ex.printStackTrace();
+			  			}
+			  			p.setBedSpawnLocation(p.getLocation());
+			  			p.sendMessage(ChatColor.DARK_GREEN
+			  					+ plugin.locale.getString(plugin.getLanguage() + "." + "BED_SET"));
+			  			if(plugin.getConfig().getBoolean("console_messages")){
+			  				plugin.log.info((plugin.locale.getString(plugin.getLanguage() + "." + "CONSOLE_PLAYER_SET")).replace("$player", ChatColor.stripColor(p.getDisplayName())));
+			  			}	
+			  		}
+		  }
+	  }
+  }	
 
 
 }
