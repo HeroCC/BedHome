@@ -20,6 +20,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -71,6 +72,18 @@ public class Main extends JavaPlugin implements Listener{
 	@Override
 	@SuppressWarnings("unused")
 	public void onEnable() {
+		try{
+	        OfflinePlayer.class.getMethod("getUniqueId", new Class[0]);
+	      }
+	      catch (NoSuchMethodException e){
+	        getLogger().severe("!!!====================================WARNING====================================!!!");
+	        getLogger().severe("Since version 2.15, BedHome requires a server with UUID support.");
+	        getLogger().severe("Please update your Bukkit version or downgrade the plugin to version 2.0 or below.");
+	        getLogger().severe("Plugin disabling.");
+	        getLogger().severe("!!!====================================WARNING====================================!!!");
+	        getPluginLoader().disablePlugin(this);
+	        return;
+	      }
 		Updater updater = new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.DISABLED //Custom Updater type which does nothing
 						, false);
 		
@@ -107,18 +120,7 @@ public class Main extends JavaPlugin implements Listener{
 	    }
 		locale.setDefaults(locale);
 		reloadLocale();
-		try{
-	        OfflinePlayer.class.getMethod("getUniqueId", new Class[0]);
-	      }
-	      catch (NoSuchMethodException e){
-	        getLogger().severe("!!!====================================WARNING====================================!!!");
-	        getLogger().severe("Since version 2.15, BedHome requires a server with UUID support.");
-	        getLogger().severe("Please update your Bukkit version or downgrade the plugin to version 2.0 or below.");
-	        getLogger().severe("Plugin disabling.");
-	        getLogger().severe("!!!====================================WARNING====================================!!!");
-	        getPluginLoader().disablePlugin(this);
-	        return;
-	      }
+		
 			getConfig().options().header("Configuration for BedHome 2.18 by Superior_Slime"
 					+ "\npermissions - true/false. Whether to use permissions or allow all players to do /bed"
 					+ "\nauto-update - true/false. Should the plugin automatically download and install new updates?"
@@ -130,9 +132,16 @@ public class Main extends JavaPlugin implements Listener{
 					+ "\nc: Players will not be able to teleport to their past bed, but can see its co-ordinates."
 					+ "\nLocale - What language to use. Availible: en (English), es (Spanish), German (de), fr (French), pt (Portuguese) and dn (Danish)."
 					+ "\n If you specify a language that doesn't exist, the plugin will just use English.");
+			checkConfig("permissions", true);
+			checkConfig("auto-update", true);
+			checkConfig("console_messages", false);
 			checkConfig("day_beds", false);
+			checkConfig("nobedmode", 'c');
+			checkConfig("locale", "en");
 			saveConfig();
-		
+	  pm.addPermission(new Permission("bedhome.bed"));
+	  pm.addPermission(new Permission("bedhome.config"));
+	  pm.addPermission(new Permission("bedhome.lookup"));
 		
 	} // Ends onEnable()
 	private boolean bedInConfig(Player player) {
@@ -229,49 +238,33 @@ public class Main extends JavaPlugin implements Listener{
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String[] args) {
 		if (commandLabel.equalsIgnoreCase("bed")) {
-            if(file != null){
+
             	if (!(sender instanceof Player)) {
     				sender.sendMessage(locale.getString(getLanguage() + "." + "ERR_CONSOLE_TELE"));
-    			} else if (((Player) sender).getBedSpawnLocation() != null) {
+            	}else if ((authorized(sender, "bedhome.bed")) || !getConfig().getBoolean("permissions")){
     				Player p = (Player) sender;
     				String dn = p.getDisplayName();
     				dn = ChatColor.stripColor(dn);
-    				if (p.getBedSpawnLocation().getWorld() == p.getWorld()) {
-    					if (!p.hasPermission("bedhome.bed")
-    							&& (getConfig().getBoolean("permissions"))) {
-    						p.sendMessage(ChatColor.DARK_RED
-    								+ locale.getString(getLanguage() + "." + "ERR_NO_PERMS"));
-    					} else if (p.isOp()
-    							|| ((p.hasPermission("bedhome.bed")) & (getConfig()
-    									.getString("permissions") == "true"))
-    							|| ((getConfig().getString("permissions") != "false") & (getConfig()
-    									.getString("permissions") != "true"))
-    							|| (!getConfig().getBoolean("permissions"))) {
-    						if (bedInConfig(p)) {
-    							tp(p);
-    							if(getConfig().getBoolean("console_messages")){
-    								log.info(locale.getString(getLanguage() + "." + "CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
-    				  			}
-    						} else {
-    							p.sendMessage(ChatColor.DARK_RED
-    									+ locale.getString(getLanguage() + "." + "ERR_NO_BED"));
+            	if (((Player) sender).getBedSpawnLocation() != null) {
+                    if (p.getBedSpawnLocation().getWorld() == p.getWorld()) {
+        						if (bedInConfig(p)) {
+        							tp(p);
+        							if(getConfig().getBoolean("console_messages")){
+        								log.info(locale.getString(getLanguage() + "." + "CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
+        				  			}
+        						}
+        					} else if(bedInConfig(p)) {
+    							cfgCheck(p);
     						}
-    					}
-    				} else if (bedInConfig(p)) {
-    					cfgCheck(p);
-    				}
-    			}else{
-    				cfgCheck((Player) sender);
-    			}
-    			
-            }else{
-            	if(sender instanceof Player){
-            		sender.sendMessage(ChatColor.DARK_RED
-    						+ locale.getString(getLanguage() + "." + "ERR_NO_BED"));
             	}else{
-            		sender.sendMessage(locale.getString(getLanguage() + "." + "ERR_CONSOLE_TELE"));
+            	    cfgCheck((Player) sender);
             	}
-            }
+    				} else {
+    					((Player) sender).sendMessage(ChatColor.DARK_RED
+						+ locale.getString(getLanguage() + "." + "ERR_NO_PERMS"));
+    				}
+    			
+
             return true;
 		}else if(commandLabel.equalsIgnoreCase("bhdebug")){
 				sender.sendMessage("Command Registered");
@@ -297,6 +290,15 @@ public class Main extends JavaPlugin implements Listener{
 					}else{
 						sender.sendMessage("Mode: Offline");
 					}
+					sender.sendMessage("Permissions: " + getConfig().getString("permissions"));
+					if(sender instanceof Player){
+						Player p = (Player) sender;
+						if(p.hasPermission("bedhome.bed")){
+							p.sendMessage("You have /bed permission");
+						}else{
+							p.sendMessage("You do not have /bed permissions");
+						}
+					}
 					try{
 						sender.sendMessage("Day bed mode: " + getConfig().getString("day_beds"));
 					}catch(Exception e2){
@@ -310,7 +312,7 @@ public class Main extends JavaPlugin implements Listener{
 						sender.sendMessage(ChatColor.DARK_RED + "Locale error!!");
 					}
 					try {
-						sender.sendMessage(((UUIDFetcher.getUUIDOf("Superior_Slime")).toString()));
+						OfflinePlayer.class.getMethod("getUniqueId", new Class[0]);
 						sender.sendMessage("UUID Fetching OK");
 					} catch (Exception e) {
 						sender.sendMessage("UUID Fetching NOT OK");
@@ -323,7 +325,7 @@ public class Main extends JavaPlugin implements Listener{
 						sender.sendMessage(e.getStackTrace().toString());
 					}
 				}else{
-					sender.sendMessage(ChatColor.DARK_RED + "You don't have permission to perform this command!");
+					sender.sendMessage(ChatColor.DARK_RED + "You don't have permission.");
 				}
 				sender.sendMessage("=======DEBUG END=======");
 				return true;
