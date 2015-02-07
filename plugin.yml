@@ -1,6 +1,6 @@
 name: BedHome
 main: org.minecast.bedhome.Main
-version: 2.19
+version: 2.2
 description: >
              Teleport to your bed with a command: /bed!
 commands:
