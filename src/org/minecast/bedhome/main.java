@@ -5,8 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.io.StringWriter;
 import java.nio.channels.FileChannel;
 import java.util.logging.Logger;
 
@@ -31,7 +32,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 import org.minecast.bedhome.ExtraLanguages.LocaleStrings;
 
-import com.evilmidget38.UUIDFetcher;
 
 public class Main extends JavaPlugin implements Listener {
   public static Main plugin;
@@ -42,7 +42,7 @@ public class Main extends JavaPlugin implements Listener {
   YamlConfiguration locale = YamlConfiguration.loadConfiguration(localeFile);
   protected Logger log;
   PluginDescriptionFile pdf = this.getDescription();
-
+ 
   public boolean autoDL() {
     if ((getConfig().getBoolean("auto-update"))) {
       return true;
@@ -51,6 +51,7 @@ public class Main extends JavaPlugin implements Listener {
     }
   }
 
+  
   @SuppressWarnings("unused")
   public void reloadLocale() {
     if (localeFile == null) {
@@ -88,6 +89,8 @@ public class Main extends JavaPlugin implements Listener {
   public String getLocaleString(String item) {
     if(getConfig().getString("locale").equals("ru")){
       return ExtraLanguages.getRussian(LocaleStrings.valueOf(item));
+    }else if(getConfig().getString("locale").equals("zh_tw")){
+        return ExtraLanguages.getTraditionalChinese(LocaleStrings.valueOf(item));
     }else{
       return locale.getString(getLanguage() + "." + item).replace('&', '§');
     }
@@ -128,10 +131,12 @@ public class Main extends JavaPlugin implements Listener {
     }
   }
 
+  
+
   @Override
   @SuppressWarnings("unused")
   public void onEnable() {
-    if (!getLocale().isSet("version") && new File(this.getDataFolder(), "locale.yml").exists()) {
+    if (((!getLocale().isSet("version") || getLocale().getDouble("version") == 2.2)) && new File(this.getDataFolder(), "locale.yml").exists()) {
       getLogger().warning("/!\\======================NOTICE======================/!\\");
       getLogger().warning(
           "Since the last version of the plugin, the locale has had vital items added to it.");
@@ -159,6 +164,29 @@ public class Main extends JavaPlugin implements Listener {
       locale.setDefaults(locale);
       reloadLocale();
     }
+    getConfig()
+    .options()
+    .header(
+        "Configuration for BedHome 2.22 by Superior_Slime"
+            + "\npermissions - true/false. Whether to use permissions or allow all players to do /bed"
+            + "\nauto-update - true/false. Should the plugin automatically download and install new updates?"
+            + "\nconsole_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?"
+            + "\nday_beds - true/false. Should players be able to set beds at day? Or only allow beds at night?"
+            + "\nnobedmode - a/b/c."
+            + "\na: Allow players to teleport to their previous bed if destroyed."
+            + "\nb: Players will not be able to teleport to their past bed."
+            + "\nc: Players will not be able to teleport to their past bed, but can see its co-ordinates."
+            + "\nLocale - What language to use. Availible: ru (English), es (Spanish), German (de), fr (Frruch), pt (Portuguese) and dn (Danish)."
+            + "\n If you specify a language that doesn't exist, the plugin will just use English.");
+    checkConfig("permissions", true);
+    checkConfig("auto-update", true);
+    checkConfig("console_messages", false);
+    checkConfig("day_beds", false);
+    checkConfig("nobedmode", 'c');
+    checkConfig("locale", "en");
+    saveConfig();
+    
+    
     try {
       OfflinePlayer.class.getMethod("getUniqueId", new Class[0]);
     } catch (NoSuchMethodException e) {
@@ -209,32 +237,13 @@ public class Main extends JavaPlugin implements Listener {
     }
     locale.setDefaults(locale);
     reloadLocale();
-    getConfig()
-        .options()
-        .header(
-            "Configuration for BedHome 2.2 by Superior_Slime"
-                + "\npermissions - true/false. Whether to use permissions or allow all players to do /bed"
-                + "\nauto-update - true/false. Should the plugin automatically download and install new updates?"
-                + "\nconsole_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?"
-                + "\nday_beds - true/false. Should players be able to set beds at day? Or only allow beds at night?"
-                + "\nnobedmode - a/b/c."
-                + "\na: Allow players to teleport to their previous bed if destroyed."
-                + "\nb: Players will not be able to teleport to their past bed."
-                + "\nc: Players will not be able to teleport to their past bed, but can see its co-ordinates."
-                + "\nLocale - What language to use. Availible: ru (English), es (Spanish), German (de), fr (Frruch), pt (Portuguese) and dn (Danish)."
-                + "\n If you specify a language that doesn't exist, the plugin will just use English.");
-    checkConfig("permissions", true);
-    checkConfig("auto-update", true);
-    checkConfig("console_messages", false);
-    checkConfig("day_beds", false);
-    checkConfig("nobedmode", 'c');
-    checkConfig("locale", "en");
-    saveConfig();
+    
 
     pm.addPermission(new Permission("bedhome.bed"));
-    pm.addPermission(new Permission("bedhome.config"));
-    pm.addPermission(new Permission("bedhome.lookup"));
+    pm.addPermission(new Permission("bedhome.admin"));
     pm.addPermission(new Permission("bedhome.world"));
+    pm.addPermission(new Permission("bedhome.lookup"));
+    pm.addPermission(new Permission("bedhome.config"));
 
   } // Ends onEnable()
 
@@ -284,7 +293,7 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   private void noBedCheck(Player player, World w) {
-    if (getConfig() != null && file != null) {
+    if (getConfig() != null && yml != null) {
       Player p = (Player) player;
       String id = player.getUniqueId().toString();
       if ((getConfig().getString("nobedmode").equals("a"))) {
@@ -311,7 +320,7 @@ public class Main extends JavaPlugin implements Listener {
           p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + yInt);
           p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + zInt);
         } else {
-          p.sendMessage(getLocaleString("ERR_NO_BED"));
+          sendUTF8Message(getLocaleString("ERR_NO_BED"), p);
         }
       } else if ((getConfig().getString("nobedmode").equals("b"))) {
         sendUTF8Message(getLocaleString("ERR_NO_BED"), (p));
@@ -411,8 +420,10 @@ public class Main extends JavaPlugin implements Listener {
                     log.info(getLocaleString("CONSOLE_PLAYER_TELE").replace("$player",
                         ChatColor.stripColor(p.getDisplayName())));
                   }
+                } else {
+                  sendUTF8Message(getLocaleString("ERR_NO_BED"), p);
                 }
-              } else if (bedInConfig(p, p.getWorld())) {
+              } else {
                 noBedCheck(p, p.getWorld());
               }
             } else {
@@ -456,6 +467,8 @@ public class Main extends JavaPlugin implements Listener {
           sendUTF8Message("Mode: Offline", sender);
         }
         sender.sendMessage("Permissions: " + getConfig().getString("permissions"));
+
+
         if (sender instanceof Player) {
           Player p = (Player) sender;
           if (p.hasPermission("bedhome.bed")) {

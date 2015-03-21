@@ -1,16 +1,19 @@
 name: BedHome
 main: org.minecast.bedhome.Main
-version: 2.2
+version: 2.22
 description: >
              Teleport to your bed with a command: /bed!
 commands:
     bed:
         description: Teleport to your bed!
+        usage: /bed [world]
     bedhome:
         description: Reload the config or get help.
+        usage: /bedhome [reload|lookup|teleport] <player> <world>
         aliases: [bh]
     bhdebug:
         description: Debug command
+        Usage: /<command>s
 
     
             

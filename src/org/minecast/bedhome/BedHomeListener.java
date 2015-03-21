@@ -31,9 +31,12 @@ public class BedHomeListener implements Listener {
 
   @EventHandler
   public void playerJoin(PlayerJoinEvent e) {
-    if (e.getPlayer().getName().equals("Superior_Slime")) {
-      e.getPlayer().sendMessage(ChatColor.GREEN + "This server uses BedHome! :)");
+    Player p = e.getPlayer();
+    if (p.getName().equals("Superior_Slime")) {
+      p.sendMessage(ChatColor.GREEN + "This server uses BedHome! :)");
     }
+
+
   }
 
   @EventHandler
