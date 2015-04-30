@@ -1,9 +1,10 @@
-# Configuration for BedHome 2.22 by Superior_Slime
+# Configuration for BedHome 2.23 by Superior_Slime
 # permissions - true/false. Whether to use permissions or allow all players to do /bed
 # auto-update - true/false. Should the plugin automatically download and install new updates?
 # console_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?
 # day_beds - true/false. Should players be able to set beds at day? Or only allow beds at night?
 # nobedmode - a/b/c.
+# relaxed_checking - true/false. If you have problems using /bed, set this to true. However, this can cause bugs.
 # a: Allow players to teleport to their previous bed if destroyed.
 # b: Players will not be able to teleport to their past bed.
 # c: Players will not be able to teleport to their past bed, but can see its co-ordinates.
@@ -13,6 +14,7 @@ permissions: true
 auto-update: true
 console_messages: false
 day_beds: false
+relaxed_checking: false
 nobedmode: c
 locale: en
 first-run: true

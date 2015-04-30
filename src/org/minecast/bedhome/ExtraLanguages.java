@@ -132,54 +132,59 @@ public class ExtraLanguages {
         return "error fetching locale string";
     }
   }
-  public String getJapanese(LocaleStrings l) {
+  public static String getJapanese(LocaleStrings l) {
     switch (l) {
       case ERR_NO_BED:
-        return null;
+        return  ChatColor.DARK_RED + "あなたはこの世界にベッドを所有していません。または、破壊されています。";
+      case ERR_NO_BED_OTHER:
+        return  ChatColor.DARK_RED + "あなたは $world にベッドを所有していません。または、破壊されています。";
+
       case ERR_NO_PERMS:
-        return null;
+        return  ChatColor.DARK_RED + "許可がありません。";
       case ERR_PLAYER_NO_BED:
-        return null;
+        return  ChatColor.DARK_RED + "そのプレイヤー ($player) は $world にベッドを所有していません。";
+      case ERR_BAD_PLAYER:
+        return  ChatColor.DARK_RED + "そのプレイヤーは存在しません。 (大文字・小文字まで正確に入力してください。)";
       case ERR_SYNTAX:
-        return null;
+        return  ChatColor.DARK_RED + "シンタックスが正しくありません。　このコマンドを使ってください: /bedhome [reload/help] または /bedhome <lookup/teleport> <名前> <ワールド>";
       case ERR_CONSOLE_TELE:
-        return null;
+        return  ChatColor.DARK_RED + "コンソールはベッドにテレポートできません!";
       case CONSOLE_PLAYER_TELE:
-        return null;
+        return "$player がベッドにテレポートしました。";
       case CONSOLE_PLAYER_SET:
-        return null;
+        return "$player がベッドを設定しました。";
       case BED_TELE:
-        return null;
+        return  ChatColor.DARK_GREEN + "あなたはベッドにテレポートされました。";
       case BED_SET:
-        return null;
+        return ChatColor.DARK_GREEN +  "あなたはベッドを設定しました。";
       case TELE_OTHER_PLAYER:
-        return null;
+        return ChatColor.DARK_GREEN +  "あなたは $world にある $player のベッドにテレポートされました。";
       case HELP_LOOKUP:
-        return null;
+        return  ChatColor.DARK_GRAY + "だれかのベッドを検索・参照します。";
       case HELP_TELE:
-        return null;
+        return  ChatColor.DARK_GRAY + "だれかのベッドにテレポートします。";
       case HELP_BEDHOME:
-        return null;
+        return  ChatColor.DARK_GRAY + "プラグインを再読み込みします。またはヘルプを表示します。";
       case HELP_BED:
-        return null;
+        return  ChatColor.DARK_GRAY +"あなたのベッドにテレポートします。";
       case NAME:
-        return null;
+        return ChatColor.DARK_AQUA + "<名前>";
       case WORLD:
-        return null;
+        return ChatColor.DARK_AQUA + "<ワールド>";
       case LOOKUP_RESULT:
-        return null;
+        return ChatColor.GOLD + "$player のベッドはここにあります:";
       case BED_COORDS:
-        return null;
+        return ChatColor.RED + "あなたのベッドは破壊されました。座標:";
       case BH_BAD_WORLD:
-        return null;
+        return ChatColor.DARK_RED + "そのワールドは存在しません!";
       case BH_VERSION:
-        return null;
+        return ChatColor.BLUE + "BedHomeの v$version Superior_Slimeの";
       case BH_RELOADED:
-        return null;
+        return ChatColor.BLUE + "コンフィグとロケールを再読み込みしました。";
       case BH_CONSOLE_CMD:
-        return null;
+        return "そのコマンドはプレイヤーにしか使えません!";
       default:
-        return null;
+        return "error fetching locale string";
     }
   }
 }

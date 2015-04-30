@@ -91,6 +91,9 @@ public class Main extends JavaPlugin implements Listener {
       return ExtraLanguages.getRussian(LocaleStrings.valueOf(item));
     }else if(getConfig().getString("locale").equals("zh_tw")){
         return ExtraLanguages.getTraditionalChinese(LocaleStrings.valueOf(item));
+    
+    }else if(getConfig().getString("locale").equals("jp")){
+        return ExtraLanguages.getJapanese(LocaleStrings.valueOf(item));
     }else{
       return locale.getString(getLanguage() + "." + item).replace('&', '§');
     }
@@ -144,7 +147,7 @@ public class Main extends JavaPlugin implements Listener {
           .warning(
               "Thanks to Bukkit's crappy encoding handling, we'll have to delete your locale to regenerate it.");
       getLogger().warning("But, we will back up your old file so you can migrate any changes.");
-      getLogger().warning("The new file is called \"locale.yml.old\"");
+      getLogger().warning("The backup file is called \"locale.yml.old\"");
       getLogger().warning("/!\\======================NOTICE======================/!\\");
 
       try {
@@ -167,11 +170,12 @@ public class Main extends JavaPlugin implements Listener {
     getConfig()
     .options()
     .header(
-        "Configuration for BedHome 2.22 by Superior_Slime"
+        "Configuration for BedHome 2.23 by Superior_Slime"
             + "\npermissions - true/false. Whether to use permissions or allow all players to do /bed"
             + "\nauto-update - true/false. Should the plugin automatically download and install new updates?"
             + "\nconsole_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?"
             + "\nday_beds - true/false. Should players be able to set beds at day? Or only allow beds at night?"
+            + "\nrelaxed_checking - true/false. If you have problems using /bed, set this to true. However, this can cause bugs."
             + "\nnobedmode - a/b/c."
             + "\na: Allow players to teleport to their previous bed if destroyed."
             + "\nb: Players will not be able to teleport to their past bed."
@@ -182,6 +186,7 @@ public class Main extends JavaPlugin implements Listener {
     checkConfig("auto-update", true);
     checkConfig("console_messages", false);
     checkConfig("day_beds", false);
+    checkConfig("relaxed_checking", false);
     checkConfig("nobedmode", 'c');
     checkConfig("locale", "en");
     saveConfig();
@@ -375,14 +380,18 @@ public class Main extends JavaPlugin implements Listener {
     }
   }
   private boolean bedAtPos(Player p, World w){
-        String id = p.getUniqueId().toString();
-        String wn = w.getName();
-        double x = (Double) yml.get(id + "." + wn + ".x");
-        double y = (Double) yml.get(id + "." + wn + ".y");
-        double z = (Double) yml.get(id + "." + wn + ".z");
-        Location l = new Location(w, x, y, z);
-        return l.getBlock().getType() == Material.BED_BLOCK || l.getBlock().getType() == Material.BED
-            || l.add(0,1,0).getBlock().getType() == Material.BED_BLOCK || l.add(0,1,0).getBlock().getType() == Material.BED;
+        if(!getConfig().getBoolean("relaxed_checking")){
+          String id = p.getUniqueId().toString();
+          String wn = w.getName();
+          double x = (Double) yml.get(id + "." + wn + ".x");
+          double y = (Double) yml.get(id + "." + wn + ".y");
+          double z = (Double) yml.get(id + "." + wn + ".z");
+          Location l = new Location(w, x, y, z);
+          return l.getBlock().getType() == Material.BED_BLOCK || l.getBlock().getType() == Material.BED
+              || l.add(0,1,0).getBlock().getType() == Material.BED_BLOCK || l.add(0,1,0).getBlock().getType() == Material.BED;
+        }else{
+          return true;
+        }
   }
   @Override
   public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
