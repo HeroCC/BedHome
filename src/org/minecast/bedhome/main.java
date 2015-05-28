@@ -42,6 +42,7 @@ public class Main extends JavaPlugin implements Listener {
   YamlConfiguration locale = YamlConfiguration.loadConfiguration(localeFile);
   protected Logger log;
   PluginDescriptionFile pdf = this.getDescription();
+  Updater updater;
  
   public boolean autoDL() {
     if ((getConfig().getBoolean("auto-update"))) {
@@ -94,6 +95,10 @@ public class Main extends JavaPlugin implements Listener {
     
     }else if(getConfig().getString("locale").equals("jp")){
         return ExtraLanguages.getJapanese(LocaleStrings.valueOf(item));
+    }else if(getConfig().getString("locale").equals("zh_cn")){
+      return ExtraLanguages.getSimplifiedChinese(LocaleStrings.valueOf(item));
+    }else if(getConfig().getString("locale").equals("kr")){
+      return ExtraLanguages.getKorean(LocaleStrings.valueOf(item));
     }else{
       return locale.getString(getLanguage() + "." + item).replace('&', '§');
     }
@@ -139,7 +144,7 @@ public class Main extends JavaPlugin implements Listener {
   @Override
   @SuppressWarnings("unused")
   public void onEnable() {
-    if (((!getLocale().isSet("version") || getLocale().getDouble("version") == 2.2)) && new File(this.getDataFolder(), "locale.yml").exists()) {
+    if (((!getLocale().isSet("version") || getLocale().getDouble("version") == 2.23)) && new File(this.getDataFolder(), "locale.yml").exists()) {
       getLogger().warning("/!\\======================NOTICE======================/!\\");
       getLogger().warning(
           "Since the last version of the plugin, the locale has had vital items added to it.");
@@ -170,7 +175,7 @@ public class Main extends JavaPlugin implements Listener {
     getConfig()
     .options()
     .header(
-        "Configuration for BedHome 2.23 by Superior_Slime"
+        "Configuration for BedHome 2.25 by Superior_Slime"
             + "\npermissions - true/false. Whether to use permissions or allow all players to do /bed"
             + "\nauto-update - true/false. Should the plugin automatically download and install new updates?"
             + "\nconsole_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?"
@@ -207,8 +212,7 @@ public class Main extends JavaPlugin implements Listener {
 
     Updater updater =
         new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT
-            : Updater.UpdateType.DISABLED // Custom Updater type
-            // which does nothing
+            : Updater.UpdateType.NO_DOWNLOAD 
             , false);
 
     this.getCommand("bedhome").setExecutor(new BedHomeCmd(this));

@@ -132,6 +132,118 @@ public class ExtraLanguages {
         return "error fetching locale string";
     }
   }
+  public static String getSimplifiedChinese(LocaleStrings l) {
+    switch (l) {
+      case ERR_NO_BED:
+        return  ChatColor.DARK_RED + "你在这个世界中并没有床, 或者床已经被摧毁了。";
+     
+
+      case ERR_NO_PERMS:
+        return  ChatColor.DARK_RED + "你没有权限";
+      case ERR_PLAYER_NO_BED:
+        return  ChatColor.DARK_RED + "你指定的玩家 ($player) 在世界 $world 中没有床。";
+      case ERR_BAD_PLAYER:
+        return  ChatColor.DARK_RED + "你指定的玩家并不存在(区分大小写)!";
+      case ERR_SYNTAX:
+        return  ChatColor.DARK_RED + "语法错误! 用法: /bedroom [reload/help] 或者 /bedroom <lookup/teleport> <玩家名> <世界名>";
+      case ERR_CONSOLE_TELE:
+        return  ChatColor.DARK_RED + "控制台并不能被传送!";
+      case CONSOLE_PLAYER_TELE:
+        return "$player 已被传送到他的床前。";
+      case CONSOLE_PLAYER_SET:
+        return "$player 已经设置了他的床的位置。";
+      case BED_TELE:
+        return  ChatColor.DARK_GREEN + "你已经被传送到你的床前。";
+      case BED_SET:
+        return ChatColor.DARK_GREEN +  "你的床已被设置。";
+      case TELE_OTHER_PLAYER:
+        return ChatColor.DARK_GREEN +  "你已被传送到玩家 $player 在世界 $world 中的床上。";
+      case HELP_LOOKUP:
+        return  ChatColor.DARK_GRAY + "查找某人的床";
+      case HELP_TELE:
+        return  ChatColor.DARK_GRAY + "传送到某人的床边";
+      case HELP_BEDHOME:
+        return  ChatColor.DARK_GRAY + "刷新插件或获取帮助";
+      case HELP_BED:
+        return  ChatColor.DARK_GRAY +"传送到你床边";
+      case NAME:
+        return ChatColor.DARK_AQUA + "<玩家名>";
+      case WORLD:
+        return ChatColor.DARK_AQUA + "<世界名>";
+      case LOOKUP_RESULT:
+        return ChatColor.GOLD + "$player 的床位于:";
+      case BED_COORDS:
+        return ChatColor.RED + "你的床被毁了, 但是它的坐标还有:";
+      case BH_BAD_WORLD:
+        return ChatColor.DARK_RED + "那个世界并不存在!";
+      case BH_VERSION:
+        return ChatColor.BLUE + "BedHome 版本 $version 作者: Superior_Slime";
+      case BH_RELOADED:
+        return ChatColor.BLUE + "设置和语言已刷新!";
+      case BH_CONSOLE_CMD:
+        return "只有玩家才可使用这个命令!";
+      case ERR_NO_BED_OTHER:
+        return  ChatColor.DARK_RED + "你在世界 $world 中没有床, 或者已经毁掉了。";
+      default:
+        return "error fetching locale string";
+    }
+  }
+  public static String getKorean(LocaleStrings l) {
+    switch (l) {
+      case ERR_NO_BED:
+        return  ChatColor.DARK_RED + "이 월드에 침대가 없거나 파괴되었습니다.";
+     
+
+      case ERR_NO_PERMS:
+        return  ChatColor.DARK_RED + "권한이 없으십니다.";
+      case ERR_PLAYER_NO_BED:
+        return  ChatColor.DARK_RED + "당신이 원한 플레이어 ($player)는 침대가 $world에 없습니다.";
+      case ERR_BAD_PLAYER:
+        return  ChatColor.DARK_RED + "당신이 원한 플레이어는 존재하지 않습니다.";
+      case ERR_SYNTAX:
+        return  ChatColor.DARK_RED + "문법이 틀렸습니다! /bedhome [reload/help] 나 /bedhome <lookup/teleport> <이름> <월드> 를 사용하십시오.";
+      case ERR_CONSOLE_TELE:
+        return  ChatColor.DARK_RED + "CONSOLE 침대로 이동할 수 없습니다!";
+      case CONSOLE_PLAYER_TELE:
+        return "$player가 침대로 순간이동하였습니다.。";
+      case CONSOLE_PLAYER_SET:
+        return "$player가 침대를 정하였습니다.";
+      case BED_TELE:
+        return  ChatColor.DARK_GREEN + "침대로 순간이동하였습니다.";
+      case BED_SET:
+        return ChatColor.DARK_GREEN +  "침대가 정해졌습니다.";
+      case TELE_OTHER_PLAYER:
+        return ChatColor.DARK_GREEN +  "$world 월드의 $player''s 의 침대로 이동하였습니다.";
+      case HELP_LOOKUP:
+        return  ChatColor.DARK_GRAY + "어떤 사람의 침대를 검색";
+      case HELP_TELE:
+        return  ChatColor.DARK_GRAY + "어떤 사람의 침대로 이동";
+      case HELP_BEDHOME:
+        return  ChatColor.DARK_GRAY + "Reload the plugin or get help.";
+      case HELP_BED:
+        return  ChatColor.DARK_GRAY +"자신의 침대로 이동한다.";
+      case NAME:
+        return ChatColor.DARK_AQUA + "<이름>";
+      case WORLD:
+        return ChatColor.DARK_AQUA + "<월드>";
+      case LOOKUP_RESULT:
+        return ChatColor.GOLD + "$player 의 침대 위치:";
+      case BED_COORDS:
+        return ChatColor.RED + "당신의 침대는 파괴되었습니다 아무튼 그곳의 위치는:";
+      case BH_BAD_WORLD:
+        return ChatColor.DARK_RED + "월드가 존재하지 않습니다!";
+      case BH_VERSION:
+        return ChatColor.BLUE + "BedHome $version에 의해Superior_Slime";
+      case BH_RELOADED:
+        return ChatColor.BLUE + "Reloaded!";
+      case BH_CONSOLE_CMD:
+        return "플레이어만이 이 커맨드를 사용할 수 있습니다!";
+      case ERR_NO_BED_OTHER:
+        return  ChatColor.DARK_RED + "$world 월드에 당신의 침대가 없거나 파괴되었습니다.。";
+      default:
+        return "error fetching locale string";
+    }
+  }
   public static String getJapanese(LocaleStrings l) {
     switch (l) {
       case ERR_NO_BED:

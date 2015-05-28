@@ -3,6 +3,7 @@ package org.minecast.bedhome;
 import java.io.IOException;
 
 import net.gravitydevelopment.updater.Updater;
+import net.gravitydevelopment.updater.Updater.UpdateResult;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,7 +20,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class BedHomeListener implements Listener {
   public static Main plugin;
   Updater updater;
-
+  
   public BedHomeListener(Main instance) {
     plugin = instance;
   }
