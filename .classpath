@@ -16,6 +16,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Rob/Desktop/Spig/craftbukkit-1.8.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Rob/Desktop/Everything Else/spigot/craftbukkit-1.8.8.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,6 +1,6 @@
 name: BedHome
 main: org.minecast.bedhome.Main
-version: 2.25
+version: 2.26
 description: >
              Teleport to your bed with a command: /bed!
 commands:
@@ -13,7 +13,7 @@ commands:
         aliases: [bh]
     bhdebug:
         description: Debug command
-        Usage: /<command>s
+        Usage: /<command>
 
     
             
