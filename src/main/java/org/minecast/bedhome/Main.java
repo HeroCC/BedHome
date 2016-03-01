@@ -33,7 +33,7 @@ import org.mcstats.Metrics;
 import org.minecast.bedhome.ExtraLanguages.LocaleStrings;
 
 
-public class main extends JavaPlugin implements Listener {
+public class Main extends JavaPlugin implements Listener {
   public static Main plugin;
   public final BedHomeListener l = new BedHomeListener(this);
   File file = new File(this.getDataFolder(), "beds.yml");
