@@ -45,11 +45,7 @@ public class Main extends JavaPlugin implements Listener {
   Updater updater;
  
   public boolean autoDL() {
-    if ((getConfig().getBoolean("auto-update"))) {
-      return true;
-    } else {
-      return false;
-    }
+    return (getConfig().getBoolean("auto-update"));
   }
 
   
@@ -175,7 +171,7 @@ public class Main extends JavaPlugin implements Listener {
     getConfig()
     .options()
     .header(
-        "Configuration for BedHome 2.25 by Superior_Slime"
+        "Configuration for BedHome 2.26 by Superior_Slime"
             + "\npermissions - true/false. Whether to use permissions or allow all players to do /bed"
             + "\nauto-update - true/false. Should the plugin automatically download and install new updates?"
             + "\nconsole_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?"

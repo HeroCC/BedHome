@@ -1,6 +1,7 @@
 name: BedHome
 main: org.minecast.bedhome.Main
 version: 2.26
+authors: [Superior_Slime, HeroCC]
 description: >
              Teleport to your bed with a command: /bed!
 commands:
@@ -16,4 +17,3 @@ commands:
         Usage: /<command>
 
     
-            
