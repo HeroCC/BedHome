@@ -21,14 +21,11 @@ public class BedHomeCmd implements CommandExecutor {
   public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
     if (commandLabel.equalsIgnoreCase("bedhome") || commandLabel.equalsIgnoreCase("bh")) {
       if (!(sender instanceof Player)) {
-        plugin.sendUTF8Message(plugin.getLocaleString("BH_CONSOLE_CMD"),
-            (sender));
+        plugin.sendUTF8Message(plugin.getLocaleString("BH_CONSOLE_CMD"), (sender));
       } else {
         Player p = (Player) sender;
         if (args.length == 0) {
-          plugin.sendUTF8Message(
-              plugin.getLocaleString("BH_VERSION").replace("$version",
-                  plugin.pdf.getVersion()), (p));
+          plugin.sendUTF8Message(plugin.getLocaleString("BH_VERSION").replace("$version", plugin.pdf.getVersion()), (p));
         } else {
           if ((args[0].equals("reload"))) {
             if ((p.hasPermission("bedhome.admin")) || p.isOp() || p.hasPermission("bedhome.config")) {

@@ -19,7 +19,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class BedHomeListener implements Listener {
   public static Main plugin;
-  Updater updater;
   
   public BedHomeListener(Main instance) {
     plugin = instance;
@@ -33,22 +32,18 @@ public class BedHomeListener implements Listener {
   @EventHandler
   public void playerJoin(PlayerJoinEvent e) {
     Player p = e.getPlayer();
-    if (p.getName().equals("Superior_Slime")) {
+    if (p.getUniqueId().toString().equalsIgnoreCase("ccf73101-c88c-461a-90be-c3a6c70da1f9") || p.getUniqueId().toString().equalsIgnoreCase("e6505ed0-eacb-4bbc-a6f6-adc2b753f02a")) {
+      // If Superior_Slime or HeroCC, let them know BedHome is in use
       p.sendMessage(ChatColor.GREEN + "This server uses BedHome! :)");
     }
-
-
   }
 
   @EventHandler
   public void playerInteract(PlayerInteractEvent e) {
-    if ((e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType()
-        .equals(Material.BED_BLOCK))) {
+    if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.BED_BLOCK)) {
       Player p = e.getPlayer();
       if (!day(p) || plugin.getConfig().getBoolean("day_beds")) {
-        if ((p.hasPermission("bedhome.bed") && plugin.getConfig().getString("permissions") == "true")
-            || p.isOp() || (plugin.getConfig().getString("permissions") == "false")) {
-
+        if ((p.hasPermission("bedhome.bed") && plugin.getConfig().getString("permissions") == "true") || p.isOp() || (plugin.getConfig().getString("permissions") == "false")) {
           String id = p.getUniqueId().toString();
           p.teleport(e.getClickedBlock().getLocation());
           p.setBedSpawnLocation(p.getLocation(), true);
@@ -68,8 +63,7 @@ public class BedHomeListener implements Listener {
           p.setBedSpawnLocation(p.getLocation());
           p.sendMessage(plugin.getLocaleString("BED_SET"));
           if (plugin.getConfig().getBoolean("console_messages")) {
-            plugin.log.info((plugin.getLocaleString("CONSOLE_PLAYER_SET")).replace("$player",
-                ChatColor.stripColor(p.getDisplayName())));
+            plugin.log.info((plugin.getLocaleString("CONSOLE_PLAYER_SET")).replace("$player", ChatColor.stripColor(p.getDisplayName())));
           }
         }
       }

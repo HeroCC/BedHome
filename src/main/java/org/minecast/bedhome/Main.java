@@ -5,9 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.Reader;
-import java.io.StringWriter;
 import java.nio.channels.FileChannel;
 import java.util.logging.Logger;
 
@@ -29,7 +27,9 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import org.mcstats.Metrics;
+
 import org.minecast.bedhome.ExtraLanguages.LocaleStrings;
 
 
@@ -88,7 +88,6 @@ public class Main extends JavaPlugin implements Listener {
       return ExtraLanguages.getRussian(LocaleStrings.valueOf(item));
     }else if(getConfig().getString("locale").equals("zh_tw")){
         return ExtraLanguages.getTraditionalChinese(LocaleStrings.valueOf(item));
-    
     }else if(getConfig().getString("locale").equals("jp")){
         return ExtraLanguages.getJapanese(LocaleStrings.valueOf(item));
     }else if(getConfig().getString("locale").equals("zh_cn")){
@@ -101,9 +100,7 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   public void sendUTF8Message(String text, CommandSender p) {
-
     try {
-
       byte[] bytes = text.getBytes("UTF-8");
       String value = new String(bytes, "UTF-8");
       p.sendMessage(value);
