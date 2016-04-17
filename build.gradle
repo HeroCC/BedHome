@@ -9,7 +9,11 @@ targetCompatibility = 1.6
 repositories {
   mavenCentral()
   maven { url "https://hub.spigotmc.org/nexus/content/groups/public" }
+  maven { url "http://repo.mcstats.org/content/repositories/public" }
+  maven { url "http://repo.gravitydevelopment.net" }
 }
 dependencies {
-    compile group: 'org.bukkit', name: 'bukkit', version:'1.9-R0.1-SNAPSHOT'
+  compile group: 'org.bukkit', name: 'bukkit', version: '1.9-R0.1-SNAPSHOT'
+  compile group: 'org.mcstats.bukkit', name: 'metrics', version: 'R7'
+  compile group: 'net.gravitydevelopment.updater', name: 'updater', version: '2.3'
 }

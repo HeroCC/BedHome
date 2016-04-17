@@ -203,10 +203,7 @@ public class Main extends JavaPlugin implements Listener {
       return;
     }
 
-    Updater updater =
-        new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT
-            : Updater.UpdateType.NO_DOWNLOAD 
-            , false);
+    Updater updater = new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD, false);
 
     this.getCommand("bedhome").setExecutor(new BedHomeCmd(this));
     this.log = this.getLogger();
