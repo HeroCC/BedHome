@@ -50,7 +50,7 @@ public class BedHomeCmd implements CommandExecutor {
                 + (plugin.getLocaleString("WORLD")) + " - "
                 + (plugin.getLocaleString("HELP_TELE")));
           }else if (args[0].equals("lookup")) {
-                if(plugin.authorized(p, "bedhome.admin") || p.hasPermission("bedhome.lookup")){
+                if(plugin.isPlayerAuthorized(p, "bedhome.admin") || p.hasPermission("bedhome.lookup")){
                   if(args.length == 3){
                     try {
                       if (plugin.yml.contains(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "."
@@ -88,7 +88,7 @@ public class BedHomeCmd implements CommandExecutor {
                 }
                   
               } else if (((args[0].equals("teleport")) || (args[0].equals("tele")))) {
-                    if(plugin.authorized(p, "bedhome.admin") || p.hasPermission("bedhome.lookup")){
+                    if(plugin.isPlayerAuthorized(p, "bedhome.admin") || p.hasPermission("bedhome.lookup")){
                       if(args.length == 3){
                         try {
                           if (plugin.yml.contains(((UUIDFetcher.getUUIDOf(args[1])).toString()) + "."
