@@ -1,7 +1,12 @@
+plugins {
+  id "org.zeroturnaround.gradle.jrebel" version '1.1.3'
+  id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
 apply plugin: 'java'
 
 group = 'bedhome'
-version = '2.26'
+version = '2.27'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -11,9 +16,44 @@ repositories {
   maven { url "https://hub.spigotmc.org/nexus/content/groups/public" }
   maven { url "http://repo.mcstats.org/content/repositories/public" }
   maven { url "http://repo.gravitydevelopment.net" }
+  maven { url "http://nexus.hc.to/content/repositories/pub_releases" }
 }
+
 dependencies {
-  compile group: 'org.bukkit', name: 'bukkit', version: '1.9-R0.1-SNAPSHOT'
-  compile group: 'org.mcstats.bukkit', name: 'metrics', version: 'R7'
+  compile group: 'org.mcstats.bukkit', name: 'metrics-lite', version: 'R7'
   compile group: 'net.gravitydevelopment.updater', name: 'updater', version: '2.3'
+  compile group: 'org.bukkit', name: 'bukkit', version: '1.10.2-R0.1-SNAPSHOT'
+  compile group: 'net.milkbowl.vault', name: 'VaultAPI', version: '1.6'
 }
+
+artifacts { // task 'build' runs generates uberjar
+  archives shadowJar
+}
+
+//noinspection GroovyAssignabilityCheck
+jar {
+  version = version + '-min' // we want the Uberjar to be distributed, this is the minified version
+  dependsOn generateRebel // Automatically generate jRebel configs
+}
+
+shadowJar {
+  dependencies {
+    include dependency('org.mcstats.bukkit:metrics-lite')
+    include dependency('net.gravitydevelopment.updater:updater')
+  }
+  classifier = null
+  dependsOn generateRebel
+}
+
+ext {
+  resourceTokens = [
+      'Version': version
+  ]
+}
+
+processResources {
+  include 'plugin.yml', 'config.yml'
+  filter org.apache.tools.ant.filters.ReplaceTokens, tokens: resourceTokens
+}
+
+

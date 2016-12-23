@@ -1,10 +1,9 @@
 name: BedHome
 main: org.minecast.bedhome.Main
-version: 2.26
+version: 2.27
 authors: [Superior_Slime, HeroCC]
 softdepend: [Vault]
-description: >
-             Teleport to your bed with a command: /bed!
+description: 'Teleport to your bed with a command: /bed!'
 commands:
     bed:
         description: Teleport to your bed!
@@ -18,3 +17,17 @@ commands:
         Usage: /<command>
 
     
+permissions:
+  bedhome.bed:
+    description: "Allows players to use /bed"
+  bedhome.admin:
+    description: "Allows players to use all mod commands"
+    children:
+      bedhome.lookup: true
+      bedhome.config: true
+  bedhome.world:
+    description: "Allows players to /bed to another world"
+  bedhome.lookup:
+    description: "Allows players to lookup the location of someone's bed"
+  bedhome.config:
+    description: "Allows players to reload and modify configuration files"

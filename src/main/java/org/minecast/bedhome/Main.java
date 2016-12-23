@@ -1,56 +1,54 @@
 package org.minecast.bedhome;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.channels.FileChannel;
-import java.util.logging.Logger;
-
 import net.gravitydevelopment.updater.Updater;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import org.mcstats.Metrics;
-
+import org.mcstats.MetricsLite;
 import org.minecast.bedhome.ExtraLanguages.LocaleStrings;
+
+import java.io.*;
+import java.nio.channels.FileChannel;
+import java.util.logging.Logger;
 
 
 public class Main extends JavaPlugin implements Listener {
+  //Plugin Stuff
   public static Main plugin;
-  public final BedHomeListener l = new BedHomeListener(this);
-  File file = new File(this.getDataFolder(), "beds.yml");
-  YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+  private final BedHomeListener l = new BedHomeListener(this);
+  Logger log;
+  PluginDescriptionFile pdf = this.getDescription();
 
+  // Vault Economy
+  private boolean useEconomy;
+  private Economy econ;
+  double bedTpCost;
+  double bedSetCost;
+
+  // Bed Database
+  File beds = new File(this.getDataFolder(), "beds.yml");
+  YamlConfiguration yml = YamlConfiguration.loadConfiguration(beds);
+
+  // Locale File
   File localeFile = new File(this.getDataFolder(), "locale.yml");
   YamlConfiguration locale = YamlConfiguration.loadConfiguration(localeFile);
 
-  protected Logger log;
-  PluginDescriptionFile pdf = this.getDescription();
- 
+
+
   private boolean autoDL() { return (getConfig().getBoolean("auto-update")); }
-  
-  @SuppressWarnings("unused")
-  public void reloadLocale() {
+
+  void reloadLocale() {
     if (localeFile == null) {
-      File localeFile = new File(this.getDataFolder(), "locale.yml");
+      localeFile = new File(this.getDataFolder(), "locale.yml");
     }
     locale = YamlConfiguration.loadConfiguration(localeFile);
 
@@ -82,19 +80,29 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   public String getLocaleString(String item) {
+    String result;
     if(getConfig().getString("locale").equals("ru")){
-      return ExtraLanguages.getRussian(LocaleStrings.valueOf(item));
+      result = ExtraLanguages.getRussian(LocaleStrings.valueOf(item));
     }else if(getConfig().getString("locale").equals("zh_tw")){
-        return ExtraLanguages.getTraditionalChinese(LocaleStrings.valueOf(item));
+      result = ExtraLanguages.getTraditionalChinese(LocaleStrings.valueOf(item));
     }else if(getConfig().getString("locale").equals("jp")){
-        return ExtraLanguages.getJapanese(LocaleStrings.valueOf(item));
+      result = ExtraLanguages.getJapanese(LocaleStrings.valueOf(item));
     }else if(getConfig().getString("locale").equals("zh_cn")){
-      return ExtraLanguages.getSimplifiedChinese(LocaleStrings.valueOf(item));
+      result = ExtraLanguages.getSimplifiedChinese(LocaleStrings.valueOf(item));
     }else if(getConfig().getString("locale").equals("kr")){
-      return ExtraLanguages.getKorean(LocaleStrings.valueOf(item));
+      result = ExtraLanguages.getKorean(LocaleStrings.valueOf(item));
     }else{
-      return locale.getString(getLanguage() + "." + item).replace('&', '§');
+      result = locale.getString(getLanguage() + "." + item).replace('&', '§');
     }
+    if (result == null){
+      result = locale.getString("en." + item).replace('&', '§'); // Try to get the English string, rather than an error
+
+      //noinspection ConstantConditions
+      if (result == null){
+        result = "error getting message, please contact admin"; // Worst case scenario, return an error in basic English
+      }
+    }
+    return result;
   }
 
   public void sendUTF8Message(String text, CommandSender p) {
@@ -131,7 +139,7 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   public void verifyLocale() {
-    if (((!getLocale().isSet("version") || getLocale().getDouble("version") == 2.23)) && new File(this.getDataFolder(), "locale.yml").exists()) {
+    if ((!getLocale().isSet("version") || getLocale().getDouble("version") <= 2.23) && new File(this.getDataFolder(), "locale.yml").exists()) {
       getLogger().warning("/!\\======================NOTICE======================/!\\");
       getLogger().warning(
           "Since the last version of the plugin, the locale has had vital items added to it.");
@@ -145,10 +153,10 @@ public class Main extends JavaPlugin implements Listener {
       try {
         File bak = new File(this.getDataFolder(), "locale.yml.old");
         copyFile(localeFile, bak);
-
       } catch (IOException e) {
-        // TODO TODO TODO TODO DOOO
+        log.severe("Unable to create backup! Stopping to avoid damage, please check your config!");
         e.printStackTrace();
+        return;
       }
       localeFile.delete();
       reloadLocale();
@@ -205,17 +213,44 @@ public class Main extends JavaPlugin implements Listener {
 
   private void setupMetrics() {
     try {
-      Metrics metrics = new Metrics(this);
-      getConfig().options();
+      MetricsLite metrics = new MetricsLite(this);
       metrics.start();
     } catch (IOException e) {
       // Failed to submit the stats :-(
     }
   }
 
+  private boolean setupEconomy() {
+    // Taken from the VaultAPI page, thanks! https://github.com/MilkBowl/VaultAPI
+    if (getServer().getPluginManager().getPlugin("Vault") == null) {
+      return false;
+    }
+    RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+    if (rsp == null) {
+      return false;
+    }
+    econ = rsp.getProvider();
+    return econ != null;
+  }
+
+  public void reloadEconomy() {
+    bedTpCost = getConfig().getDouble("bedTpCost");
+    bedSetCost = getConfig().getDouble("bedSetCost");
+    if (bedTpCost != 0.0 || bedSetCost != 0.0) {
+      if (setupEconomy()){
+        useEconomy = true;
+      } else {
+        log.warning("Economy enabled, but Vault doesn't have an economy hook!");
+        useEconomy = false;
+      }
+    }
+  }
+
   @Override
-  @SuppressWarnings("unused")
   public void onEnable() {
+    plugin = this;
+    log = getLogger();
+
     verifyLocale();
 
     setConfigOpts();
@@ -224,19 +259,17 @@ public class Main extends JavaPlugin implements Listener {
 
     checkForUUID();
 
-    Updater updater = new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD, false);
+    this.getCommand("bedhome").setExecutor(new BedHomeCmd());
 
-    this.getCommand("bedhome").setExecutor(new BedHomeCmd(this));
-    this.log = this.getLogger();
-    PluginManager pm = getServer().getPluginManager();
-    pm.registerEvents(this.l, this);
+    getServer().getPluginManager().registerEvents(l, this);
 
     this.yml.options().copyDefaults(true);
 
-    setupMetrics();
-    if (!file.exists()) {
+    reloadEconomy();
+
+    if (!beds.exists()) {
       try {
-        file.createNewFile();
+        beds.createNewFile();
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -249,14 +282,9 @@ public class Main extends JavaPlugin implements Listener {
     }
     locale.setDefaults(locale);
     reloadLocale();
-    
 
-    pm.addPermission(new Permission("bedhome.bed"));
-    pm.addPermission(new Permission("bedhome.admin"));
-    pm.addPermission(new Permission("bedhome.world"));
-    pm.addPermission(new Permission("bedhome.lookup"));
-    pm.addPermission(new Permission("bedhome.config"));
-
+    setupMetrics();
+    Updater updater = new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD, false);
   }
 
   private boolean bedInConfig(Player player, World w) {
@@ -292,25 +320,20 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   public void teleToBed(Player player, World w) {
-    String id = player.getUniqueId().toString();
-    String wn = w.getName();
-    double x = (Double) yml.get(id + "." + wn + ".x");
-    double y = (Double) yml.get(id + "." + wn + ".y");
-    double z = (Double) yml.get(id + "." + wn + ".z");
-    player.teleport(new Location(w, x, y, z));
+    player.teleport(getSavedBedLocation(player, w));
     sendUTF8Message(getLocaleString("BED_TELE"), player);
   }
 
   public void sendCoords(Player p, World w) {
     String wn = w.getName();
     String id = p.getUniqueId().toString();
-    double x = (Double) yml.get(id + "." + wn + ".x");
-    double y = (Double) yml.get(id + "." + wn + ".y");
-    double z = (Double) yml.get(id + "." + wn + ".z");
+    double x = yml.getDouble(id + "." + wn + ".x");
+    double y = yml.getDouble(id + "." + wn + ".y");
+    double z = yml.getDouble(id + "." + wn + ".z");
     int xInt = (int) Math.round(x);
     int yInt = (int) Math.round(y);
     int zInt = (int) Math.round(z);
-    p.sendMessage((getLocaleString("BED_COORDS")));
+    p.sendMessage(getLocaleString("BED_COORDS"));
     p.sendMessage(ChatColor.RED + "X: " + ChatColor.GOLD + xInt);
     p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + yInt);
     p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + zInt);
@@ -320,7 +343,9 @@ public class Main extends JavaPlugin implements Listener {
     if (getConfig() != null && yml != null) {
       if ((getConfig().getString("nobedmode").equals("a"))) {
         if (bedInConfig(p, w)) {
-          teleToBed(p, w);
+          if (chargePlayerAccount(p, bedTpCost)) {
+            teleToBed(p, w);
+          }
           if (getConfig().getBoolean("console_messages")) {
             log.info(getLocaleString("CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
           }
@@ -344,19 +369,39 @@ public class Main extends JavaPlugin implements Listener {
     }
   }
 
-  private boolean bedAtPos(Player p, World w){
-        if(!getConfig().getBoolean("relaxed_checking")){
-          String id = p.getUniqueId().toString();
-          String wn = w.getName();
-          double x = (Double) yml.get(id + "." + wn + ".x");
-          double y = (Double) yml.get(id + "." + wn + ".y");
-          double z = (Double) yml.get(id + "." + wn + ".z");
-          Location l = new Location(w, x, y, z);
-          return l.getBlock().getType() == Material.BED_BLOCK || l.getBlock().getType() == Material.BED
-              || l.add(0,1,0).getBlock().getType() == Material.BED_BLOCK || l.add(0,1,0).getBlock().getType() == Material.BED;
-        }else{
-          return true;
+  public Location getSavedBedLocation(Player p, World w){
+    String id = p.getUniqueId().toString();
+    String wn = w.getName();
+    double x = (Double) yml.get(id + "." + wn + ".x");
+    double y = (Double) yml.get(id + "." + wn + ".y");
+    double z = (Double) yml.get(id + "." + wn + ".z");
+    return new Location(w, x, y, z);
+  }
+
+  public Location getAltBedBlock(Block b){
+    if (b.getType().equals(Material.BED_BLOCK)){
+      for (int x = -1; x <= 1; x++) {
+        for (int z = -1; z <= 1; z++) {
+          Block b2 = b.getRelative(x, 0, z);
+          if (!(b.getLocation().equals(b2.getLocation()))) {
+            if (b2.getType().equals(Material.BED_BLOCK)) {
+              System.out.println(b2);
+              return b2.getLocation();
+            }
+          }
         }
+      }
+    }
+    return null;
+  }
+
+  public boolean bedAtPos(Player p, World w){
+    if(!getConfig().getBoolean("relaxed_checking")){
+      Location l = getSavedBedLocation(p, w);
+      return ((l.getBlock().getType() == Material.BED_BLOCK) || (l.getBlock().getType() == Material.BED) || (l.add(0,1,0).getBlock().getType() == Material.BED_BLOCK) || (l.add(0,1,0).getBlock().getType() == Material.BED));
+    }else{
+      return true;
+    }
   }
 
   private void doDebugChecking(CommandSender sender) {
@@ -426,6 +471,17 @@ public class Main extends JavaPlugin implements Listener {
     sendUTF8Message("=======DEBUG END=======", sender);
   }
 
+  public boolean chargePlayerAccount(Player p, double cost){
+    if (!useEconomy) return true;
+    if (econ.getBalance(p) >= cost){
+      econ.withdrawPlayer(p, cost);
+      return true;
+    } else {
+      sendUTF8Message(getLocaleString("ERR_NO_MONEY"), p);
+    }
+    return false;
+  }
+
   @Override
   public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
     if (commandLabel.equalsIgnoreCase("bed")) {
@@ -436,7 +492,9 @@ public class Main extends JavaPlugin implements Listener {
             if (Bukkit.getWorld(args[0]) != null) {
               World w = Bukkit.getWorld(args[0]);
               if (bedInConfig(p, w) && bedAtPos(p, w)) {
-                teleToBed(p, w);
+                if (chargePlayerAccount(p, bedTpCost)) {
+                  teleToBed(p, w);
+                }
               } else {
                 noBedCheck(p, w, true);
               }
@@ -448,18 +506,16 @@ public class Main extends JavaPlugin implements Listener {
           }
         } else if (args.length == 0) {
           if ((isPlayerAuthorized(sender, "bedhome.bed")) || !getConfig().getBoolean("permissions")) {
-            if (((Player) sender).getBedSpawnLocation() != null) {
-              if (p.getBedSpawnLocation().getWorld() == p.getWorld()) {
-                if (bedInConfig(p, p.getWorld())) {
+            if (p.getBedSpawnLocation() != null && p.getBedSpawnLocation().getWorld() == p.getWorld()) {
+              if (bedInConfig(p, p.getWorld())) {
+                if (chargePlayerAccount(p, bedTpCost)) {
                   teleToBed(p, p.getWorld());
-                  if (getConfig().getBoolean("console_messages")) {
-                    log.info(getLocaleString("CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
-                  }
-                } else {
-                  sendUTF8Message(getLocaleString("ERR_NO_BED"), p);
+                }
+                if (getConfig().getBoolean("console_messages")) {
+                  log.info(getLocaleString("CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
                 }
               } else {
-                noBedCheck(p, p.getWorld(), false);
+                sendUTF8Message(getLocaleString("ERR_NO_BED"), p);
               }
             } else {
               noBedCheck(p, p.getWorld(), false);
@@ -479,5 +535,9 @@ public class Main extends JavaPlugin implements Listener {
       return true;
     }
     return false;
+  }
+
+  public static final Main getPlugin() {
+    return plugin;
   }
 }

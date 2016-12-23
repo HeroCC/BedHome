@@ -1,4 +1,4 @@
-# Configuration for BedHome 2.26 by Superior_Slime
+# Configuration for BedHome @Version@ by Superior_Slime
 # permissions - true/false. Whether to use permissions or allow all players to do /bed
 # auto-update - true/false. Should the plugin automatically download and install new updates?
 # console_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?
@@ -10,6 +10,8 @@
 # c: Players will not be able to teleport to their past bed, but can see its co-ordinates.
 # Locale - What language to use. Availible: en (English), es (Spanish), German (de), fr (French), pt (Portuguese), zh_tw (Traditional Chinese), ru (Russian), it (Italian), and dn (Danish).
 #  If you specify a language that doesn't exist, the plugin will just use English.
+# bedTpCost - If you want to charge players to use /bed, specify the amount here. 0.0 disables economy
+# bedSetCost - If you want to charge players to set their bed, specify the amount here. 0.0 disables economy
 # The plugin must be reloaded in order for any changes here to take effect.
 permissions: true
 auto-update: true
@@ -19,3 +21,5 @@ relaxed_checking: false
 nobedmode: c
 locale: en
 first-run: true
+bedTpCost: 0.0
+bedSetCost: 0.0

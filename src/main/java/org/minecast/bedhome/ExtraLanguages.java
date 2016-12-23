@@ -1,10 +1,6 @@
 package org.minecast.bedhome;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
 public class ExtraLanguages {
   enum LocaleStrings {
@@ -13,12 +9,8 @@ public class ExtraLanguages {
     BED_SET, TELE_OTHER_PLAYER, HELP_LOOKUP, HELP_TELE, 
     HELP_BEDHOME, HELP_BED, NAME, WORLD, 
     LOOKUP_RESULT, BED_COORDS, BH_BAD_WORLD, BH_VERSION, 
-    BH_RELOADED, BH_CONSOLE_CMD, ERR_NO_BED_OTHER, ERR_BAD_PLAYER
+    BH_RELOADED, BH_CONSOLE_CMD, ERR_NO_BED_OTHER, ERR_BAD_PLAYER, ERR_NO_MONEY
   }
-  
-  
-
-
 
   public static String getRussian(LocaleStrings l) {
     switch (l) {
@@ -72,7 +64,7 @@ public class ExtraLanguages {
       case BH_CONSOLE_CMD:
         return "Только игроки могут использовать эту команду!";
       default:
-        return "error fetching locale string";
+        return null;
     }
   }
 
@@ -83,7 +75,6 @@ public class ExtraLanguages {
         return  ChatColor.DARK_RED + "你在這世界上沒有床唷，或者已經被毀掉了呢。";
       case ERR_NO_BED_OTHER:
         return  ChatColor.DARK_RED + "你在 $world 沒有床唷，或者已經被毀掉了呢。";
-
       case ERR_NO_PERMS:
         return  ChatColor.DARK_RED + "你沒有權限使用";
       case ERR_PLAYER_NO_BED:
@@ -129,15 +120,13 @@ public class ExtraLanguages {
       case BH_CONSOLE_CMD:
         return "只有玩家可以使用這項指令";
       default:
-        return "error fetching locale string";
+        return null;
     }
   }
   public static String getSimplifiedChinese(LocaleStrings l) {
     switch (l) {
       case ERR_NO_BED:
         return  ChatColor.DARK_RED + "你在这个世界中并没有床, 或者床已经被摧毁了。";
-     
-
       case ERR_NO_PERMS:
         return  ChatColor.DARK_RED + "你没有权限";
       case ERR_PLAYER_NO_BED:
@@ -185,15 +174,13 @@ public class ExtraLanguages {
       case ERR_NO_BED_OTHER:
         return  ChatColor.DARK_RED + "你在世界 $world 中没有床, 或者已经毁掉了。";
       default:
-        return "error fetching locale string";
+        return null;
     }
   }
   public static String getKorean(LocaleStrings l) {
     switch (l) {
       case ERR_NO_BED:
         return  ChatColor.DARK_RED + "이 월드에 침대가 없거나 파괴되었습니다.";
-     
-
       case ERR_NO_PERMS:
         return  ChatColor.DARK_RED + "권한이 없으십니다.";
       case ERR_PLAYER_NO_BED:
@@ -241,7 +228,7 @@ public class ExtraLanguages {
       case ERR_NO_BED_OTHER:
         return  ChatColor.DARK_RED + "$world 월드에 당신의 침대가 없거나 파괴되었습니다.。";
       default:
-        return "error fetching locale string";
+        return null;
     }
   }
   public static String getJapanese(LocaleStrings l) {
@@ -296,7 +283,7 @@ public class ExtraLanguages {
       case BH_CONSOLE_CMD:
         return "そのコマンドはプレイヤーにしか使えません!";
       default:
-        return "error fetching locale string";
+        return null;
     }
   }
 }

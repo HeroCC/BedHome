@@ -1,20 +1,18 @@
 package org.minecast.bedhome;
 
-import java.io.IOException;
-
-import net.gravitydevelopment.updater.Updater;
-import net.gravitydevelopment.updater.Updater.UpdateResult;
-
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.io.IOException;
 
 
 public class BedHomeListener implements Listener {
@@ -42,25 +40,33 @@ public class BedHomeListener implements Listener {
   public void playerInteract(PlayerInteractEvent e) {
     if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.BED_BLOCK)) {
       Player p = e.getPlayer();
+      World w = p.getLocation().getWorld();
+      String wn = w.getName();
       if (!day(p) || plugin.getConfig().getBoolean("day_beds")) {
-        if ((p.hasPermission("bedhome.bed") && plugin.getConfig().getString("permissions") == "true") || p.isOp() || (plugin.getConfig().getString("permissions") == "false")) {
+        if (plugin.isPlayerAuthorized(p, "bedhome.bed")) {
+          Location ogBed = plugin.getSavedBedLocation(p, w); // The player's current saved bed
+          if (ogBed.equals(e.getClickedBlock().getLocation())) {
+            return; // If the clicked block is the same as the saved block, return
+          } else if (!ogBed.equals(plugin.getAltBedBlock(e.getClickedBlock()))) {
+            // Only try to charge the player if the bed is different
+            if (!plugin.chargePlayerAccount(p, plugin.bedSetCost)){
+              return;
+            }
+          }
           String id = p.getUniqueId().toString();
           p.teleport(e.getClickedBlock().getLocation());
           p.setBedSpawnLocation(p.getLocation(), true);
           double x = p.getLocation().getX();
           double z = p.getLocation().getZ();
           double y = p.getLocation().getY();
-          World w = p.getLocation().getWorld();
-          String wn = w.getName();
           plugin.yml.set(id + "." + wn + ".x", x);
           plugin.yml.set(id + "." + wn + ".y", y);
           plugin.yml.set(id + "." + wn + ".z", z);
           try {
-            plugin.yml.save(plugin.file);
+            plugin.yml.save(plugin.beds);
           } catch (IOException ex) {
             ex.printStackTrace();
           }
-          p.setBedSpawnLocation(p.getLocation());
           p.sendMessage(plugin.getLocaleString("BED_SET"));
           if (plugin.getConfig().getBoolean("console_messages")) {
             plugin.log.info((plugin.getLocaleString("CONSOLE_PLAYER_SET")).replace("$player", ChatColor.stripColor(p.getDisplayName())));
@@ -70,5 +76,20 @@ public class BedHomeListener implements Listener {
     }
   }
 
-
+  @EventHandler
+  public void playerBreakBlock(BlockBreakEvent e){
+    if (!plugin.getConfig().getString("nobedmode").equals("b")){ return; } // Return if nobedmode isn't b
+    Player p = e.getPlayer();
+    if (e.getBlock().getType().equals(Material.BED_BLOCK) || e.getBlock().getType().equals(Material.BED)){
+      String id = p.getUniqueId().toString().toLowerCase();
+      if (plugin.yml.contains(id)){
+        plugin.yml.set(id + "." + p.getWorld().getName(), null); // Remove the bed (in this world) from the config
+        try {
+          plugin.yml.save(plugin.beds);
+        } catch (IOException ex) {
+          ex.printStackTrace();
+        }
+      }
+    }
+  }
 }
