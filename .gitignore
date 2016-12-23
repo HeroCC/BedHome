@@ -1,6 +1,7 @@
 target/
 build/
 .gradle/
+.idea/
 
 rebel.xml
 rebel-remote.xml
