@@ -45,6 +45,10 @@ shadowJar {
   dependsOn generateRebel
 }
 
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+}
+
 ext {
   resourceTokens = [
       'Version': version
