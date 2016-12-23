@@ -56,7 +56,6 @@ ext {
 }
 
 processResources {
-  include 'plugin.yml', 'config.yml'
   filter org.apache.tools.ant.filters.ReplaceTokens, tokens: resourceTokens
 }
 
