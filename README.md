@@ -1,7 +1,27 @@
+<h1 align="center">
+  <img src="https://i.imgur.com/yaUBwkV.png" width="256">
+  <br>
+  BedHome <sup>v2</sup>
+</h1>
+<h4 align="center">The simple bed teleport plugin</h4>
+
+<p align="center">
+
+  <a href="https://dev.bukkit.org/projects/bedhome/files"><img src="https://img.shields.io/github/release/HeroCC/BedHome.svg?label=release" alt="Release"></a> 
+  <a href="https://ci.herocc.com/job/BedHome"><img src="https://img.shields.io/jenkins/s/https/ci.herocc.com/BedHome.svg" alt="Build Status"></a> 
+  <a href="https://github.com/HeroCC/BedHome/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/HeroCC/bedhome.svg" alt="License"></a>
+  </p>
+
+
+<p align="center">
+<a href="#commands">Commands</a> | <a href="#permissions">Permissions</a> | <a href="https://github.com/HeroCC/BedHome/issues">Bug tracker</a>
+</p>
+
+
 Teleport to your bed using /bed. Your bed is saved when you sleep in it.
 
 
-This plugin is compatible with CraftBukkit 1.7.9, Spigot 1.8, and Spigot-updated CraftBukkit 1.8!
+This plugin is compatible with most Bukkit forks supporting UUIDs.
 
 
 _Feel free to make a pull request or open an issue._
@@ -37,12 +57,3 @@ One bed per world!
 * **bedhome.admin** - Allows players to use all mod commands
 
 * **bedhome.world** - Allows players to /bed to another world (2.2+)
-
-
-# TODO
-
-- If you want to request a feature, feel free to comment, PM me, or make a pull request.
-
-# CHANGELOG
-
-_View the BukkitDev page to find this._
