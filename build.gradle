@@ -14,7 +14,6 @@ targetCompatibility = 1.6
 repositories {
   mavenCentral()
   maven { url "https://hub.spigotmc.org/nexus/content/groups/public" }
-  maven { url "http://repo.mcstats.org/content/repositories/public" }
   maven { url "http://repo.gravitydevelopment.net" }
   maven { url "http://nexus.hc.to/content/repositories/pub_releases" }
 }
@@ -38,7 +37,6 @@ jar {
 
 shadowJar {
   dependencies {
-    include dependency('org.mcstats.bukkit:metrics-lite')
     include dependency('net.gravitydevelopment.updater:updater')
   }
   classifier = null

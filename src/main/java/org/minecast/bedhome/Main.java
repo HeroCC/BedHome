@@ -13,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.MetricsLite;
 import org.minecast.bedhome.ExtraLanguages.LocaleStrings;
 
 import java.io.*;
@@ -212,12 +211,15 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   private void setupMetrics() {
+    //TODO Implement new Metrics
+    /*
     try {
       MetricsLite metrics = new MetricsLite(this);
       metrics.start();
     } catch (IOException e) {
       // Failed to submit the stats :-(
     }
+    */
   }
 
   private boolean setupEconomy() {
