@@ -287,7 +287,7 @@ public class Main extends JavaPlugin implements Listener {
     Updater updater = new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD, false);
   }
 
-  private boolean bedInConfig(Player player, World w) {
+  public boolean bedInConfig(Player player, World w) {
     if (yml != null) {
       String id = player.getUniqueId().toString();
       String wn = w.getName();

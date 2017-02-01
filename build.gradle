@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'java'
 
 group = 'bedhome'
-version = '2.27'
+version = '2.28'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-  compile group: 'org.mcstats.bukkit', name: 'metrics-lite', version: 'R8-SNAPSHOT'
+  compile group: 'org.mcstats.bukkit', name: 'metrics-lite', version: 'R8-SNAPSHOT' // Main Metrics
   compile group: 'net.gravitydevelopment.updater', name: 'updater', version: '2.3'
   compile group: 'org.bukkit', name: 'bukkit', version: '1.10.2-R0.1-SNAPSHOT'
   compile group: 'net.milkbowl.vault', name: 'VaultAPI', version: '1.6'

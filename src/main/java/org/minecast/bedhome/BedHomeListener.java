@@ -44,13 +44,15 @@ public class BedHomeListener implements Listener {
       String wn = w.getName();
       if (!day(p) || plugin.getConfig().getBoolean("day_beds")) {
         if (plugin.isPlayerAuthorized(p, "bedhome.bed")) {
-          Location ogBed = plugin.getSavedBedLocation(p, w); // The player's current saved bed
-          if (ogBed.equals(e.getClickedBlock().getLocation())) {
-            return; // If the clicked block is the same as the saved block, return
-          } else if (!ogBed.equals(plugin.getAltBedBlock(e.getClickedBlock()))) {
-            // Only try to charge the player if the bed is different
-            if (!plugin.chargePlayerAccount(p, plugin.bedSetCost)){
-              return;
+          if (plugin.bedInConfig(p, w)) { // ogBed is null if they have bed
+            Location ogBed = plugin.getSavedBedLocation(p, w); // The player's current saved bed
+            if (ogBed.equals(e.getClickedBlock().getLocation())) {
+              return; // If the clicked block is the same as the saved block, return
+            } else if (!ogBed.equals(plugin.getAltBedBlock(e.getClickedBlock()))) {
+              // Only try to charge the player if the bed is different
+              if (!plugin.chargePlayerAccount(p, plugin.bedSetCost)) {
+                return;
+              }
             }
           }
           String id = p.getUniqueId().toString();

@@ -1,6 +1,6 @@
 name: BedHome
 main: org.minecast.bedhome.Main
-version: 2.27
+version: 2.28
 authors: [Superior_Slime, HeroCC]
 softdepend: [Vault]
 description: 'Teleport to your bed with a command: /bed!'
