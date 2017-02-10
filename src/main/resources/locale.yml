@@ -215,6 +215,7 @@ it:
     WORLD: '&3<mondo>'
     LOOKUP_RESULT: '&6Il letto di $player si trova a :'
     BED_COORDS: '&2Il tuo letto è stato distrutto, ecco le coordinate:'
+    ERR_NO_MONEY: '&4Non hai abbastanza soldi per usare questo comando!'
 pl:
     #By ZdzichuZdzichu
     ERR_NO_BED: '&4Nie masz łóżka w tym świecie, lub łóżko zostało zniszczone.'
