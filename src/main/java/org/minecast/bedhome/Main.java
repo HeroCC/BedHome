@@ -287,8 +287,9 @@ public class Main extends JavaPlugin implements Listener {
 
     if (!beds.exists()) {
       try {
-        beds.createNewFile();
+        if (!beds.createNewFile()) log.severe("Beds file doesn't exist and couldn't be created!");
       } catch (IOException e) {
+        log.severe("Beds file doesn't exist and couldn't be created!");
         e.printStackTrace();
       }
     }
