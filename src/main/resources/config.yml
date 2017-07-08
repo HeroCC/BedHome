@@ -4,10 +4,10 @@
 # console_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?
 # day_beds - true/false. Should players be able to set beds at day? Or only allow beds at night?
 # nobedmode - a/b/c.
-# relaxed_checking - true/false. If you have problems using /bed, set this to true. However, this can cause bugs.
 # a: Allow players to teleport to their previous bed if destroyed.
 # b: Players will not be able to teleport to their past bed.
 # c: Players will not be able to teleport to their past bed, but can see its co-ordinates.
+# relaxed_checking - true/false. If you have problems using /bed, set this to true. However, this can cause bugs.
 # Locale - What language to use. Availible: en (English), es (Spanish), German (de), fr (French), pt (Portuguese), zh_tw (Traditional Chinese), ru (Russian), it (Italian), and dn (Danish).
 #  If you specify a language that doesn't exist, the plugin will just use English.
 # bedTpCost - If you want to charge players to use /bed, specify the amount here. 0.0 disables economy
@@ -20,6 +20,6 @@ day_beds: false
 relaxed_checking: false
 nobedmode: c
 locale: en
-first-run: true
 bedTpCost: 0.0
 bedSetCost: 0.0
+first-run: true

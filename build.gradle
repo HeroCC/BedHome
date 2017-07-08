@@ -5,8 +5,9 @@ plugins {
 
 apply plugin: 'java'
 
-group = 'bedhome'
-version = '2.28'
+String packagePath = 'org.minecast.bedhome'
+group packagePath
+version = '2.29'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -16,12 +17,14 @@ repositories {
   maven { url "https://hub.spigotmc.org/nexus/content/groups/public" }
   maven { url "http://repo.gravitydevelopment.net" }
   maven { url "http://nexus.hc.to/content/repositories/pub_releases" }
+  maven { url 'https://repo.bstats.org/content/repositories/releases' }
 }
 
 dependencies {
   compile group: 'net.gravitydevelopment.updater', name: 'updater', version: '2.3'
   compile group: 'org.bukkit', name: 'bukkit', version: '1.10.2-R0.1-SNAPSHOT'
   compile group: 'net.milkbowl.vault', name: 'VaultAPI', version: '1.6'
+  compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.1'
 }
 
 artifacts { // task 'build' runs generates uberjar
@@ -37,7 +40,9 @@ jar {
 shadowJar {
   dependencies {
     include dependency('net.gravitydevelopment.updater:updater')
+    include dependency('org.bstats:bstats-bukkit')
   }
+  relocate('org.bstats', packagePath + '.dependencies')
   classifier = null
   dependsOn generateRebel
 }

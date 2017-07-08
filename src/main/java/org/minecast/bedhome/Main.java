@@ -2,6 +2,7 @@ package org.minecast.bedhome;
 
 import net.gravitydevelopment.updater.Updater;
 import net.milkbowl.vault.economy.Economy;
+import org.bstats.Metrics;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -211,15 +212,30 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   private void setupMetrics() {
-    //TODO Implement new Metrics
-    /*
-    try {
-      MetricsLite metrics = new MetricsLite(this);
-      metrics.start();
-    } catch (IOException e) {
-      // Failed to submit the stats :-(
-    }
-    */
+    Metrics metrics = new Metrics(this);
+
+    // Track what locale people use
+    metrics.addCustomChart(new Metrics.SimplePie("used_locale") {
+      @Override
+      public String getValue() {
+        return getConfig().getString("locale");
+      }
+    });
+
+    // Track if people use economy
+    metrics.addCustomChart(new Metrics.SimplePie("used_economy") {
+      @Override
+      public String getValue() {
+        return String.valueOf(useEconomy);
+      }
+    });
+
+    metrics.addCustomChart(new Metrics.SimplePie("no_bed_mode") {
+      @Override
+      public String getValue() {
+        return getConfig().getString("nobedmode");
+      }
+    });
   }
 
   private boolean setupEconomy() {
