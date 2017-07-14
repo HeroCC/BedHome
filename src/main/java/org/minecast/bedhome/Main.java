@@ -496,7 +496,7 @@ public class Main extends JavaPlugin implements Listener {
       econ.withdrawPlayer(p, cost);
       return true;
     } else {
-      sendUTF8Message(getLocaleString("ERR_NO_MONEY"), p);
+      sendUTF8Message(getLocaleString("ERR_NO_MONEY").replace("$amount", String.valueOf(cost)), p);
     }
     return false;
   }
