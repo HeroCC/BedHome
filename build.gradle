@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-  compile group: 'net.gravitydevelopment.updater', name: 'updater', version: '2.3'
+  compile group: 'net.gravitydevelopment.updater', name: 'updater', version: '2.4'
   compile group: 'org.bukkit', name: 'bukkit', version: '1.12-R0.1-SNAPSHOT'
   compile group: 'net.milkbowl.vault', name: 'VaultAPI', version: '1.6'
   compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.1'
@@ -43,6 +43,7 @@ shadowJar {
     include dependency('org.bstats:bstats-bukkit')
   }
   relocate('org.bstats', packagePath + '.dependencies')
+  relocate('net.gravitydevelopment.updater', packagePath + '.dependencies')
   classifier = null
   dependsOn generateRebel
 }
