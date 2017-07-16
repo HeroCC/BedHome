@@ -328,11 +328,7 @@ public class Main extends JavaPlugin implements Listener {
   public boolean isPlayerAuthorized(CommandSender s, String perm) {
     if (s instanceof Player) {
       Player p = (Player) s;
-      if (p.hasPermission(perm) || p.isOp()) {
-        return true;
-      } else {
-        return false;
-      }
+      return p.hasPermission(perm) || p.isOp();
     } else {
       return true;
     }
@@ -404,7 +400,6 @@ public class Main extends JavaPlugin implements Listener {
           Block b2 = b.getRelative(x, 0, z);
           if (!(b.getLocation().equals(b2.getLocation()))) {
             if (b2.getType().equals(Material.BED_BLOCK)) {
-              System.out.println(b2);
               return b2.getLocation();
             }
           }
