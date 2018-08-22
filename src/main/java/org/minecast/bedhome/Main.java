@@ -5,6 +5,8 @@ import net.milkbowl.vault.economy.Economy;
 import org.bstats.Metrics;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.type.Bed;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -392,28 +394,62 @@ public class Main extends JavaPlugin implements Listener {
     double z = (Double) yml.get(id + "." + wn + ".z");
     return new Location(w, x, y, z);
   }
-
-  public Location getAltBedBlock(Block b){
-    if (b.getType().equals(Material.BED_BLOCK)){
+  
+  /**
+   * Old method (pre 1.13) of checking for bed block
+   * @param b Block of bed to get alternate
+   * @return Location of alternate bed block, otherwise null
+   * @deprecated
+   */
+  private Location _legacyGetAltBedBlock(Block b) {
+    if (b.getBlockData() instanceof Bed){
       for (int x = -1; x <= 1; x++) {
         for (int z = -1; z <= 1; z++) {
           Block b2 = b.getRelative(x, 0, z);
           if (!(b.getLocation().equals(b2.getLocation()))) {
-            if (b2.getType().equals(Material.BED_BLOCK)) {
+            if (b2.getBlockData() instanceof Bed) {
               return b2.getLocation();
             }
           }
         }
       }
     }
-    return null;
+    return b.getLocation();
+  }
+  
+  public Block getAltBedBlock(Block block) {
+    try {
+      Class.forName("org.bukkit.block.data.type.Bed");
+    } catch (ClassNotFoundException e) {
+      return _legacyGetAltBedBlock(block).getBlock();
+    }
+    
+    if (!(block.getBlockData() instanceof Bed)) return block;
+    Bed bed = (Bed) block.getBlockData();
+    
+    // Get the alternate block of the bed
+    Bed.Part part = bed.getPart();
+    Block supposedAltBlock = getBlockFaceLocation(block.getLocation(), bed.getFacing().getOppositeFace()).getBlock();
+    if (supposedAltBlock.getBlockData() instanceof Bed && ((Bed) supposedAltBlock.getBlockData()).getPart() != part) {
+      return supposedAltBlock;
+    } else {
+      // Resort to the old method until the above can be verified
+      return _legacyGetAltBedBlock(block).getBlock();
+    }
+  }
+  
+  public static Location getBlockFaceLocation(Location l, BlockFace blockFace) {
+    // It would be nice if BlockFace extended Vector
+    Location newLoc = l.clone();
+    l.add(blockFace.getModX(), blockFace.getModY(), blockFace.getModZ());
+    return newLoc;
   }
 
   public boolean bedAtPos(Player p, World w){
     if(!getConfig().getBoolean("relaxed_checking")){
       Location l = getSavedBedLocation(p, w);
-      return ((l.getBlock().getType() == Material.BED_BLOCK) || (l.getBlock().getType() == Material.BED) || (l.add(0,1,0).getBlock().getType() == Material.BED_BLOCK) || (l.add(0,1,0).getBlock().getType() == Material.BED));
-    }else{
+      return l.getBlock().getBlockData() instanceof Bed || getAltBedBlock(l.getBlock()).getBlockData() instanceof Bed;
+    } else {
       return true;
     }
   }
