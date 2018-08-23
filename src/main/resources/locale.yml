@@ -138,16 +138,16 @@ es:
     LOOKUP_RESULT: '&6La cama de $player se encuentra en:'
     BED_COORDS: '&2Tu cama ha sido destruida, pero, aqui estan las coordenadas:'
 de:
-    #By FiFTX
-    BED_COORDS: '&2Dein Bett wurde zerstort, wie auch immer, hier sind seine Koordianten'
+    #By FiFTX and thedava
+    BED_COORDS: '&2Dein Bett wurde zerstört, wie auch immer, hier sind seine Koordianten'
     BED_SET: '&2Dein Bett wurde gesetzt.'
     BED_TELE: '&2Du wurdest zu deinem Bett teleportiert.'
     CONSOLE_PLAYER_SET: '$player hat sein Bett gesetzt.'
     CONSOLE_PLAYER_TELE: '$player hat sich zu seinem Bett teleportiert.'
-    ERR_BAD_PLAYER: '&4Der angegebene Spieler existiert nicht (Gro?- und Kleinschreibung beachten!).'
+    ERR_BAD_PLAYER: '&4Der angegebene Spieler existiert nicht (Groß- und Kleinschreibung beachten!).'
     ERR_CONSOLE_TELE: '&4Konsole kann nicht zu einem Bett teleportiert werden!'
-    ERR_NO_BED: '&4Du hast kein Bett in dieser Welt, oder es wurde zerstort.'
-    ERR_NO_BED_OTHER: '&4Sie verfügen nicht über ein Bett in weltweit $world, oder zerstört worden ist.'
+    ERR_NO_BED: '&4Du hast kein Bett in dieser Welt oder es wurde zerstört.'
+    ERR_NO_BED_OTHER: '&Du hast kein Bett in der Welt $world oder es wurde zerstört.'
     ERR_NO_PERMS: '&4Du bist nicht berechtigt.'
     ERR_PLAYER_NO_BED: '&4Der angegebene Spieler ($player) hat kein Bett in $world.'
     ERR_SYNTAX: '&4Falsche Verwendung! Benutze: /bedhome [reload/help] oder /bedhome <lookup/teleport> <name> <welt>'
