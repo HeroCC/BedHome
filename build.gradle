@@ -40,7 +40,7 @@ jar {
 shadowJar {
   dependencies {
     include dependency('net.gravitydevelopment.updater:updater')
-    include dependency('org.bstats.bukkit:bstats-bukkit')
+    include dependency('org.bstats:bstats-bukkit')
   }
   relocate('org.bstats.bukkit', packagePath + '.dependencies')
   relocate('net.gravitydevelopment.updater', packagePath + '.dependencies')
