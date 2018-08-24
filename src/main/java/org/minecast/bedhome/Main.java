@@ -407,7 +407,7 @@ public class Main extends JavaPlugin implements Listener {
         for (int z = -1; z <= 1; z++) {
           Block b2 = b.getRelative(x, 0, z);
           if (!(b.getLocation().equals(b2.getLocation()))) {
-            if (b2.getBlockData() instanceof Bed) {
+            if (Main.blockIsBed(b2)) {
               return b2.getLocation();
             }
           }
@@ -448,10 +448,24 @@ public class Main extends JavaPlugin implements Listener {
   public boolean bedAtPos(Player p, World w){
     if(!getConfig().getBoolean("relaxed_checking")){
       Location l = getSavedBedLocation(p, w);
-      return l.getBlock().getBlockData() instanceof Bed || getAltBedBlock(l.getBlock()).getBlockData() instanceof Bed;
+      return blockIsBed(l.getBlock()) || blockIsBed(getAltBedBlock(l.getBlock()));
     } else {
       return true;
     }
+  }
+  
+  public static boolean blockIsBed(Block b) {
+    if (b == null) return false; // This shouldn't happen
+    try {
+      // 1.13+ only
+      Class.forName("org.bukkit.block.data.type.Bed");
+    } catch (ClassNotFoundException e) {
+      // I know, I know it's deprecated, but backwards compatibility commands me
+      //noinspection deprecation
+      return b.getType().equals(Material.LEGACY_BED_BLOCK) || b.getType().equals(Material.LEGACY_BED);
+    }
+    
+    return b.getBlockData() instanceof Bed;
   }
 
   private void doDebugChecking(CommandSender sender) {

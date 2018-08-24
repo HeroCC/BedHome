@@ -3,7 +3,6 @@ package org.minecast.bedhome;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.data.type.Bed;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,7 +37,7 @@ public class BedHomeListener implements Listener {
 
   @EventHandler
   public void playerInteract(PlayerInteractEvent e) {
-    if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getBlockData() instanceof Bed) {
+    if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Main.blockIsBed(e.getClickedBlock())) {
       Player p = e.getPlayer();
       World w = p.getLocation().getWorld();
       String wn = w.getName();
@@ -82,7 +81,7 @@ public class BedHomeListener implements Listener {
   public void playerBreakBlock(BlockBreakEvent e){
     if (!plugin.getConfig().getString("nobedmode").equals("b")){ return; } // Return if nobedmode isn't b
     Player p = e.getPlayer();
-    if (e.getBlock().getBlockData() instanceof Bed){
+    if (Main.blockIsBed(e.getBlock())){
       String id = p.getUniqueId().toString().toLowerCase();
       if (plugin.yml.contains(id)){
         plugin.yml.set(id + "." + p.getWorld().getName(), null); // Remove the bed (in this world) from the config
