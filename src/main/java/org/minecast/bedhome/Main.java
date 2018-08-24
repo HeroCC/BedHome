@@ -2,7 +2,7 @@ package org.minecast.bedhome;
 
 import net.gravitydevelopment.updater.Updater;
 import net.milkbowl.vault.economy.Economy;
-import org.bstats.Metrics;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -20,6 +20,7 @@ import org.minecast.bedhome.ExtraLanguages.LocaleStrings;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
+import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 
@@ -217,27 +218,27 @@ public class Main extends JavaPlugin implements Listener {
     Metrics metrics = new Metrics(this);
 
     // Track what locale people use
-    metrics.addCustomChart(new Metrics.SimplePie("used_locale") {
+    metrics.addCustomChart(new Metrics.SimplePie("used_locale", new Callable<String>() {
       @Override
-      public String getValue() {
+      public String call() {
         return getConfig().getString("locale");
       }
-    });
+    }));
 
     // Track if people use economy
-    metrics.addCustomChart(new Metrics.SimplePie("used_economy") {
+    metrics.addCustomChart(new Metrics.SimplePie("used_economy", new Callable<String>() {
       @Override
-      public String getValue() {
+      public String call() {
         return String.valueOf(useEconomy);
       }
-    });
+    }));
 
-    metrics.addCustomChart(new Metrics.SimplePie("no_bed_mode") {
+    metrics.addCustomChart(new Metrics.SimplePie("no_bed_mode", new Callable<String>() {
       @Override
-      public String getValue() {
+      public String call() {
         return getConfig().getString("nobedmode");
       }
-    });
+    }));
   }
 
   private boolean setupEconomy() {
