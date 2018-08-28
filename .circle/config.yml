@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+
+    docker:
+    - image: circleci/openjdk:8-jdk-browsers
+
+    steps:
+    - checkout
+    - restore_cache:
+        key: circleci-java-{{ checksum "build.gradle" }}
+
+    - run: gradle dependencies
+
+    - save_cache:
+        paths:
+        - ~/.gradle
+        key: circleci-java-{{ checksum "build.gradle" }}
+
+    - run: gradle clean build
+
+    - store_artifacts:
+        path: build/libs/*.jar
