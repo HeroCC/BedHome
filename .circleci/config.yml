@@ -14,4 +14,4 @@ jobs:
         key: circleci-java-{{ checksum "build.gradle" }}
     - run: gradle clean build
     - store_artifacts:
-        path: build/libs/*.jar
+        path: build/libs/
