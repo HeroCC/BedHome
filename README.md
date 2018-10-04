@@ -24,7 +24,7 @@ Teleport to your bed using /bed. Your bed is saved when you sleep in it.
 This plugin is compatible with most Bukkit forks supporting UUIDs.
 
 
-_Feel free to make a pull request or open an issue._
+-Feel free to make a pull request or open an issue.-
 
 
 
@@ -52,8 +52,8 @@ One bed per world!
 
 # PERMISSIONS
 
-* **bedhome.bed** - Allows players to use /bed
+* **bedhome.bed** - Allows players to use /bed.
 
-* **bedhome.admin** - Allows players to use all mod commands
+* **bedhome.admin** - Allows players to use all mod commands.
 
-* **bedhome.world** - Allows players to /bed to another world (2.2+)
+* **bedhome.world** - Allows players to /bed to another world (2.2+).
