@@ -463,7 +463,7 @@ public class Main extends JavaPlugin implements Listener {
     } catch (ClassNotFoundException e) {
       // I know, I know it's deprecated, but backwards compatibility commands me
       //noinspection deprecation
-      return b.getType().equals(Material.LEGACY_BED_BLOCK) || b.getType().equals(Material.LEGACY_BED);
+      return b.getState() instanceof org.bukkit.block.Bed;
     }
     
     return b.getBlockData() instanceof Bed;

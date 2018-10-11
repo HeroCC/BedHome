@@ -7,7 +7,7 @@ apply plugin: 'java'
 
 String packagePath = 'org.minecast.bedhome'
 group packagePath
-version = '2.29'
+version = '2.30'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
