@@ -112,7 +112,7 @@ fr:
     LOOKUP_RESULT: '&6Le lit de $player et situe a:'
     BED_COORDS: '&2Ton lit as ete detruit, cependant, voici ses coordonnees:'
 es:
-    #By Google Translate and Superior_Slime, partners in crime.
+    #Mostly Google Translate, sorry.
     ERR_NO_BED: '&4No tiene una cama en este mundo, o ha sido destruida.'
     ERR_NO_BED_OTHER: '&4Usted no tiene una cama en el mundo $world, o ha sido destruida.'
     ERR_NO_PERMS: '&4No tiene permiso.'
