@@ -81,7 +81,7 @@ public class BedHomeListener implements Listener {
   public void playerBreakBlock(BlockBreakEvent e){
     if (!plugin.getConfig().getString("nobedmode").equals("b")){ return; } // Return if nobedmode isn't b
     Player p = e.getPlayer();
-    if (Main.blockIsBed(e.getBlock())){
+    if (Main.blockIsBed(e.getBlock()) && plugin.getSavedBedLocation(p, p.getWorld()).distance(e.getBlock().getLocation()) <= 1) {
       String id = p.getUniqueId().toString().toLowerCase();
       if (plugin.yml.contains(id)){
         plugin.yml.set(id + "." + p.getWorld().getName(), null); // Remove the bed (in this world) from the config
