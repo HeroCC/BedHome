@@ -25,7 +25,7 @@ public class ExtraLanguages {
       case ERR_BAD_PLAYER:
         return ChatColor.DARK_RED + "Игрок с таким именем не найден (учитывайте регистр!).";
       case ERR_SYNTAX:
-        return ChatColor.DARK_RED + "Ошибка синтаксиса! Использование: /bedhome [reload/help] или /bedhome <просмотр/телепорт> <имя> <мир>";
+        return ChatColor.DARK_RED + "Ошибка синтаксиса! Использование: /bedhome [reload/help] или /bedhome <lookup/teleport> <имя> <мир>";
       case ERR_CONSOLE_TELE:
         return ChatColor.DARK_RED
             + "Ошибка синтаксиса! Использование: /bedhome [reload/help] или /bedhome <lookup/teleport> <имя> <мир>";
