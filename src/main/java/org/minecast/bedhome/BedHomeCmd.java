@@ -1,5 +1,6 @@
 package org.minecast.bedhome;
 
+import io.papermc.lib.PaperLib;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -101,8 +102,13 @@ public class BedHomeCmd implements CommandExecutor {
               double z = plugin.yml.getDouble(uuid + "." + args[2] + ".z");
               World w = Bukkit.getWorld(args[2]);
               Location l = new Location(w, x, y, z);
-              player.teleport(l);
-              player.sendMessage(plugin.getLocaleString("TELE_OTHER_PLAYER").replace("$player", args[1]).replace("$world", args[2]));
+              PaperLib.teleportAsync(player, l).thenAccept(result -> {
+                if (result) {
+                  player.sendMessage(plugin.getLocaleString("TELE_OTHER_PLAYER").replace("$player", args[1]).replace("$world", args[2]));
+                } else {
+                  player.sendMessage(ChatColor.DARK_RED + "Unable to use ASync Bed TPing (via command), contact server admin");
+                }
+              });
             } else {
               player.sendMessage(plugin.getLocaleString("ERR_PLAYER_NO_BED").replace("$player", args[1]).replace("$world", args[2]));
             }

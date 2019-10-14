@@ -1,5 +1,6 @@
 package org.minecast.bedhome;
 
+import io.papermc.lib.PaperLib;
 import net.gravitydevelopment.updater.Updater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -44,9 +45,7 @@ public class Main extends JavaPlugin implements Listener {
   // Locale File
   File localeFile = new File(this.getDataFolder(), "locale.yml");
   YamlConfiguration locale = YamlConfiguration.loadConfiguration(localeFile);
-
-
-
+  
   private boolean autoDL() { return (getConfig().getBoolean("auto-update")); }
 
   void reloadLocale() {
@@ -271,6 +270,8 @@ public class Main extends JavaPlugin implements Listener {
   public void onEnable() {
     plugin = this;
     log = getLogger();
+    
+    PaperLib.suggestPaper(this);
 
     verifyLocale();
 
@@ -338,8 +339,13 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   public void teleToBed(Player player, World w) {
-    player.teleport(getSavedBedLocation(player, w));
-    sendUTF8Message(getLocaleString("BED_TELE"), player);
+    PaperLib.teleportAsync(player, getSavedBedLocation(player, w)).thenAccept(result -> {
+      if (result) {
+        sendUTF8Message(getLocaleString("BED_TELE"), player);
+      } else {
+        player.sendMessage("Error Async TPing to Bed, contact server admin");
+      }
+    });
   }
 
   public void sendCoords(Player p, World w) {
