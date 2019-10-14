@@ -42,20 +42,21 @@ public class BedHomeListener implements Listener {
       World w = p.getLocation().getWorld();
       String wn = w.getName();
       if (!day(p) || plugin.getConfig().getBoolean("day_beds")) {
-        if (plugin.isPlayerAuthorized(p, "bedhome.bed")) {
+        if (plugin.isPlayerAuthorized(p, "bedhome.bed") || !plugin.getConfig().getBoolean("permissions")) {
           if (plugin.bedInConfig(p, w)) { // ogBed is null if they have bed
             Location ogBed = plugin.getSavedBedLocation(p, w); // The player's current saved bed
-            if (ogBed.equals(e.getClickedBlock().getLocation())) {
+            if (ogBed.equals(e.getClickedBlock().getLocation()) || ogBed.equals(plugin.getAltBedBlock(e.getClickedBlock()).getLocation())) {
               return; // If the clicked block is the same as the saved block, return
-            } else if (!ogBed.equals(plugin.getAltBedBlock(e.getClickedBlock()))) {
-              // Only try to charge the player if the bed is different
-              if (!plugin.chargePlayerAccount(p, plugin.bedSetCost)) {
-                return;
-              }
             }
           }
+  
+          if (!plugin.chargePlayerAccount(p, plugin.bedSetCost)) {
+            p.sendMessage(plugin.getLocaleString("ERR_NO_MONEY"));
+            return;
+          }
+          
           String id = p.getUniqueId().toString();
-          p.teleport(e.getClickedBlock().getLocation());
+          p.teleport(e.getClickedBlock().getLocation()); // This doesn't need to be Paper Async as it's in an already generated area (close enough for the player to touch)
           p.setBedSpawnLocation(p.getLocation(), true);
           double x = p.getLocation().getX();
           double z = p.getLocation().getZ();
