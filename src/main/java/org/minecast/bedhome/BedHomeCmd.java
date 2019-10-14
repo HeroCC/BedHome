@@ -16,16 +16,23 @@ public class BedHomeCmd implements CommandExecutor {
       if (args.length == 0) {
         plugin.sendUTF8Message(plugin.getLocaleString("BH_VERSION").replace("$version", plugin.pdf.getVersion()), (p));
       } else {
-        if (args[0].equals("reload")) {
-          doReload(p);
-        } else if (args[0].equals("help")) {
-          doHelp(p);
-        }else if (args[0].equals("lookup")) {
-          doLookup(p, args);
-        } else if (args[0].equals("teleport") || args[0].equals("tele")) {
-          doTeleport(p, args);
-        } else {
-          p.sendMessage(plugin.getLocaleString("ERR_SYNTAX"));
+        switch (args[0]) {
+          case "reload":
+            doReload(p);
+            break;
+          case "help":
+            doHelp(p);
+            break;
+          case "lookup":
+            doLookup(p, args);
+            break;
+          case "teleport":
+          case "tele":
+            doTeleport(p, args);
+            break;
+          default:
+            p.sendMessage(plugin.getLocaleString("ERR_SYNTAX"));
+            break;
         }
       }
     }
@@ -60,28 +67,24 @@ public class BedHomeCmd implements CommandExecutor {
     if(plugin.isPlayerAuthorized(p, "bedhome.admin") || p.hasPermission("bedhome.lookup")){
       if(args.length == 3){
         String uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId().toString().toLowerCase();
-        if (uuid != null) {
-          if (plugin.yml.contains(uuid + "." + args[2])) {
-            p.sendMessage(plugin.getLocaleString("LOOKUP_RESULT").replace("$player", args[1]));
-            double x = plugin.yml.getDouble((uuid) + "." + args[2] + ".x");
-            double y = plugin.yml.getDouble((uuid) + "." + args[2] + ".y");
-            double z = plugin.yml.getDouble((uuid) + "." + args[2] + ".z");
-            int xInt = (int) Math.round(x);
-            int yInt = (int) Math.round(y);
-            int zInt = (int) Math.round(z);
-            p.sendMessage(ChatColor.RED + "X: " + ChatColor.GOLD + Integer.toString(xInt));
-            p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + Integer.toString(yInt));
-            p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + Integer.toString(zInt));
-          } else {
-            p.sendMessage(((plugin.getLocaleString("ERR_PLAYER_NO_BED")).replace("$player", ChatColor.stripColor(args[1]))).replace("$world", args[2]));
-          }
+        if (plugin.yml.contains(uuid + "." + args[2])) {
+          p.sendMessage(plugin.getLocaleString("LOOKUP_RESULT").replace("$player", args[1]));
+          double x = plugin.yml.getDouble((uuid) + "." + args[2] + ".x");
+          double y = plugin.yml.getDouble((uuid) + "." + args[2] + ".y");
+          double z = plugin.yml.getDouble((uuid) + "." + args[2] + ".z");
+          int xInt = (int) Math.round(x);
+          int yInt = (int) Math.round(y);
+          int zInt = (int) Math.round(z);
+          p.sendMessage(ChatColor.RED + "X: " + ChatColor.GOLD + Integer.toString(xInt));
+          p.sendMessage(ChatColor.RED + "Y: " + ChatColor.GOLD + Integer.toString(yInt));
+          p.sendMessage(ChatColor.RED + "Z: " + ChatColor.GOLD + Integer.toString(zInt));
         } else {
-          p.sendMessage((plugin.getLocaleString("ERR_BAD_PLAYER")));
+          p.sendMessage(((plugin.getLocaleString("ERR_PLAYER_NO_BED")).replace("$player", ChatColor.stripColor(args[1]))).replace("$world", args[2]));
         }
-      }else{
+      } else {
         p.sendMessage(plugin.getLocaleString("ERR_SYNTAX"));
       }
-    }else{
+    } else {
       p.sendMessage(plugin.getLocaleString("ERR_NO_PERMS"));
     }
   }

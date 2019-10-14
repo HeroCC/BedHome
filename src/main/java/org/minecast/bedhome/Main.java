@@ -372,28 +372,45 @@ public class Main extends JavaPlugin implements Listener {
 
   private void noBedCheck(Player p, World w, boolean isOtherWorld) {
     if (getConfig() != null && yml != null) {
-      if ((getConfig().getString("nobedmode").equals("a"))) {
-        if (bedInConfig(p, w)) {
-          if (chargePlayerAccount(p, bedTpCost)) {
-            teleToBed(p, w);
+      switch (getConfig().getString("nobedmode")) {
+        case "a":
+          if (bedInConfig(p, w)) {
+            if (chargePlayerAccount(p, bedTpCost)) {
+              teleToBed(p, w);
+            }
+            if (getConfig().getBoolean("console_messages")) {
+              log.info(getLocaleString("CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
+            }
+          } else {
+            if (!isOtherWorld) {
+              sendUTF8Message(getLocaleString("ERR_NO_BED"), p);
+            } else {
+              sendUTF8Message(getLocaleString("ERR_NO_BED_OTHER").replace("$world", w.getName()), p);
+            }
           }
-          if (getConfig().getBoolean("console_messages")) {
-            log.info(getLocaleString("CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
+          break;
+        case "b":
+          if (!isOtherWorld) {
+            sendUTF8Message(getLocaleString("ERR_NO_BED"), p);
+          } else {
+            sendUTF8Message(getLocaleString("ERR_NO_BED_OTHER").replace("$world", w.getName()), p);
           }
-        } else {
-          if (!isOtherWorld) { sendUTF8Message(getLocaleString("ERR_NO_BED"), p); } else { sendUTF8Message(getLocaleString("ERR_NO_BED_OTHER").replace("$world", w.getName()), p); }
-        }
-      } else if ((getConfig().getString("nobedmode").equals("b"))) {
-        if (!isOtherWorld) { sendUTF8Message(getLocaleString("ERR_NO_BED"), p); } else { sendUTF8Message(getLocaleString("ERR_NO_BED_OTHER").replace("$world", w.getName()), p); }
-      } else if (getConfig().getString("nobedmode").equals("c")) {
-        if (bedInConfig(p, w)) {
-          sendCoords(p, w);
-        } else {
-          if (!isOtherWorld){ sendUTF8Message(getLocaleString("ERR_NO_BED"), p); } else { sendUTF8Message(getLocaleString("ERR_NO_BED_OTHER").replace("$world", w.getName()), p); }
-        }
-      } else {
-        p.sendMessage(ChatColor.DARK_RED
-            + "Plugin was not set up correctly. Please contact your server administrator.");
+          break;
+        case "c":
+          if (bedInConfig(p, w)) {
+            sendCoords(p, w);
+          } else {
+            if (!isOtherWorld) {
+              sendUTF8Message(getLocaleString("ERR_NO_BED"), p);
+            } else {
+              sendUTF8Message(getLocaleString("ERR_NO_BED_OTHER").replace("$world", w.getName()), p);
+            }
+          }
+          break;
+        default:
+          p.sendMessage(ChatColor.DARK_RED
+              + "Plugin was not set up correctly. Please contact your server administrator.");
+          break;
       }
     } else {
       if (!isOtherWorld){ sendUTF8Message(getLocaleString("ERR_NO_BED"), p); } else { sendUTF8Message(getLocaleString("ERR_NO_BED_OTHER").replace("$world", w.getName()), p); }
