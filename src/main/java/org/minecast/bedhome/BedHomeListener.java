@@ -42,7 +42,7 @@ public class BedHomeListener implements Listener {
       World w = p.getLocation().getWorld();
       String wn = w.getName();
       if (!day(p) || plugin.getConfig().getBoolean("day_beds")) {
-        if (plugin.isPlayerAuthorized(p, "bedhome.bed") || !plugin.getConfig().getBoolean("permissions")) {
+        if (plugin.isPlayerAuthorized(p, "bedhome.bed")) {
           if (plugin.bedInConfig(p, w)) { // ogBed is null if they have bed
             Location ogBed = plugin.getSavedBedLocation(p, w); // The player's current saved bed
             if (ogBed.equals(e.getClickedBlock().getLocation()) || ogBed.equals(plugin.getAltBedBlock(e.getClickedBlock()).getLocation())) {

@@ -14,6 +14,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -288,6 +290,11 @@ public class Main extends JavaPlugin implements Listener {
     this.yml.options().copyDefaults(true);
 
     reloadEconomy();
+  
+    if (!getConfig().getBoolean("permissions")) {
+      // If permissions are disabled, give all players the /bed command
+      new Permission("bedhome.bed").setDefault(PermissionDefault.TRUE);
+    }
 
     if (!beds.exists()) {
       try {
@@ -559,7 +566,7 @@ public class Main extends JavaPlugin implements Listener {
       if (sender instanceof Player) {
         Player p = (Player) sender;
         if (args.length == 1) {
-          if (isPlayerAuthorized(sender, "bedhome.world") || !getConfig().getBoolean("permissions")) {
+          if (isPlayerAuthorized(sender, "bedhome.world")) {
             if (Bukkit.getWorld(args[0]) != null) {
               World w = Bukkit.getWorld(args[0]);
               if (bedInConfig(p, w) && bedAtPos(p, w)) {
@@ -576,7 +583,7 @@ public class Main extends JavaPlugin implements Listener {
             sendUTF8Message(getLocaleString("ERR_NO_PERMS"), p);
           }
         } else if (args.length == 0) {
-          if ((isPlayerAuthorized(sender, "bedhome.bed")) || !getConfig().getBoolean("permissions")) {
+          if (isPlayerAuthorized(sender, "bedhome.bed")) {
             if (p.getBedSpawnLocation() != null && p.getBedSpawnLocation().getWorld() == p.getWorld()) {
               if (bedInConfig(p, p.getWorld())) {
                 if (chargePlayerAccount(p, bedTpCost)) {
