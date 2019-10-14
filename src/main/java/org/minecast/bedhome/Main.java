@@ -314,7 +314,7 @@ public class Main extends JavaPlugin implements Listener {
     reloadLocale();
 
     setupMetrics();
-    Updater updater = new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD, false);
+    Updater updater = new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD, true);
   }
 
   public boolean bedInConfig(Player player, World w) {
