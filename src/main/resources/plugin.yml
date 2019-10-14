@@ -4,6 +4,8 @@ version: '@Version@'
 authors: [Superior_Slime, HeroCC]
 softdepend: [Vault]
 description: 'Teleport to your bed with a command: /bed!'
+api-version: '1.13'
+
 commands:
     bed:
         description: Teleport to your bed!
