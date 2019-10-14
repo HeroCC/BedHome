@@ -8,9 +8,10 @@
 <p align="center">
 
   <a href="https://dev.bukkit.org/projects/bedhome/files"><img src="https://img.shields.io/github/release/HeroCC/BedHome.svg?label=release" alt="Release"></a> 
-  <a href="https://ci.herocc.com/job/BedHome"><img src="https://img.shields.io/jenkins/s/https/ci.herocc.com/BedHome.svg" alt="Build Status"></a> 
+  <a href="https://circleci.com/gh/HeroCC/BedHome"><img src="https://img.shields.io/circleci/build/github/HeroCC/BedHome" alt="Build Status"></a> 
   <a href="https://github.com/HeroCC/BedHome/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/HeroCC/bedhome.svg" alt="License"></a>
-  </p>
+
+</p>
 
 
 <p align="center">
