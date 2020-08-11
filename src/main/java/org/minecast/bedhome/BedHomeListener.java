@@ -41,6 +41,9 @@ public class BedHomeListener implements Listener {
       Player p = e.getPlayer();
       World w = p.getLocation().getWorld();
       String wn = w.getName();
+      
+      if (!w.getEnvironment().equals(World.Environment.NORMAL)) return; // We shouldn't try to process beds in nether
+      
       if (!day(p) || plugin.getConfig().getBoolean("day_beds")) {
         if (plugin.isPlayerAuthorized(p, "bedhome.bed")) {
           if (plugin.bedInConfig(p, w)) { // ogBed is null if they have bed
