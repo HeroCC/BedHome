@@ -4,7 +4,11 @@ import io.papermc.lib.PaperLib;
 import net.gravitydevelopment.updater.Updater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Bed;
@@ -21,7 +25,12 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.minecast.bedhome.ExtraLanguages.LocaleStrings;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.channels.FileChannel;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
@@ -216,7 +225,7 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   private void setupMetrics() {
-    Metrics metrics = new Metrics(this);
+    Metrics metrics = new Metrics(this, 1126);
 
     // Track what locale people use
     metrics.addCustomChart(new Metrics.SimplePie("used_locale", new Callable<String>() {

@@ -5,7 +5,7 @@ plugins {
 
 String packagePath = 'org.minecast.bedhome'
 group packagePath
-version = '2.32'
+version = '2.33'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -15,37 +15,34 @@ repositories {
   maven { url "https://hub.spigotmc.org/nexus/content/groups/public" }
   maven { url "http://repo.gravitydevelopment.net" }
   maven { url "http://nexus.hc.to/content/repositories/pub_releases" }
+  maven { url "https://jitpack.io" }
   maven { url 'https://repo.codemc.org/repository/maven-public' }
   maven { url 'https://papermc.io/repo/repository/maven-public/'}
 }
 
 dependencies {
-  compile group: 'net.gravitydevelopment.updater', name: 'updater', version: '2.4'
-  compile group: 'org.bukkit', name: 'bukkit', version: '1.13.2-R0.1-SNAPSHOT'
-  compile group: 'net.milkbowl.vault', name: 'VaultAPI', version: '1.6'
-  compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.5'
-  compile "io.papermc:paperlib:1.0.2"
+  compileOnly 'org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT'
+  compileOnly 'net.milkbowl.vault:VaultAPI:1.6'
+  implementation 'org.bstats:bstats-bukkit:1.7'
+  implementation 'com.github.HeroiCraft:Updater:c026fb8004'
+  implementation "io.papermc:paperlib:1.0.2"
 }
 
 artifacts { // task 'build' runs generates uberjar
   archives shadowJar
 }
 
-//noinspection GroovyAssignabilityCheck
 jar {
-  version = version + '-min' // we want the Uberjar to be distributed, this is the minified version
+  archiveClassifier.set('min') // we want the Uberjar to be distributed, this is the minified version
 }
 
 shadowJar {
   dependencies {
-    include dependency('net.gravitydevelopment.updater:updater')
-    include dependency('org.bstats:bstats-bukkit')
-    include dependency('io.papermc:paperlib')
+    relocate('org.bstats.bukkit', packagePath + '.dependencies.bstats')
+    relocate('io.papermc.lib', packagePath + 'dependencies.paperlib')
+    relocate('net.gravitydevelopment.updater', packagePath + '.dependencies.updater')
   }
-  relocate('org.bstats.bukkit', packagePath + '.dependencies')
-  relocate('net.gravitydevelopment.updater', packagePath + '.dependencies')
-  relocate('io.papermc.lib', packagePath + 'dependencies.paperlib')
-  classifier = null
+  archiveClassifier.set(null)
 }
 
 tasks.withType(JavaCompile) {
