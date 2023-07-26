@@ -193,6 +193,7 @@ public class Main extends JavaPlugin implements Listener {
                 + "\nconsole_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?"
                 + "\nday_beds - true/false. Should players be able to set beds at day? Or only allow beds at night?"
                 + "\nrelaxed_checking - true/false. If you have problems using /bed, set this to true. However, this can cause bugs."
+                + "\nteleportDelay - the delay between when the command is issued, and when someone is actually teleported. 0 disables the windup altogether."
                 + "\nnobedmode - a/b/c."
                 + "\na: Allow players to teleport to their previous bed if destroyed."
                 + "\nb: Players will not be able to teleport to their past bed."
@@ -205,8 +206,8 @@ public class Main extends JavaPlugin implements Listener {
     checkConfig("day_beds", false);
     checkConfig("relaxed_checking", false);
     checkConfig("nobedmode", 'c');
-    checkConfig("locale", "en");
     checkConfig("teleportDelay", 0);
+    checkConfig("locale", "en");
     this.getConfig().options().copyDefaults(true);
   }
 
@@ -249,6 +250,13 @@ public class Main extends JavaPlugin implements Listener {
       @Override
       public String call() {
         return getConfig().getString("nobedmode");
+      }
+    }));
+
+    metrics.addCustomChart(new SimplePie("teleportdelay_used", new Callable<String>() {
+      @Override
+      public String call() {
+        return String.valueOf(getConfig().getInt("teleportDelay") > 0);
       }
     }));
   }
