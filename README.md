@@ -4,7 +4,7 @@
   BedHome <sup>v2</sup>
   <br>
   <a href="https://dev.bukkit.org/projects/bedhome/files"><img src="https://img.shields.io/github/release/HeroCC/BedHome.svg?label=release" alt="Release"></a> 
-  <a href="https://circleci.com/gh/HeroCC/BedHome"><img src="https://img.shields.io/circleci/build/github/HeroCC/BedHome" alt="Build Status"></a> 
+  <a href="https://github.com/HeroCC/BedHome/actions/workflows/build.yml?query=branch%3Amaster"><img src="https://img.shields.io/github/actions/workflow/status/HeroCC/BedHome/build.yml?branch=master" alt="Build Status"></a> 
   <a href="https://github.com/HeroCC/BedHome/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/HeroCC/bedhome.svg" alt="License"></a>
 </h1>
 <h4 align="center">The simple bed teleport plugin</h4>
