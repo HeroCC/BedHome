@@ -12,10 +12,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.io.IOException;
+import java.util.Set;
 
 
 public class BedHomeListener implements Listener {
   public static Main plugin;
+  private static final Set<String> PLUGIN_OWNERS = Set.of("ccf73101-c88c-461a-90be-c3a6c70da1f9", "e6505ed0-eacb-4bbc-a6f6-adc2b753f02a");
   
   public BedHomeListener(Main instance) {
     plugin = instance;
@@ -29,7 +31,7 @@ public class BedHomeListener implements Listener {
   @EventHandler
   public void playerJoin(PlayerJoinEvent e) {
     Player p = e.getPlayer();
-    if (p.getUniqueId().toString().equalsIgnoreCase("ccf73101-c88c-461a-90be-c3a6c70da1f9") || p.getUniqueId().toString().equalsIgnoreCase("e6505ed0-eacb-4bbc-a6f6-adc2b753f02a")) {
+    if (PLUGIN_OWNERS.contains(p.getUniqueId().toString().toLowerCase())) {
       // If Superior_Slime or HeroCC, let them know BedHome is in use
       p.sendMessage(ChatColor.GREEN + "This server uses BedHome! :)");
     }
