@@ -386,7 +386,7 @@ public class Main extends JavaPlugin implements Listener {
       switch (getConfig().getString("nobedmode")) {
         case "a":
           if (bedInConfig(p, w)) {
-            if (chargePlayerAccount(p, bedTpCost)) {
+            if (playerHasEnoughMoney(p, bedTpCost)) {
               startBedTeleport(p, w, getConfig().getInt("teleportDelay"));
             }
             if (getConfig().getBoolean("console_messages")) {
@@ -578,14 +578,20 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   public boolean chargePlayerAccount(Player p, double cost){
-    if (!useEconomy) return true;
-    if (econ.getBalance(p) >= cost){
+    if (playerHasEnoughMoney(p ,cost)){
       econ.withdrawPlayer(p, cost);
       return true;
-    } else {
+    }
+    else {
       sendUTF8Message(getLocaleString("ERR_NO_MONEY").replace("$amount", String.valueOf(cost)), p);
     }
     return false;
+  }
+
+  //ideally we want to be able to check if someone has enough during the teleport windup, without actually charging them.
+  public boolean playerHasEnoughMoney(Player p, double cost){
+    if (!useEconomy) return true;
+    return econ.getBalance(p) >= cost;
   }
 
   @Override
@@ -598,7 +604,7 @@ public class Main extends JavaPlugin implements Listener {
             if (Bukkit.getWorld(args[0]) != null) {
               World w = Bukkit.getWorld(args[0]);
               if (bedInConfig(p, w) && bedAtPos(p, w)) {
-                if (chargePlayerAccount(p, bedTpCost)) {
+                if (playerHasEnoughMoney(p, bedTpCost)) {
                   startBedTeleport(p, w, getConfig().getInt("teleportDelay"));
                 }
               } else {
@@ -614,7 +620,7 @@ public class Main extends JavaPlugin implements Listener {
           if (isPlayerAuthorized(sender, "bedhome.bed")) {
             if (p.getBedSpawnLocation() != null && p.getBedSpawnLocation().getWorld() == p.getWorld()) {
               if (bedInConfig(p, p.getWorld())) {
-                if (chargePlayerAccount(p, bedTpCost)) {
+                if (playerHasEnoughMoney(p, bedTpCost)) {
                   startBedTeleport(p, p.getWorld(), getConfig().getInt("teleportDelay"));
                 }
                 if (getConfig().getBoolean("console_messages")) {
@@ -645,7 +651,9 @@ public class Main extends JavaPlugin implements Listener {
 
   public void startBedTeleport(Player player, World world, int teleportDelay){
     if (teleportDelay == 0) {
-      teleToBed(player, world);
+      if (chargePlayerAccount(player, bedTpCost)){
+        teleToBed(player, world);
+      }
     }
 
      player.sendMessage(getLocaleString("BH_DELAYED"));
@@ -656,7 +664,9 @@ public class Main extends JavaPlugin implements Listener {
          player.sendMessage(getLocaleString("BH_MOVED_DELAY"));
        }
        else {
-         teleToBed(player, world);
+         if (chargePlayerAccount(player, bedTpCost)){
+           teleToBed(player, world);
+         }
        }
      }, teleportDelay * 20L);
   };
