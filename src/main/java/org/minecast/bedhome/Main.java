@@ -4,6 +4,7 @@ import io.papermc.lib.PaperLib;
 import net.gravitydevelopment.updater.Updater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -229,7 +230,7 @@ public class Main extends JavaPlugin implements Listener {
     Metrics metrics = new Metrics(this, 1126);
 
     // Track what locale people use
-    metrics.addCustomChart(new Metrics.SimplePie("used_locale", new Callable<String>() {
+    metrics.addCustomChart(new SimplePie("used_locale", new Callable<String>() {
       @Override
       public String call() {
         return getConfig().getString("locale");
@@ -237,14 +238,14 @@ public class Main extends JavaPlugin implements Listener {
     }));
 
     // Track if people use economy
-    metrics.addCustomChart(new Metrics.SimplePie("used_economy", new Callable<String>() {
+    metrics.addCustomChart(new SimplePie("used_economy", new Callable<String>() {
       @Override
       public String call() {
         return String.valueOf(useEconomy);
       }
     }));
 
-    metrics.addCustomChart(new Metrics.SimplePie("no_bed_mode", new Callable<String>() {
+    metrics.addCustomChart(new SimplePie("no_bed_mode", new Callable<String>() {
       @Override
       public String call() {
         return getConfig().getString("nobedmode");
