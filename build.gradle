@@ -7,8 +7,10 @@ String packagePath = 'org.minecast.bedhome'
 group packagePath
 version = '2.34'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 repositories {
   mavenCentral()
