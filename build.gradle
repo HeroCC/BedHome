@@ -1,6 +1,6 @@
 plugins {
   id 'java'
-  id 'com.github.johnrengelman.shadow' version '6.0.0'
+  id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 String packagePath = 'org.minecast.bedhome'
@@ -68,4 +68,7 @@ processResources {
   filter org.apache.tools.ant.filters.ReplaceTokens, tokens: resourceTokens
 }
 
-
+tasks.named('wrapper') {
+  distributionType = Wrapper.DistributionType.BIN
+  gradleVersion = '8.2'
+}
