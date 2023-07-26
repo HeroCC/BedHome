@@ -23,5 +23,5 @@ nobedmode: c
 locale: en
 bedTpCost: 0.0
 bedSetCost: 0.0
-first-run: true
 teleportDelay: 0
+first-run: true

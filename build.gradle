@@ -1,20 +1,22 @@
 plugins {
   id 'java'
-  id 'com.github.johnrengelman.shadow' version '6.0.0'
+  id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 String packagePath = 'org.minecast.bedhome'
 group packagePath
 version = '2.34'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 repositories {
   mavenCentral()
   maven { url "https://hub.spigotmc.org/nexus/content/groups/public" }
   //maven { url "http://repo.gravitydevelopment.net" }
-  maven { url "http://nexus.hc.to/content/repositories/pub_releases" }
+  maven { url "https://nexus.hc.to/content/repositories/pub_releases" }
   maven { url "https://jitpack.io" }
   maven { url 'https://repo.codemc.org/repository/maven-public' }
   maven { url 'https://papermc.io/repo/repository/maven-public/'}
@@ -23,7 +25,7 @@ repositories {
 dependencies {
   compileOnly 'org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT'
   implementation 'net.milkbowl.vault:VaultAPI:1.6'
-  implementation 'org.bstats:bstats-bukkit:1.7'
+  implementation 'org.bstats:bstats-bukkit:3.0.2'
   implementation 'com.github.HeroiCraft:Updater:c026fb8004'
   implementation "io.papermc:paperlib:1.0.5"
 }
@@ -66,4 +68,7 @@ processResources {
   filter org.apache.tools.ant.filters.ReplaceTokens, tokens: resourceTokens
 }
 
-
+tasks.named('wrapper') {
+  distributionType = Wrapper.DistributionType.BIN
+  gradleVersion = '8.2'
+}

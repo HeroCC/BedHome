@@ -4,6 +4,7 @@ import io.papermc.lib.PaperLib;
 import net.gravitydevelopment.updater.Updater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -192,6 +193,7 @@ public class Main extends JavaPlugin implements Listener {
                 + "\nconsole_messages - true/false. Should player actions (such as teleporting to a bed or setting one) be logged to the console?"
                 + "\nday_beds - true/false. Should players be able to set beds at day? Or only allow beds at night?"
                 + "\nrelaxed_checking - true/false. If you have problems using /bed, set this to true. However, this can cause bugs."
+                + "\nteleportDelay - the delay between when the command is issued, and when someone is actually teleported. 0 disables the windup altogether."
                 + "\nnobedmode - a/b/c."
                 + "\na: Allow players to teleport to their previous bed if destroyed."
                 + "\nb: Players will not be able to teleport to their past bed."
@@ -204,8 +206,8 @@ public class Main extends JavaPlugin implements Listener {
     checkConfig("day_beds", false);
     checkConfig("relaxed_checking", false);
     checkConfig("nobedmode", 'c');
-    checkConfig("locale", "en");
     checkConfig("teleportDelay", 0);
+    checkConfig("locale", "en");
     this.getConfig().options().copyDefaults(true);
   }
 
@@ -229,7 +231,7 @@ public class Main extends JavaPlugin implements Listener {
     Metrics metrics = new Metrics(this, 1126);
 
     // Track what locale people use
-    metrics.addCustomChart(new Metrics.SimplePie("used_locale", new Callable<String>() {
+    metrics.addCustomChart(new SimplePie("used_locale", new Callable<String>() {
       @Override
       public String call() {
         return getConfig().getString("locale");
@@ -237,17 +239,24 @@ public class Main extends JavaPlugin implements Listener {
     }));
 
     // Track if people use economy
-    metrics.addCustomChart(new Metrics.SimplePie("used_economy", new Callable<String>() {
+    metrics.addCustomChart(new SimplePie("used_economy", new Callable<String>() {
       @Override
       public String call() {
         return String.valueOf(useEconomy);
       }
     }));
 
-    metrics.addCustomChart(new Metrics.SimplePie("no_bed_mode", new Callable<String>() {
+    metrics.addCustomChart(new SimplePie("no_bed_mode", new Callable<String>() {
       @Override
       public String call() {
         return getConfig().getString("nobedmode");
+      }
+    }));
+
+    metrics.addCustomChart(new SimplePie("teleportdelay_used", new Callable<String>() {
+      @Override
+      public String call() {
+        return String.valueOf(getConfig().getInt("teleportDelay") > 0);
       }
     }));
   }
