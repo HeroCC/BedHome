@@ -51,6 +51,8 @@ en:
     BH_VERSION: '&9BedHome v$version by Superior_Slime'
     BH_RELOADED: '&9Config and locale reloaded!'
     BH_CONSOLE_CMD: 'Only players can use this command!'
+    BH_MOVED_DELAY: 'Cancelling your teleport because you moved.'
+    BH_DELAYED: 'Teleporting you in a few seconds, stay still!'
     ##These are used for /bedhome help. No point in editing them.
     NAME: '&3<name>'
     WORLD: '&3<world>'

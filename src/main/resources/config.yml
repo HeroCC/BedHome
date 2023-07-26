@@ -12,6 +12,7 @@
 #  If you specify a language that doesn't exist, the plugin will just use English.
 # bedTpCost - If you want to charge players to use /bed, specify the amount here. 0.0 disables economy
 # bedSetCost - If you want to charge players to set their bed, specify the amount here. 0.0 disables economy
+# teleportDelay - the delay between when the command is issued, and when someone is actually teleported. 0 disables the windup altogether.
 # The plugin must be reloaded in order for any changes here to take effect.
 permissions: true
 auto-update: true
@@ -23,3 +24,4 @@ locale: en
 bedTpCost: 0.0
 bedSetCost: 0.0
 first-run: true
+teleportDelay: 0

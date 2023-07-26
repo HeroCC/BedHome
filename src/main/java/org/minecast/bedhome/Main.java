@@ -56,7 +56,7 @@ public class Main extends JavaPlugin implements Listener {
   // Locale File
   File localeFile = new File(this.getDataFolder(), "locale.yml");
   YamlConfiguration locale = YamlConfiguration.loadConfiguration(localeFile);
-  
+
   private boolean autoDL() { return (getConfig().getBoolean("auto-update")); }
 
   void reloadLocale() {
@@ -205,6 +205,7 @@ public class Main extends JavaPlugin implements Listener {
     checkConfig("relaxed_checking", false);
     checkConfig("nobedmode", 'c');
     checkConfig("locale", "en");
+    checkConfig("teleportDelay", 0);
     this.getConfig().options().copyDefaults(true);
   }
 
@@ -281,7 +282,7 @@ public class Main extends JavaPlugin implements Listener {
   public void onEnable() {
     plugin = this;
     log = getLogger();
-    
+
     PaperLib.suggestPaper(this);
 
     verifyLocale();
@@ -299,7 +300,7 @@ public class Main extends JavaPlugin implements Listener {
     this.yml.options().copyDefaults(true);
 
     reloadEconomy();
-  
+
     if (!getConfig().getBoolean("permissions")) {
       // If permissions are disabled, give all players the /bed command
       new Permission("bedhome.bed").setDefault(PermissionDefault.TRUE);
@@ -355,6 +356,7 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   public void teleToBed(Player player, World w) {
+
     PaperLib.teleportAsync(player, getSavedBedLocation(player, w)).thenAccept(result -> {
       if (result) {
         sendUTF8Message(getLocaleString("BED_TELE"), player);
@@ -385,7 +387,7 @@ public class Main extends JavaPlugin implements Listener {
         case "a":
           if (bedInConfig(p, w)) {
             if (chargePlayerAccount(p, bedTpCost)) {
-              teleToBed(p, w);
+              startBedTeleport(p, w, getConfig().getInt("teleportDelay"));
             }
             if (getConfig().getBoolean("console_messages")) {
               log.info(getLocaleString("CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
@@ -434,7 +436,7 @@ public class Main extends JavaPlugin implements Listener {
     double z = (Double) yml.get(id + "." + wn + ".z");
     return new Location(w, x, y, z);
   }
-  
+
   /**
    * Old method (pre 1.13) of checking for bed block
    * @param b Block of bed to get alternate
@@ -456,17 +458,17 @@ public class Main extends JavaPlugin implements Listener {
     }
     return b.getLocation();
   }
-  
+
   public Block getAltBedBlock(Block block) {
     try {
       Class.forName("org.bukkit.block.data.type.Bed");
     } catch (ClassNotFoundException e) {
       return _legacyGetAltBedBlock(block).getBlock();
     }
-    
+
     if (!(block.getBlockData() instanceof Bed)) return block;
     Bed bed = (Bed) block.getBlockData();
-    
+
     // Get the alternate block of the bed
     Bed.Part part = bed.getPart();
     Block supposedAltBlock = getBlockFaceLocation(block.getLocation(), bed.getFacing().getOppositeFace()).getBlock();
@@ -477,7 +479,7 @@ public class Main extends JavaPlugin implements Listener {
       return _legacyGetAltBedBlock(block).getBlock();
     }
   }
-  
+
   public static Location getBlockFaceLocation(Location l, BlockFace blockFace) {
     // It would be nice if BlockFace extended Vector
     Location newLoc = l.clone();
@@ -493,7 +495,7 @@ public class Main extends JavaPlugin implements Listener {
       return true;
     }
   }
-  
+
   public static boolean blockIsBed(Block b) {
     if (b == null) return false; // This shouldn't happen
     try {
@@ -504,7 +506,7 @@ public class Main extends JavaPlugin implements Listener {
       //noinspection deprecation
       return b.getState() instanceof org.bukkit.block.Bed;
     }
-    
+
     return b.getBlockData() instanceof Bed;
   }
 
@@ -597,7 +599,7 @@ public class Main extends JavaPlugin implements Listener {
               World w = Bukkit.getWorld(args[0]);
               if (bedInConfig(p, w) && bedAtPos(p, w)) {
                 if (chargePlayerAccount(p, bedTpCost)) {
-                  teleToBed(p, w);
+                  startBedTeleport(p, w, getConfig().getInt("teleportDelay"));
                 }
               } else {
                 noBedCheck(p, w, true);
@@ -613,7 +615,7 @@ public class Main extends JavaPlugin implements Listener {
             if (p.getBedSpawnLocation() != null && p.getBedSpawnLocation().getWorld() == p.getWorld()) {
               if (bedInConfig(p, p.getWorld())) {
                 if (chargePlayerAccount(p, bedTpCost)) {
-                  teleToBed(p, p.getWorld());
+                  startBedTeleport(p, p.getWorld(), getConfig().getInt("teleportDelay"));
                 }
                 if (getConfig().getBoolean("console_messages")) {
                   log.info(getLocaleString("CONSOLE_PLAYER_TELE").replace("$player", ChatColor.stripColor(p.getDisplayName())));
@@ -640,6 +642,24 @@ public class Main extends JavaPlugin implements Listener {
     }
     return false;
   }
+
+  public void startBedTeleport(Player player, World world, int teleportDelay){
+    if (teleportDelay == 0) {
+      teleToBed(player, world);
+    }
+
+     player.sendMessage(getLocaleString("BH_DELAYED"));
+     Location playerLocation = player.getLocation().clone(); //clone to get value, not a reference. just to be sure.
+     getServer().getScheduler().runTaskLater(plugin, () -> {
+       // why not use .equals(_? because then rotation is taken into account, and ideally you'd want to be able to look around while the teleport is winding up.
+       if (player.getLocation().getX() != playerLocation.getX() || player.getLocation().getY() != playerLocation.getY() || player.getLocation().getZ() != playerLocation.getZ()){
+         player.sendMessage(getLocaleString("BH_MOVED_DELAY"));
+       }
+       else {
+         teleToBed(player, world);
+       }
+     }, teleportDelay * 20L);
+  };
 
   public static final Main getPlugin() {
     return plugin;
