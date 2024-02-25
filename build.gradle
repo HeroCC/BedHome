@@ -5,7 +5,7 @@ plugins {
 
 String packagePath = 'org.minecast.bedhome'
 group packagePath
-version = '2.34'
+version = '2.35'
 
 java {
   sourceCompatibility = JavaVersion.VERSION_1_8
