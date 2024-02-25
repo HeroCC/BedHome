@@ -89,3 +89,4 @@ modrinth { // task `modrinth`
     // The type can either be `project` or `version`
   }
 }
+tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
