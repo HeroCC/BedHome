@@ -42,11 +42,12 @@ shadowJar {
   dependencies {
     include dependency('com.github.HeroiCraft:Updater')
     include dependency('org.bstats:bstats-bukkit')
+    include dependency('org.bstats:bstats-base')
     include dependency('io.papermc:paperlib')
     include dependency('net.milkbowl.vault:VaultAPI')
   }
   dependencies {
-    relocate('org.bstats.bukkit', packagePath + '.dependencies.bstats')
+    relocate('org.bstats', packagePath + '.dependencies.bstats')
     relocate('io.papermc.lib', packagePath + '.dependencies.paperlib')
     relocate('net.gravitydevelopment.updater', packagePath + '.dependencies.updater')
     relocate('net.milkbowl.vault', packagePath + '.dependencies.vault')
