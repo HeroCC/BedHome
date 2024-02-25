@@ -1,6 +1,7 @@
 plugins {
   id 'java'
   id 'com.github.johnrengelman.shadow' version '8.1.1'
+  id "com.modrinth.minotaur" version "2.+" // Modrinth Publishing
 }
 
 String packagePath = 'org.minecast.bedhome'
@@ -72,4 +73,19 @@ processResources {
 tasks.named('wrapper') {
   distributionType = Wrapper.DistributionType.BIN
   gradleVersion = '8.2'
+}
+
+modrinth { // task `modrinth`
+  token = findProperty('modrinth_pat')
+  projectId = "SLo9kQuB"
+  versionType = "release"
+  uploadFile = shadowJar
+  gameVersions = ["1.18", "1.20"]
+  loaders = ["bukkit", "paper", "spigot"]
+  syncBodyFrom = rootProject.file("README.md").text // task `modrinthSyncBody`
+  dependencies {
+    // scope.type
+    // The scope can be `required`, `optional`, `incompatible`, or `embedded`
+    // The type can either be `project` or `version`
+  }
 }
