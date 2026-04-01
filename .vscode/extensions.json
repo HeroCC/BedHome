@@ -1,6 +1,7 @@
 {
-    "recommendations": [
-        "vscjava.vscode-gradle",
-        "redhat.vscode-yaml"
-    ]
+  "recommendations": [
+    "redhat.java",
+    "vscjava.vscode-gradle",
+    "redhat.vscode-yaml"
+  ]
 }
