@@ -73,11 +73,11 @@ tasks.named('wrapper') {
 }
 
 modrinth { // task `modrinth`
-  token = findProperty('modrinth_pat')
+  token = System.getenv("MODRINTH_TOKEN")
   projectId = "SLo9kQuB"
   versionType = "release"
   uploadFile = shadowJar
-  gameVersions = ["1.18", "1.20"]
+  gameVersions = ["1.18", "1.20", "1.21"]
   loaders = ["bukkit", "paper", "spigot"]
   syncBodyFrom = rootProject.file("README.md").text // task `modrinthSyncBody`
   dependencies {
@@ -89,7 +89,7 @@ modrinth { // task `modrinth`
 tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
 
 debugSpigot {
-  version.set('1.20.4')
+  version.set('1.21.11')
   eula.set(true)
   jarFile.set(tasks.shadowJar.archiveFile)
 }
