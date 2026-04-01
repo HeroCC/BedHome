@@ -24,6 +24,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.minecast.bedhome.ExtraLanguages.LocaleStrings;
+import com.herocc.updater.NumericUpdater;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -340,7 +341,7 @@ public class Main extends JavaPlugin implements Listener {
     reloadLocale();
 
     setupMetrics();
-    Updater updater = new Updater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD, true);
+    Updater updater = new NumericUpdater(this, 81407, this.getFile(), autoDL() ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD, true);
   }
 
   public boolean bedInConfig(Player player, World w) {
