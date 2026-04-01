@@ -72,7 +72,7 @@ processResources {
 
 tasks.named('wrapper') {
   distributionType = Wrapper.DistributionType.BIN
-  gradleVersion = '8.2'
+  gradleVersion = '9.4.1'
 }
 
 modrinth { // task `modrinth`
