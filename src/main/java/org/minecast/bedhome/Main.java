@@ -647,9 +647,10 @@ public class Main extends JavaPlugin implements Listener {
     return false;
   }
 
-  public void startBedTeleport(Player player, World world, int teleportDelay){
+  public void startBedTeleport(Player player, World world, int teleportDelay) {
     if (teleportDelay == 0) {
       teleToBed(player, world);
+      return;
     }
 
      player.sendMessage(getLocaleString("BH_DELAYED"));
