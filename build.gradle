@@ -2,6 +2,7 @@ plugins {
   id 'java'
   id 'com.gradleup.shadow' version '9.4.1'
   id "com.modrinth.minotaur" version "2.+" // Modrinth Publishing
+  id 'io.typst.spigradle.spigot' version '4.0.2' // Run a Spigot server locally
 }
 
 String packagePath = 'org.minecast.bedhome'
@@ -86,3 +87,9 @@ modrinth { // task `modrinth`
   }
 }
 tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
+
+debugSpigot {
+  version.set('1.20.4')
+  eula.set(true)
+  jarFile.set(tasks.shadowJar.archiveFile)
+}
