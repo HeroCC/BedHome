@@ -23,7 +23,7 @@
 #Read:
 ##If you use apostrophes/single quotes ('), you will get errors. Escape them by typing 2: ''
 ##Don't translate $player, $world and the names of the string. E.G., DON'T translate "ERR_NO_BED" to "ERR_NON_LIT" because the plugin can't find it. Leave it English.
-version: '@Version@'
+version: '2.35'
 
 #Thanks to Myp21 for translating Russian
 #Thanks to YuokoMikasa for translating Traditional Chinese

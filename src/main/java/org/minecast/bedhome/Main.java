@@ -152,34 +152,47 @@ public class Main extends JavaPlugin implements Listener {
   }
 
   public void verifyLocale() {
-    if ((!getLocale().isSet("version") || getLocale().getDouble("version") <= 2.23) && new File(this.getDataFolder(), "locale.yml").exists()) {
-      getLogger().warning("/!\\======================NOTICE======================/!\\");
-      getLogger().warning(
-          "Since the last version of the plugin, the locale has had vital items added to it.");
-      getLogger()
-          .warning(
-              "Thanks to Bukkit's crappy encoding handling, we'll have to delete your locale to regenerate it.");
-      getLogger().warning("But, we will back up your old file so you can migrate any changes.");
-      getLogger().warning("The backup file is called \"locale.yml.old\"");
-      getLogger().warning("/!\\======================NOTICE======================/!\\");
-
-      try {
-        File bak = new File(this.getDataFolder(), "locale.yml.old");
-        copyFile(localeFile, bak);
-      } catch (IOException e) {
-        log.severe("Unable to create backup! Stopping to avoid damage, please check your config!");
-        e.printStackTrace();
-        return;
-      }
-      localeFile.delete();
-      reloadLocale();
-
-      if (!localeFile.exists()) {
-        this.saveResource("locale.yml", false);
-      }
-      locale.setDefaults(locale);
-      reloadLocale();
+    if (!localeFile.exists()) {
+      return;
     }
+    YamlConfiguration onDisk = YamlConfiguration.loadConfiguration(localeFile);
+    if (this.getResource("locale.yml") == null) {
+      // No locale file in the jar - this shouldn't happen
+      getLogger().warning("No locale file found in the jar. Please contact the plugin developer if locale is not working.");
+      return;
+    }
+    Reader localeStream = new InputStreamReader(this.getResource("locale.yml"));
+    YamlConfiguration fromJar = YamlConfiguration.loadConfiguration(localeStream);
+
+    Double diskVersion = readVersion(onDisk);
+    Double jarVersion = readVersion(fromJar);
+    if (diskVersion == null || jarVersion == null) {
+      getLogger().warning("Failed to read version from locale file. Please check your locale file.");
+      return;
+    }
+    if (jarVersion <= diskVersion) {
+      // Locale is up to date
+      return;
+    }
+    // Locale is outdated
+    getLogger().warning("A newer locale.yml is bundled with this plugin version.");
+    getLogger().warning("Your local locale version is " + diskVersion + ", bundled version is " + jarVersion + ".");
+    getLogger().warning("Your locale file was not changed automatically. Merge new keys manually or backup and rename to recreate.");
+  }
+
+  private Double readVersion(YamlConfiguration config) {
+    Object rawVersion = config.get("version");
+    if (rawVersion instanceof Number) {
+      return ((Number) rawVersion).doubleValue();
+    }
+    if (rawVersion instanceof String) {
+      try {
+        return Double.parseDouble(((String) rawVersion).trim());
+      } catch (NumberFormatException ignored) {
+        return null;
+      }
+    }
+    return null;
   }
 
   public void setConfigOpts() {
@@ -321,12 +334,9 @@ public class Main extends JavaPlugin implements Listener {
       }
     }
 
-    reloadLocale();
-
     if (!localeFile.exists()) {
       this.saveResource("locale.yml", false);
     }
-    locale.setDefaults(locale);
     reloadLocale();
 
     setupMetrics();
